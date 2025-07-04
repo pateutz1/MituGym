@@ -162,8 +162,11 @@ export default function About() {
                 ABOUT{' '}
                 <AnimatedGradientText 
                   className="inline-block"
-                  colors={['#1e9b71', '#3b82f6', '#8b5cf6', '#ef4444', '#f59e0b', '#1e9b71']}
-                  duration="8s"
+                  variant="shimmer"
+                  animationDuration={3}
+                  gradientFrom="from-[#1e9b71]"
+                  gradientVia="via-[#3b82f6]"
+                  gradientTo="to-[#8b5cf6]"
                 >
                   MITUGYM
                 </AnimatedGradientText>

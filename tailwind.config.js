@@ -27,6 +27,8 @@ module.exports = {
         'slide-down': 'slideDown 0.3s ease-out',
         'gradient': 'animatedGradient 8s ease infinite',
         'shimmer': 'shimmer 2.5s infinite',
+        'wave': 'wave 4s ease-in-out infinite',
+        'glow': 'glow 2s ease-in-out infinite alternate',
       },
       keyframes: {
         fadeIn: {
@@ -49,6 +51,14 @@ module.exports = {
         shimmer: {
           '0%': { backgroundPosition: '-100% 0' },
           '100%': { backgroundPosition: '200% 0' },
+        },
+        wave: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+        glow: {
+          '0%': { textShadow: '0 0 5px rgba(30, 155, 113, 0.5)' },
+          '100%': { textShadow: '0 0 20px rgba(30, 155, 113, 0.8), 0 0 30px rgba(30, 155, 113, 0.6)' },
         },
       },
     },

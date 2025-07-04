@@ -25,7 +25,6 @@ const Header = () => {
     { href: '/about', label: t('navigation.about') },
     { href: '/prices', label: t('navigation.prices') },
     { href: '/gallery', label: t('navigation.gallery') },
-    { href: '/motion-demo', label: 'Motion Demo' },
     { href: '/contact', label: t('navigation.contact') },
   ]
 
@@ -38,7 +37,7 @@ const Header = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className="container mx-auto px-4 max-w-[75%]">
+        <div className="container mx-auto px-4 max-w-[65%]">
         <motion.div 
           className="nav-glass-effect rounded-full shadow-2xl shadow-black/40 ring-1 ring-white/5 px-8 py-2 relative w-full"
           whileHover={{ scale: 1.01 }}

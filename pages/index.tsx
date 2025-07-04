@@ -260,8 +260,11 @@ export default function Home() {
                 <span className="text-white">IS A </span>
                 <AnimatedGradientText 
                   className="inline-block"
-                  colors={['#1e9b71', '#10b981', '#3b82f6', '#8b5cf6', '#ef4444', '#1e9b71']}
-                  duration="6s"
+                  variant="wave"
+                  animationDuration={4}
+                  gradientFrom="from-[#1e9b71]"
+                  gradientVia="via-[#10b981]"
+                  gradientTo="to-[#3b82f6]"
                 >
                   WAY OF LIFE.
                 </AnimatedGradientText>
@@ -412,8 +415,11 @@ export default function Home() {
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-6 mt-2">
               BUILD YOUR <AnimatedGradientText 
                 className="inline-block"
-                colors={['#1e9b71', '#3b82f6', '#8b5cf6', '#ef4444', '#1e9b71']}
-                duration="5s"
+                variant="glow"
+                animationDuration={3}
+                gradientFrom="from-[#1e9b71]"
+                gradientVia="via-[#3b82f6]"
+                gradientTo="to-[#8b5cf6]"
               >
                 BEST BODY
               </AnimatedGradientText>
@@ -557,8 +563,11 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6">
               EXPERIENCE THE <AnimatedGradientText 
                 className="inline-block"
-                colors={['#1e9b71', '#10b981', '#3b82f6', '#8b5cf6', '#1e9b71']}
-                duration="7s"
+                variant="shimmer"
+                animationDuration={4}
+                gradientFrom="from-[#1e9b71]"
+                gradientVia="via-[#10b981]"
+                gradientTo="to-[#3b82f6]"
               >
                 DIFFERENCE
               </AnimatedGradientText>
@@ -887,8 +896,11 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white mb-6">
               WORLD-CLASS <AnimatedGradientText 
                 className="inline-block"
-                colors={['#1e9b71', '#3b82f6', '#8b5cf6', '#ef4444', '#1e9b71']}
-                duration="6s"
+                variant="pulse"
+                animationDuration={2}
+                gradientFrom="from-[#1e9b71]"
+                gradientVia="via-[#3b82f6]"
+                gradientTo="to-[#8b5cf6]"
               >
                 FACILITIES
               </AnimatedGradientText>
@@ -1352,8 +1364,11 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6">
               FACILITY <AnimatedGradientText 
                 className="inline-block"
-                colors={['#3b82f6', '#1d4ed8', '#1e40af', '#3b82f6']}
-                duration="6s"
+                variant="wave"
+                animationDuration={3}
+                gradientFrom="from-[#3b82f6]"
+                gradientVia="via-[#1d4ed8]"
+                gradientTo="to-[#1e40af]"
               >
                 COMPLETION
               </AnimatedGradientText>
@@ -1995,8 +2010,11 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white mb-6">
               MEMBERSHIP <AnimatedGradientText 
                 className="inline-block"
-                colors={['#8b5cf6', '#3b82f6', '#1e9b71', '#ef4444', '#8b5cf6']}
-                duration="5s"
+                variant="glow"
+                animationDuration={2.5}
+                gradientFrom="from-[#8b5cf6]"
+                gradientVia="via-[#3b82f6]"
+                gradientTo="to-[#1e9b71]"
               >
                 ESSENTIALS
               </AnimatedGradientText>
@@ -2079,8 +2097,11 @@ export default function Home() {
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold text-white mb-4 sm:mb-6">
               JOIN OUR <AnimatedGradientText 
                 className="inline-block"
-                colors={['#1e9b71', '#3b82f6', '#8b5cf6', '#ef4444', '#f59e0b', '#1e9b71']}
-                duration="6s"
+                variant="shimmer"
+                animationDuration={4}
+                gradientFrom="from-[#1e9b71]"
+                gradientVia="via-[#3b82f6]"
+                gradientTo="to-[#8b5cf6]"
               >
                 COMMUNITY
               </AnimatedGradientText>

@@ -204,7 +204,7 @@ export function withIntersectionLoading<T extends object>(
       }
 
       return () => observer.disconnect()
-    }, [hasLoaded, options])
+    }, [hasLoaded])
 
     return (
       <div ref={ref}>

@@ -1,47 +1,64 @@
-import { motion, useSpring, useTransform, useMotionValue, useVelocity, useAnimationFrame } from 'motion/react'
-import { useRef, useState, useEffect } from 'react'
+'use client'
+
+import { motion, useMotionValue, useSpring, useTransform, useAnimationFrame } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
 
 // Physics-based spring animations
 export function PhysicsSpring() {
-  const [isActive, setIsActive] = useState(false)
-  const springValue = useSpring(0, { stiffness: 100, damping: 30 })
+  const [target, setTarget] = useState(0)
+  const [stiffness, setStiffness] = useState(100)
+  const [damping, setDamping] = useState(10)
+  
+  const x = useMotionValue(0)
+  const springX = useSpring(x, { stiffness, damping })
   
   useEffect(() => {
-    springValue.set(isActive ? 1 : 0)
-  }, [isActive, springValue])
-
-  const scale = useTransform(springValue, [0, 1], [1, 1.5])
-  const rotate = useTransform(springValue, [0, 1], [0, 180])
-  const backgroundColor = useTransform(
-    springValue,
-    [0, 1],
-    ['rgb(30, 155, 113)', 'rgb(239, 68, 68)']
-  )
+    x.set(target)
+  }, [target, x])
 
   return (
     <div className="space-y-6">
-      <motion.button
-        onClick={() => setIsActive(!isActive)}
-        className="px-4 py-2 bg-primary text-white rounded-lg"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        {isActive ? 'Deactivate' : 'Activate'} Physics
-      </motion.button>
-
-      <motion.div
-        className="w-20 h-20 rounded-lg mx-auto"
-        style={{
-          scale,
-          rotate,
-          backgroundColor
-        }}
-      />
-
-      <div className="text-center text-white/70 text-sm">
-        <p>Spring Value: {springValue.get().toFixed(2)}</p>
-        <p>Scale: {scale.get().toFixed(2)}</p>
-        <p>Rotation: {rotate.get().toFixed(0)}°</p>
+      <div className="grid grid-cols-3 gap-4">
+        <div>
+          <label className="text-white text-sm">Target: {target}</label>
+          <input
+            type="range"
+            min="0"
+            max="300"
+            value={target}
+            onChange={(e) => setTarget(Number(e.target.value))}
+            className="w-full"
+          />
+        </div>
+        <div>
+          <label className="text-white text-sm">Stiffness: {stiffness}</label>
+          <input
+            type="range"
+            min="10"
+            max="500"
+            value={stiffness}
+            onChange={(e) => setStiffness(Number(e.target.value))}
+            className="w-full"
+          />
+        </div>
+        <div>
+          <label className="text-white text-sm">Damping: {damping}</label>
+          <input
+            type="range"
+            min="1"
+            max="50"
+            value={damping}
+            onChange={(e) => setDamping(Number(e.target.value))}
+            className="w-full"
+          />
+        </div>
+      </div>
+      
+      <div className="relative h-24 bg-surface/20 rounded-lg border border-white/10">
+        <motion.div
+          className="absolute top-1/2 w-8 h-8 bg-primary rounded-full -translate-y-1/2"
+          style={{ x: springX }}
+        />
       </div>
     </div>
   )
@@ -52,20 +69,18 @@ export function MouseTracker() {
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
   
-  const springX = useSpring(mouseX, { stiffness: 200, damping: 20 })
-  const springY = useSpring(mouseY, { stiffness: 200, damping: 20 })
-  
-  const velocityX = useVelocity(springX)
-  const velocityY = useVelocity(springY)
+  const springX = useSpring(mouseX, { stiffness: 300, damping: 30 })
+  const springY = useSpring(mouseY, { stiffness: 300, damping: 30 })
   
   const [velocity, setVelocity] = useState(0)
   
-  useAnimationFrame(() => {
-    const vx = velocityX.get()
-    const vy = velocityY.get()
-    const totalVelocity = Math.sqrt(vx * vx + vy * vy)
-    setVelocity(totalVelocity)
-  })
+  useEffect(() => {
+    const unsubscribe = springX.on('change', (latest: number) => {
+      const vel = Math.abs(latest - springX.getPrevious())
+      setVelocity(vel)
+    })
+    return unsubscribe
+  }, [springX])
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -73,8 +88,11 @@ export function MouseTracker() {
     mouseY.set(e.clientY - rect.top)
   }
 
-  const scale = useTransform(springX, (x) => Math.max(0.5, Math.min(2, x / 200)))
-  const rotate = useTransform([springX, springY], ([x, y]) => Math.atan2(y - 200, x - 200) * (180 / Math.PI))
+  const scale = useTransform(springX, (x: number) => Math.max(0.5, Math.min(2, x / 200)))
+  const rotate = useTransform([springX, springY], (values: number[]) => {
+    const [x, y] = values
+    return Math.atan2(y - 200, x - 200) * (180 / Math.PI)
+  })
   const opacity = useTransform(springY, [0, 400], [1, 0.3])
 
   return (
@@ -142,6 +160,14 @@ export function TransformChains() {
   const shadowBlur = useTransform(scale, [1, 1.5], [10, 30])
   const shadowOffset = useTransform(rotate, [0, 360], [0, 20])
 
+  const filter = useTransform(
+    [shadowBlur, shadowOffset],
+    (values: number[]) => {
+      const [blur, offset] = values
+      return `drop-shadow(${offset}px ${offset}px ${blur}px rgba(0,0,0,0.3))`
+    }
+  )
+
   return (
     <div className="space-y-6">
       <div className="space-y-4">
@@ -169,10 +195,7 @@ export function TransformChains() {
             backgroundColor,
             skewX,
             skewY,
-            filter: useTransform(
-              [shadowBlur, shadowOffset],
-              (blur, offset) => `drop-shadow(${offset}px ${offset}px ${blur}px rgba(0,0,0,0.3))`
-            )
+            filter
           }}
         />
       </div>
@@ -279,9 +302,9 @@ export function GesturePhysics() {
           dragElastic={0.3}
           onDragStart={() => setDragCount(prev => prev + 1)}
           className="absolute bottom-4 right-4 w-12 h-12 bg-purple-500 rounded-full cursor-grab active:cursor-grabbing"
-          style={{ originY: -2 }}
           whileDrag={{ 
-            rotate: useTransform(useMotionValue(0), [-100, 100], [-30, 30])
+            rotate: 15,
+            scale: 1.1
           }}
           transition={{ 
             type: "spring",

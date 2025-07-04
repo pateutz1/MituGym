@@ -63,7 +63,7 @@ export const TypingText: React.FC<TypingTextProps> = ({
   const cursorIntervalRef = useRef<NodeJS.Timeout>();
   
   // Create stable reference for texts array
-  const stableTexts = useMemo(() => texts, [JSON.stringify(texts)]);
+  const stableTexts = useMemo(() => texts, [texts]);
   const stableOnComplete = useRef(onComplete);
   
   // Update ref when callback changes

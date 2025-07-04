@@ -1,46 +1,61 @@
-import React from 'react';
-import { cn } from '@/libs/utils';
+'use client'
 
-interface AnimatedGradientTextProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode;
-  className?: string;
-  colors?: string[];
-  duration?: string;
-  direction?: 'left' | 'right';
+import { motion } from 'framer-motion'
+import { cn } from '../../libs/utils'
+
+interface AnimatedGradientTextProps {
+  children: React.ReactNode
+  className?: string
+  gradientFrom?: string
+  gradientTo?: string
+  gradientVia?: string
+  animationDuration?: number
+  variant?: 'shimmer' | 'pulse' | 'wave' | 'glow'
 }
 
-export default function AnimatedGradientText({
+const AnimatedGradientText = ({
   children,
-  className,
-  colors = ['#1e9b71', '#10b981', '#3b82f6', '#8b5cf6', '#1e9b71'], // Default MituGym green palette
-  duration = '8s',
-  direction = 'right',
-  ...props
-}: AnimatedGradientTextProps) {
-  const gradientDirection = direction === 'right' ? 'to right' : 'to left';
-  const gradientStops = colors.join(', ');
-  
-  const animationDuration = duration === '8s' ? 'animate-gradient' : '';
+  className = '',
+  gradientFrom = 'from-[#1e9b71]',
+  gradientTo = 'to-[#16a085]',
+  gradientVia = 'via-[#20b2aa]',
+  animationDuration = 3,
+  variant = 'shimmer'
+}: AnimatedGradientTextProps) => {
+  const getVariantClasses = () => {
+    switch (variant) {
+      case 'shimmer':
+        return 'bg-gradient-to-r bg-[length:200%_auto] animate-shimmer'
+      case 'pulse':
+        return 'bg-gradient-to-r animate-pulse'
+      case 'wave':
+        return 'bg-gradient-to-r bg-[length:200%_auto] animate-wave'
+      case 'glow':
+        return 'bg-gradient-to-r animate-glow'
+      default:
+        return 'bg-gradient-to-r bg-[length:200%_auto] animate-shimmer'
+    }
+  }
 
   return (
-    <div
+    <motion.span
       className={cn(
-        'relative inline-block bg-clip-text text-transparent',
-        animationDuration,
+        'inline-block bg-clip-text text-transparent font-bold',
+        `${gradientFrom} ${gradientVia} ${gradientTo}`,
+        getVariantClasses(),
         className
       )}
       style={{
-        background: `linear-gradient(${gradientDirection}, ${gradientStops})`,
-        backgroundSize: '300% 100%',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
-        ...(duration !== '8s' && {
-          animation: `animatedGradient ${duration} ease infinite`,
-        }),
+        animationDuration: `${animationDuration}s`,
+        backgroundSize: variant === 'shimmer' || variant === 'wave' ? '200% auto' : '100% auto',
       }}
-      {...props}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       {children}
-    </div>
-  );
-} 
+    </motion.span>
+  )
+}
+
+export default AnimatedGradientText 
