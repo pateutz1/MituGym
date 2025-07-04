@@ -1,0 +1,68 @@
+{
+  "hero": {
+    "headline": "Transform Your Body",
+    "subheadline": "Premium fitness equipment, expert trainers, and a supportive community await you",
+    "countdown": {
+      "title": "Grand Opening In",
+      "days": "Days",
+      "hours": "Hours", 
+      "minutes": "Minutes",
+      "seconds": "Seconds"
+    }
+  },
+  "features": {
+    "title": "Why Choose MituGym?",
+    "equipment": {
+      "title": "State-of-the-Art Equipment",
+      "description": "Latest fitness technology and premium equipment for optimal results"
+    },
+    "trainers": {
+      "title": "Expert Trainers",
+      "description": "Certified professionals dedicated to helping you achieve your goals"
+    },
+    "classes": {
+      "title": "Diverse Classes",
+      "description": "From yoga to high-intensity training, find the perfect class for you"
+    },
+    "community": {
+      "title": "Supportive Community",
+      "description": "Join a welcoming community of fitness enthusiasts"
+    }
+  },
+  "pricing": {
+    "title": "Choose Your Plan",
+    "subtitle": "Flexible membership options to fit your lifestyle",
+    "basic": {
+      "name": "Basic",
+      "price": "$29",
+      "period": "/month",
+      "features": [
+        "Gym access during off-peak hours",
+        "Basic equipment usage",
+        "Locker room access"
+      ]
+    },
+    "premium": {
+      "name": "Premium", 
+      "price": "$49",
+      "period": "/month",
+      "features": [
+        "24/7 gym access",
+        "All equipment usage",
+        "Group classes included",
+        "Personal trainer consultation"
+      ]
+    },
+    "vip": {
+      "name": "VIP",
+      "price": "$79",
+      "period": "/month",
+      "features": [
+        "Everything in Premium",
+        "Private training sessions",
+        "Nutrition consultation",
+        "Premium locker access"
+      ]
+    }
+  }
+} 

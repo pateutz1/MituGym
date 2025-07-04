@@ -1,0 +1,12 @@
+{
+  "locales": ["en", "ro"],
+  "defaultLocale": "en",
+  "pages": {
+    "*": ["common"],
+    "/": ["home"],
+    "/about": ["about"],
+    "/prices": ["prices"],
+    "/gallery": ["gallery"],
+    "/contact": ["contact"]
+  }
+} 

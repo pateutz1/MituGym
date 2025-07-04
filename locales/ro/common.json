@@ -1,0 +1,30 @@
+{
+  "navigation": {
+    "home": "Acasă",
+    "about": "Despre Noi",
+    "prices": "Prețuri",
+    "gallery": "Galerie",
+    "contact": "Contact"
+  },
+  "buttons": {
+    "joinUs": "Alătură-te",
+    "learnMore": "Află Mai Multe",
+    "viewAllPlans": "Vezi Toate Planurile",
+    "getStarted": "Începe Acum",
+    "contact": "Contactează-ne"
+  },
+  "footer": {
+    "quickLinks": "Link-uri Rapide",
+    "followUs": "Urmărește-ne",
+    "copyright": "© 2024 MituGym. Toate drepturile rezervate."
+  },
+  "language": {
+    "english": "Engleză",
+    "romanian": "Română"
+  },
+  "common": {
+    "loading": "Se încarcă...",
+    "error": "Eroare",
+    "success": "Succes"
+  }
+} 

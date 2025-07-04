@@ -1,0 +1,30 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About Us",
+    "prices": "Prices",
+    "gallery": "Gallery",
+    "contact": "Contact"
+  },
+  "buttons": {
+    "joinUs": "Join Us",
+    "learnMore": "Learn More",
+    "viewAllPlans": "View All Plans",
+    "getStarted": "Get Started",
+    "contact": "Contact Us"
+  },
+  "footer": {
+    "quickLinks": "Quick Links",
+    "followUs": "Follow Us",
+    "copyright": "© 2024 MituGym. All rights reserved."
+  },
+  "language": {
+    "english": "English",
+    "romanian": "Romanian"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  }
+} 

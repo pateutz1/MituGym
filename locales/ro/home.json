@@ -1,0 +1,68 @@
+{
+  "hero": {
+    "headline": "Transformă-ți Corpul",
+    "subheadline": "Echipamente premium, antrenori experți și o comunitate care te susține te așteaptă",
+    "countdown": {
+      "title": "Deschiderea Oficială În",
+      "days": "Zile",
+      "hours": "Ore", 
+      "minutes": "Minute",
+      "seconds": "Secunde"
+    }
+  },
+  "features": {
+    "title": "De Ce Să Alegi MituGym?",
+    "equipment": {
+      "title": "Echipamente de Ultimă Generație",
+      "description": "Tehnologie fitness de vârf și echipamente premium pentru rezultate optime"
+    },
+    "trainers": {
+      "title": "Antrenori Experți",
+      "description": "Profesioniști certificați dedicați să te ajute să îți atingi obiectivele"
+    },
+    "classes": {
+      "title": "Clase Diverse",
+      "description": "De la yoga la antrenamente de înaltă intensitate, găsește clasa perfectă pentru tine"
+    },
+    "community": {
+      "title": "Comunitate Care Te Susține",
+      "description": "Alătură-te unei comunități primitoare de pasionați de fitness"
+    }
+  },
+  "pricing": {
+    "title": "Alege-ți Planul",
+    "subtitle": "Opțiuni flexibile de abonament care se potrivesc stilului tău de viață",
+    "basic": {
+      "name": "Basic",
+      "price": "139 RON",
+      "period": "/lună",
+      "features": [
+        "Acces la sală în orele de vârf redus",
+        "Utilizarea echipamentelor de bază",
+        "Acces la vestiare"
+      ]
+    },
+    "premium": {
+      "name": "Premium", 
+      "price": "229 RON",
+      "period": "/lună",
+      "features": [
+        "Acces 24/7 la sală",
+        "Utilizarea tuturor echipamentelor",
+        "Clase de grup incluse",
+        "Consultație cu antrenor personal"
+      ]
+    },
+    "vip": {
+      "name": "VIP",
+      "price": "369 RON",
+      "period": "/lună",
+      "features": [
+        "Tot ce e în Premium",
+        "Sesiuni de antrenament private",
+        "Consultație nutrițională",
+        "Acces la vestiarele premium"
+      ]
+    }
+  }
+} 
