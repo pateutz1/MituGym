@@ -3,6 +3,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRef } from 'react'
 import { useTranslation } from '@/hooks/useTranslation'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { useAnimationPerformance } from '@/hooks/usePerformanceMonitoring'
+import { createAccessibleVariants } from '@/hooks/useMotionConfig'
 import FaqSection from '@/components/ui/faq'
 import ShinyButton from '@/components/ui/shiny-button'
 import Counter from '@/components/ui/counter'
@@ -11,18 +14,39 @@ import MagneticButton from '@/components/ui/magnetic-button'
 import ExpandableCard from '@/components/ui/expandable-card'
 import StaggeredList from '@/components/ui/staggered-list'
 import ScrollProgress from '@/components/ui/scroll-progress'
+
+// Lazy load advanced motion components
+import { 
+  LazyScrollLinkedAnimations,
+  LazyDynamicGrid
+} from '@/components/ui/lazy-motion-components'
+
 import { generalFAQs } from '@/data/faqData'
 
 export default function About() {
   const { t } = useTranslation()
+  const prefersReducedMotion = useReducedMotion()
+  const { startTracking, endTracking } = useAnimationPerformance('AboutPage')
   const containerRef = useRef<HTMLDivElement>(null)
+  
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   })
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, -100])
+  const y = useTransform(scrollYProgress, [0, 1], [0, prefersReducedMotion ? 0 : -100])
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0])
+
+  // Accessible animation variants
+  const headerVariants = createAccessibleVariants({
+    hidden: { opacity: 0, y: 30, scale: 0.8 },
+    visible: { opacity: 1, y: 0, scale: 1 }
+  })
+
+  const cardVariants = createAccessibleVariants({
+    hidden: { opacity: 0, y: 20, scale: 0.95 },
+    visible: { opacity: 1, y: 0, scale: 1 }
+  })
 
   const ourValues = [
     {
@@ -76,9 +100,10 @@ export default function About() {
           <motion.div
             className="text-center mb-16 relative"
             style={{ y, opacity }}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            variants={headerVariants}
+            initial="hidden"
+            animate="visible"
+            transition={prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6 }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-3xl blur-3xl opacity-30" />
             <div className="relative z-10">
@@ -161,7 +186,7 @@ export default function About() {
                         and personalized service has made us the premier fitness destination.
                       </p>
                       <p className="text-base sm:text-lg text-white/70 leading-relaxed">
-                        Whether you're a beginner or a seasoned athlete, MituGym provides the tools, support, and motivation 
+                        Whether you&apos;re a beginner or a seasoned athlete, MituGym provides the tools, support, and motivation 
                         you need to exceed your expectations.
                       </p>
                     </div>
@@ -273,8 +298,6 @@ export default function About() {
             </div>
           </section>
 
-
-
           {/* FAQ Section */}
           <motion.section
             className="mb-20"
@@ -327,6 +350,8 @@ export default function About() {
           </motion.div>
         </div>
       </div>
+
+
     </>
   )
 } 

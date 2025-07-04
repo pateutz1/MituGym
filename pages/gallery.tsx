@@ -1,9 +1,37 @@
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import { useTranslation } from '@/hooks/useTranslation'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { useAnimationPerformance } from '@/hooks/usePerformanceMonitoring'
+import { createAccessibleVariants } from '@/hooks/useMotionConfig'
+import ScrollProgress from '@/components/ui/scroll-progress'
+
+// Lazy load advanced motion components
+import { 
+  LazyDynamicGrid,
+  LazyVariantsShowcase
+} from '@/components/ui/lazy-motion-components'
 
 export default function Gallery() {
   const { t } = useTranslation()
+  const prefersReducedMotion = useReducedMotion()
+  const { startTracking, endTracking } = useAnimationPerformance('GalleryPage')
+
+  // Accessible animation variants
+  const headerVariants = createAccessibleVariants({
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 }
+  })
+
+  const gridVariants = createAccessibleVariants({
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 }
+  })
+
+  const itemVariants = createAccessibleVariants({
+    hidden: { opacity: 0, y: 30, scale: 0.9 },
+    visible: { opacity: 1, y: 0, scale: 1 }
+  })
 
   const galleryImages = [
     {
@@ -93,89 +121,97 @@ export default function Gallery() {
   ]
 
   return (
-    <div className="pt-24 pb-16 min-h-screen bg-background">
-      <div className="container mx-auto px-4">
-        {/* Header Section */}
-        <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6">
-            OUR <span className="bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
-              GALLERY
-            </span>
-          </h1>
-          <p className="text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
-            Take a look at our premium facilities and see what makes MituGym the perfect place for your fitness journey.
-          </p>
-        </motion.div>
-
-        {/* Simple Gallery Grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          {galleryImages.map((image, index) => (
-            <motion.div
-              key={image.id}
-              className="relative aspect-square rounded-xl overflow-hidden group"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-            >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <h4 className="text-white font-semibold text-sm mb-1">{image.title}</h4>
-                <p className="text-white/80 text-xs">{image.description}</p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Call to Action */}
-        <motion.div
-          className="text-center mt-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <div className="bg-gradient-to-br from-primary/20 to-blue-500/10 backdrop-blur-sm border border-white/10 rounded-3xl p-8 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              Ready to Experience It Yourself?
-            </h3>
-            <p className="text-white/70 mb-6">
-              Book a tour or start your membership to access these amazing facilities.
+    <>
+      <ScrollProgress />
+      <div className="pt-24 pb-16 min-h-screen bg-background">
+        <div className="container mx-auto px-4">
+          {/* Header Section */}
+          <motion.div
+            className="text-center mb-12"
+            variants={headerVariants}
+            initial="hidden"
+            animate="visible"
+            transition={prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6 }}
+          >
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6">
+              OUR <span className="bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
+                GALLERY
+              </span>
+            </h1>
+            <p className="text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
+              Take a look at our premium facilities and see what makes MituGym the perfect place for your fitness journey.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.button
-                className="bg-primary text-white px-8 py-3 rounded-xl font-semibold hover:bg-primary/90 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+          </motion.div>
+
+          {/* Simple Gallery Grid */}
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            variants={gridVariants}
+            initial="hidden"
+            animate="visible"
+            transition={prefersReducedMotion ? { duration: 0.01, delay: 0.1 } : { duration: 0.6, delay: 0.2 }}
+          >
+            {galleryImages.map((image, index) => (
+              <motion.div
+                key={image.id}
+                className="relative aspect-square rounded-xl overflow-hidden group"
+                variants={itemVariants}
+                initial="hidden"
+                animate="visible"
+                transition={prefersReducedMotion ? { duration: 0.01, delay: index * 0.02 } : { duration: 0.3, delay: index * 0.1 }}
               >
-                Book a Tour
-              </motion.button>
-              <motion.button
-                className="bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 rounded-xl font-semibold transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Join Now
-              </motion.button>
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                  <h4 className="text-white font-semibold text-sm mb-1">{image.title}</h4>
+                  <p className="text-white/80 text-xs">{image.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Call to Action */}
+          <motion.div
+            className="text-center mt-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <div className="bg-gradient-to-br from-primary/20 to-blue-500/10 backdrop-blur-sm border border-white/10 rounded-3xl p-8 max-w-2xl mx-auto">
+              <h3 className="text-2xl font-bold text-white mb-4">
+                Ready to Experience It Yourself?
+              </h3>
+              <p className="text-white/70 mb-6">
+                Book a tour or start your membership to access these amazing facilities.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <motion.button
+                  className="bg-primary text-white px-8 py-3 rounded-xl font-semibold hover:bg-primary/90 transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Book a Tour
+                </motion.button>
+                <motion.button
+                  className="bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 rounded-xl font-semibold transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Join Now
+                </motion.button>
+              </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+
+
+        </div>
       </div>
-    </div>
+    </>
   )
 } 

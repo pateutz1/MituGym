@@ -1,14 +1,29 @@
-import { motion } from 'motion/react'
-import { useTranslation } from '@/hooks/useTranslation'
-import FaqSection from '@/components/ui/faq'
-import ShinyButton from '@/components/ui/shiny-button'
-import Counter from '@/components/ui/counter'
-import TypingText from '@/components/ui/typing-text'
-import PlanCard from '@/components/PlanCard'
-import { membershipFAQs } from '@/data/faqData'
+import { motion } from 'framer-motion'
+import { useTranslation } from '../hooks/useTranslation'
+import { useReducedMotion } from '../hooks/useReducedMotion'
+import { usePerformanceMonitoring } from '../hooks/usePerformanceMonitoring'
+import FaqSection from '../components/ui/faq'
+import { Counter } from '../components/ui/counter'
+import { TypingText } from '../components/ui/typing-text'
+import PlanCard from '../components/PlanCard'
+import ScrollProgress from '../components/ui/scroll-progress'
+import { membershipFAQs } from '../data/faqData'
 
 export default function Prices() {
   const { t } = useTranslation()
+  const prefersReducedMotion = useReducedMotion()
+  const { startTracking, endTracking } = usePerformanceMonitoring()
+
+  // Accessible animation variants
+  const headerVariants = {
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : -50 },
+    visible: { opacity: 1, y: 0 }
+  }
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 30 },
+    visible: { opacity: 1, y: 0 }
+  }
 
   const pricingPlans = [
     {
@@ -16,7 +31,7 @@ export default function Prices() {
       price: "$29",
       originalPrice: "$39",
       gradient: "from-gray-800/40 to-gray-900/40",
-      description: "Perfect for getting started with your fitness journey",
+      description: "Perfect for beginners getting started with fitness",
       features: [
         { text: "Access to gym equipment", enabled: true },
         { text: "Locker room access", enabled: true },
@@ -69,151 +84,156 @@ export default function Prices() {
   ]
 
   return (
-    <div className="pt-24 pb-16">
-      <div className="container mx-auto px-4">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-8">
-            {t('navigation.prices')}
-          </h1>
-          <div className="text-xl text-white/70 max-w-2xl mx-auto">
-            <p className="mb-4">Discover our flexible membership plans designed to fit</p>
-            <TypingText
-              texts={[
-                "every fitness goal.",
-                "your busy lifestyle.",
-                "any budget range.",
-                "personal preferences.",
-                "long-term success.",
-                "your unique needs."
-              ]}
-              typingSpeed={50}
-              deletingSpeed={25}
-              pauseDuration={2000}
-              startDelay={1500}
-              className="text-emerald-400 font-semibold"
-              cursor="_"
-            />
-          </div>
-        </motion.div>
-
-        {/* Pricing Plans */}
-        <section className="mb-20">
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {pricingPlans.map((plan, index) => (
-              <PlanCard
-                key={plan.name}
-                name={plan.name}
-                price={plan.price}
-                originalPrice={plan.originalPrice}
-                features={plan.features}
-                delay={index * 0.1}
-                isPopular={plan.isPopular}
-                gradient={plan.gradient}
-              />
-            ))}
-          </div>
-        </section>
-
-        {/* Value Proposition Section */}
-        <section className="mb-20">
+    <>
+      <ScrollProgress />
+      <div className="pt-24 pb-16 min-h-screen">
+        <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="bg-gradient-to-br from-primary/10 to-purple-500/10 rounded-3xl p-8 lg:p-12 text-center"
+            className="text-center mb-16"
+            variants={headerVariants}
+            initial="hidden"
+            animate="visible"
+            transition={prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6 }}
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
-              Why Choose <span className="gradient-text">MituGym</span>?
-            </h2>
-            <p className="text-white/70 mb-12 max-w-2xl mx-auto">
-              Join thousands of satisfied members who have transformed their lives with our premium facilities and expert guidance.
-            </p>
-            
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="text-center"
-              >
-                <div className="text-3xl sm:text-4xl font-bold mb-2">
-                  <Counter
-                    target={95}
-                    suffix="%"
-                    duration={2500}
-                    delay={800}
-                    className="text-3xl sm:text-4xl"
-                  />
-                </div>
-                <h3 className="text-white font-semibold mb-1">Satisfaction</h3>
-                <p className="text-white/60 text-sm">Member retention rate</p>
-              </motion.div>
-
-                             <motion.div
-                 initial={{ opacity: 0, y: 30 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 transition={{ duration: 0.6, delay: 0.7 }}
-                 className="text-center"
-               >
-                 <div className="text-2xl sm:text-3xl font-bold mb-2 text-primary">
-                   Premium
-                 </div>
-                 <h3 className="text-white font-semibold mb-1">Equipment</h3>
-                 <p className="text-white/60 text-sm">Latest technology</p>
-               </motion.div>
-
-                             <motion.div
-                 initial={{ opacity: 0, y: 30 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 transition={{ duration: 0.6, delay: 0.8 }}
-                 className="text-center"
-               >
-                 <div className="space-y-1 mb-2">
-                   <div className="text-xs font-semibold text-primary/80">Monday - Friday</div>
-                   <div className="text-2xl font-bold text-primary">6:00 - 23:00</div>
-                 </div>
-                 <div className="grid grid-cols-2 gap-2 text-xs text-white/60 mb-2">
-                   <div>Sat: 7:00-22:00</div>
-                   <div>Sun: 7:00-20:00</div>
-                 </div>
-                 <h3 className="text-white font-semibold mb-1">Access Hours</h3>
-                 <p className="text-white/60 text-sm">Extended schedule</p>
-               </motion.div>
-
-                             <motion.div
-                 initial={{ opacity: 0, y: 30 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 transition={{ duration: 0.6, delay: 0.9 }}
-                 className="text-center"
-               >
-                 <div className="text-2xl sm:text-3xl font-bold mb-2 text-primary">
-                   Coming<br/>Soon
-                 </div>
-                 <h3 className="text-white font-semibold mb-1">Trainers</h3>
-                 <p className="text-white/60 text-sm">Expert guidance</p>
-               </motion.div>
+            <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-8">
+              {t('navigation.prices')}
+            </h1>
+            <div className="text-xl text-white/70 max-w-2xl mx-auto">
+              <p className="mb-4">Discover our flexible membership plans designed to fit</p>
+              <TypingText
+                texts={[
+                  "every fitness goal.",
+                  "your busy lifestyle.",
+                  "any budget range.",
+                  "personal preferences.",
+                  "long-term success.",
+                  "your unique needs."
+                ]}
+                typingSpeed={50}
+                deletingSpeed={25}
+                pauseDuration={2000}
+                startDelay={1500}
+                className="text-emerald-400 font-semibold"
+                cursor="_"
+              />
             </div>
           </motion.div>
-        </section>
-        
-        {/* FAQ Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <FaqSection 
-            data={membershipFAQs}
-            title={t('faq.titles.membership')}
-            subtitle={t('faq.subtitles.membership')}
-          />
-        </motion.section>
+
+          {/* Pricing Plans */}
+          <section className="mb-20">
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {pricingPlans.map((plan, index) => (
+                <PlanCard
+                  key={plan.name}
+                  name={plan.name}
+                  price={plan.price}
+                  originalPrice={plan.originalPrice}
+                  features={plan.features}
+                  delay={index * 0.1}
+                  isPopular={plan.isPopular}
+                  gradient={plan.gradient}
+                />
+              ))}
+            </div>
+          </section>
+
+          {/* Value Proposition Section */}
+          <section className="mb-20">
+            <motion.div
+              variants={cardVariants}
+              initial="hidden"
+              animate="visible"
+              transition={prefersReducedMotion ? { duration: 0.01, delay: 0.2 } : { duration: 0.6, delay: 0.5 }}
+              className="bg-gradient-to-br from-primary/10 to-purple-500/10 rounded-3xl p-8 lg:p-12 text-center"
+            >
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
+                Why Choose <span className="gradient-text">MituGym</span>?
+              </h2>
+              <p className="text-white/70 mb-12 max-w-2xl mx-auto">
+                Join thousands of satisfied members who have transformed their lives with our premium facilities and expert guidance.
+              </p>
+              
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                  className="text-center"
+                >
+                  <div className="text-3xl sm:text-4xl font-bold mb-2">
+                    <Counter
+                      target={95}
+                      suffix="%"
+                      duration={2500}
+                      delay={800}
+                      className="text-3xl sm:text-4xl"
+                    />
+                  </div>
+                  <h3 className="text-white font-semibold mb-1">Satisfaction</h3>
+                  <p className="text-white/60 text-sm">Member retention rate</p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.7 }}
+                  className="text-center"
+                >
+                  <div className="text-2xl sm:text-3xl font-bold mb-2 text-primary">
+                    Premium
+                  </div>
+                  <h3 className="text-white font-semibold mb-1">Equipment</h3>
+                  <p className="text-white/60 text-sm">Latest technology</p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.8 }}
+                  className="text-center"
+                >
+                  <div className="space-y-1 mb-2">
+                    <div className="text-xs font-semibold text-primary/80">Monday - Friday</div>
+                    <div className="text-2xl font-bold text-primary">6:00 - 23:00</div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-xs text-white/60 mb-2">
+                    <div>Sat: 7:00-22:00</div>
+                    <div>Sun: 7:00-20:00</div>
+                  </div>
+                  <h3 className="text-white font-semibold mb-1">Access Hours</h3>
+                  <p className="text-white/60 text-sm">Extended schedule</p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.9 }}
+                  className="text-center"
+                >
+                  <div className="text-2xl sm:text-3xl font-bold mb-2 text-primary">
+                    Coming<br/>Soon
+                  </div>
+                  <h3 className="text-white font-semibold mb-1">Trainers</h3>
+                  <p className="text-white/60 text-sm">Expert guidance</p>
+                </motion.div>
+              </div>
+            </motion.div>
+          </section>
+          
+          {/* FAQ Section */}
+          <motion.section
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <FaqSection 
+              data={membershipFAQs}
+              title={t('faq.titles.membership')}
+              subtitle={t('faq.subtitles.membership')}
+            />
+          </motion.section>
+        </div>
       </div>
-    </div>
+    </>
   )
 } 

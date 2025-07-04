@@ -2,6 +2,9 @@ import { motion } from 'motion/react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useTranslation } from '@/hooks/useTranslation'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { useMotionConfig, createAccessibleVariants } from '@/hooks/useMotionConfig'
+import { useAnimationPerformance } from '@/hooks/usePerformanceMonitoring'
 import { useMultiParallax, useParallax, useIntersectionParallax } from '@/hooks/useParallax'
 import Countdown from '@/components/Countdown'
 import FeatureCard from '@/components/FeatureCard'
@@ -21,6 +24,14 @@ import MagneticButton from '@/components/ui/magnetic-button'
 import StaggeredList from '@/components/ui/staggered-list'
 import ExpandableCard from '@/components/ui/expandable-card'
 
+// Lazy load advanced motion components
+import { 
+  LazyScrollLinkedAnimations,
+  LazyDynamicGrid,
+  LazyPhysicsSpring,
+  LazyVariantsShowcase
+} from '@/components/ui/lazy-motion-components'
+
 import { popularFAQs } from '@/data/faqData'
 
 interface StatItem {
@@ -33,13 +44,35 @@ interface StatItem {
 
 export default function Home() {
   const { t } = useTranslation()
+  const prefersReducedMotion = useReducedMotion()
+  const motionConfig = useMotionConfig()
+  const { startTracking, endTracking } = useAnimationPerformance('HomePage')
 
-  // Parallax hooks
+  // Parallax hooks - disable for reduced motion
   const scrollY = useMultiParallax()
-  const heroParallax = useParallax<HTMLDivElement>({ speed: 0.5 })
-  const floatingParallax1 = useParallax<HTMLDivElement>({ speed: -0.3 })
-  const floatingParallax2 = useParallax<HTMLDivElement>({ speed: -0.6 })
-  const imageParallax = useParallax<HTMLDivElement>({ speed: 0.05 })
+  const heroParallax = useParallax<HTMLDivElement>({ 
+    speed: prefersReducedMotion ? 0 : 0.5 
+  })
+  const floatingParallax1 = useParallax<HTMLDivElement>({ 
+    speed: prefersReducedMotion ? 0 : -0.3 
+  })
+  const floatingParallax2 = useParallax<HTMLDivElement>({ 
+    speed: prefersReducedMotion ? 0 : -0.6 
+  })
+  const imageParallax = useParallax<HTMLDivElement>({ 
+    speed: prefersReducedMotion ? 0 : 0.05 
+  })
+
+  // Accessible animation variants
+  const heroVariants = createAccessibleVariants({
+    hidden: { opacity: 0, y: 50, rotate: 5 },
+    visible: { opacity: 1, y: 0, rotate: 0 }
+  })
+
+  const cardVariants = createAccessibleVariants({
+    hidden: { opacity: 0, y: 30, scale: 0.9 },
+    visible: { opacity: 1, y: 0, scale: 1 }
+  })
 
   // Stats data with tooltip content
   const stats: StatItem[] = [
@@ -69,8 +102,6 @@ export default function Home() {
       isCounter: false
     }
   ]
-
-
 
   // Professional Icons Components with Gradients
   const DumbbellIcon = () => (
@@ -206,9 +237,10 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Content */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+              variants={heroVariants}
+              initial="hidden"
+              animate="visible"
+              transition={prefersReducedMotion ? { duration: 0.01 } : { type: 'spring', stiffness: 400, damping: 25 }}
               className="text-center lg:text-left"
             >
               <motion.div
@@ -2093,7 +2125,7 @@ export default function Home() {
     </div>
 
     {/* Floating Dock - Fixed to viewport */}
-            <GymFloatingDock position="bottom-right" />
+    <GymFloatingDock position="bottom-right" />
     </>
   )
 } 

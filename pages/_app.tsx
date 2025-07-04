@@ -3,6 +3,7 @@ import Head from 'next/head'
 import '@/styles/globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { PerformanceMonitor } from '@/components/ui/performance-monitor'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -20,6 +21,14 @@ export default function App({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </main>
         <Footer />
+        
+        {/* Performance Monitor - Only in development */}
+        {process.env.NODE_ENV === 'development' && (
+          <PerformanceMonitor 
+            showDebugInfo={true}
+            position="bottom-right"
+          />
+        )}
       </div>
     </>
   )
