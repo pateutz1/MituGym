@@ -165,8 +165,9 @@ export function withLazyLoading<T extends object>(
   fallback?: ComponentType<T>
 ) {
   return function LazyComponent(props: T) {
+    const FallbackComponent = fallback;
     return (
-      <Suspense fallback={fallback ? <fallback {...props} /> : <MotionLoadingFallback />}>
+      <Suspense fallback={FallbackComponent ? <FallbackComponent {...props} /> : <MotionLoadingFallback />}>
         <Component {...props} />
       </Suspense>
     )
