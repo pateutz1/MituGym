@@ -6,7 +6,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { useTranslation } from '@/hooks/useTranslation'
 
-const LanguageSwitcher = () => {
+interface LanguageSwitcherProps {
+  position?: 'top' | 'bottom' | 'auto'
+}
+
+const LanguageSwitcher = ({ position = 'auto' }: LanguageSwitcherProps) => {
   const { t, lang } = useTranslation('common')
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
@@ -66,7 +70,11 @@ const LanguageSwitcher = () => {
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
-          animate={{ rotate: isOpen ? 180 : 0 }}
+          animate={{ 
+            rotate: isOpen 
+              ? position === 'bottom' ? 0 : 180 
+              : position === 'bottom' ? 180 : 0 
+          }}
           transition={{ duration: 0.4, ease: "easeInOut" }}
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -87,10 +95,12 @@ const LanguageSwitcher = () => {
             />
             
             <motion.div
-              className="absolute top-full right-0 mt-3 w-44 glass-effect rounded-2xl shadow-2xl shadow-black/50 ring-1 ring-white/10 backdrop-blur-3xl border border-white/20 z-50 overflow-hidden"
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              className={`absolute right-0 w-44 glass-effect rounded-2xl shadow-2xl shadow-black/50 ring-1 ring-white/10 backdrop-blur-3xl border border-white/20 z-50 overflow-hidden ${
+                position === 'bottom' ? 'bottom-full mb-3' : 'top-full mt-3'
+              }`}
+              initial={{ opacity: 0, y: position === 'bottom' ? 10 : -10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              exit={{ opacity: 0, y: position === 'bottom' ? 10 : -10, scale: 0.95 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
               {/* Enhanced gradient overlay */}

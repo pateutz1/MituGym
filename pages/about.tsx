@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { useTranslation } from '@/hooks/useTranslation'
 import FaqSection from '@/components/ui/faq'
 import ShinyButton from '@/components/ui/shiny-button'
+import Counter from '@/components/ui/counter'
+import TypingText from '@/components/ui/typing-text'
 import { generalFAQs } from '@/data/faqData'
 
 export default function About() {
@@ -22,9 +24,25 @@ export default function About() {
           <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-8">
             {t('navigation.about')}
           </h1>
-          <p className="text-xl text-white/70 max-w-2xl mx-auto">
-            Discover the story behind MituGym - where fitness meets excellence and every member becomes part of our fitness family.
-          </p>
+          <div className="text-xl text-white/70 max-w-2xl mx-auto">
+            <p className="mb-4">Discover the story behind MituGym - where fitness meets excellence and</p>
+            <TypingText
+              texts={[
+                "every member becomes family.",
+                "dreams become reality.",
+                "strength is built daily.",
+                "wellness is a lifestyle.",
+                "transformation happens.",
+                "excellence is standard."
+              ]}
+              typingSpeed={70}
+              deletingSpeed={35}
+              pauseDuration={2500}
+              startDelay={2000}
+              className="text-primary font-semibold"
+              cursor="|"
+            />
+          </div>
         </motion.div>
 
         {/* Our Story Section */}
@@ -52,14 +70,47 @@ export default function About() {
                 </p>
               </div>
 
-              <div className="grid sm:grid-cols-2 gap-4 max-w-md mx-auto">
-                <div className="bg-surface/30 backdrop-blur-sm border border-white/10 rounded-xl p-4">
-                  <div className="text-2xl font-bold text-primary mb-1">1000m²</div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                <div className="bg-surface/30 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
+                  <div className="text-2xl font-bold mb-1">
+                                         <Counter
+                       target={500}
+                       suffix="m²"
+                       duration={2000}
+                       delay={300}
+                       className="text-2xl"
+                     />
+                  </div>
                   <div className="text-white/70 text-sm">Training Space</div>
                 </div>
-                <div className="bg-surface/30 backdrop-blur-sm border border-white/10 rounded-xl p-4">
-                  <div className="text-2xl font-bold text-primary mb-1">Premium</div>
-                  <div className="text-white/70 text-sm">Equipment</div>
+                                 <div className="bg-surface/30 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
+                   <div className="text-2xl font-bold mb-1 text-primary">
+                     Premium
+                   </div>
+                   <div className="text-white/70 text-sm">Equipment</div>
+                 </div>
+                                 <div className="bg-surface/30 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
+                   <div className="space-y-1 mb-2">
+                     <div className="text-xs font-semibold text-primary/80">Monday - Friday</div>
+                     <div className="text-lg font-bold text-primary">6:00 - 23:00</div>
+                   </div>
+                   <div className="grid grid-cols-2 gap-2 text-xs text-white/60 mb-2">
+                     <div>Sat: 7:00-22:00</div>
+                     <div>Sun: 7:00-20:00</div>
+                   </div>
+                   <div className="text-white/70 text-sm">Access Hours</div>
+                 </div>
+                <div className="bg-surface/30 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
+                  <div className="text-2xl font-bold mb-1">
+                    <Counter
+                      target={100}
+                      suffix="%"
+                      duration={2500}
+                      delay={900}
+                      className="text-2xl"
+                    />
+                  </div>
+                  <div className="text-white/70 text-sm">Premium Quality</div>
                 </div>
               </div>
             </motion.div>

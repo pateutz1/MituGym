@@ -12,7 +12,19 @@ import SimpleTooltip from '@/components/SimpleTooltip'
 import FaqSection from '@/components/ui/faq'
 import AnimatedGradientText from '@/components/ui/animated-gradient-text'
 import ShinyButton from '@/components/ui/shiny-button'
+import Counter from '@/components/ui/counter'
+import TypingText from '@/components/ui/typing-text'
+import ProgressRing, { ProgressRingPresets } from '@/components/ui/progress-ring'
+import GymFloatingDock from '@/components/ui/gym-floating-dock'
 import { popularFAQs } from '@/data/faqData'
+
+interface StatItem {
+  number: string | number;
+  suffix?: string;
+  label: string;
+  tooltip: string;
+  isCounter: boolean;
+}
 
 export default function Home() {
   const { t } = useTranslation()
@@ -25,26 +37,31 @@ export default function Home() {
   const imageParallax = useParallax<HTMLDivElement>({ speed: 0.05 })
 
   // Stats data with tooltip content
-  const stats = [
+  const stats: StatItem[] = [
     { 
       number: 'Opening', 
       label: 'Soon',
-      tooltip: 'State-of-the-art facility opening Saturday, July 12th at 10 AM. Be part of our founding member community!'
+      tooltip: 'State-of-the-art facility opening Saturday, July 12th at 10 AM. Be part of our founding member community!',
+      isCounter: false
     },
     { 
-      number: '1000m²', 
+      number: 500, 
+      suffix: 'm²',
       label: 'Training Space',
-      tooltip: 'Spacious areas with dedicated zones for cardio, strength training, functional fitness, and group classes.'
+      tooltip: 'Spacious areas with dedicated zones for cardio, strength training, functional fitness, and group classes.',
+      isCounter: true
     },
     { 
       number: 'Premium', 
       label: 'Equipment',
-      tooltip: 'Latest generation fitness equipment from top manufacturers like Technogym, Life Fitness, and Hammer Strength.'
+      tooltip: 'Latest generation fitness equipment from top manufacturers like Technogym, Life Fitness, and Hammer Strength.',
+      isCounter: false
     },
     { 
-      number: '6am-10pm', 
-      label: 'Daily Hours',
-      tooltip: 'Extended hours to fit your schedule - whether you\'re an early bird or night owl, we\'ve got you covered.'
+      number: 'Extended', 
+      label: 'Access Hours',
+      tooltip: 'Extended hours to fit your schedule: Monday-Friday 6AM-11PM, Saturday 7AM-10PM, Sunday 7AM-8PM.',
+      isCounter: false
     }
   ]
 
@@ -153,6 +170,7 @@ export default function Home() {
   )
 
   return (
+    <>
     <div className="overflow-hidden parallax-container">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center pt-16 sm:pt-20 md:pt-24 section-transition hero-bg">
@@ -211,14 +229,32 @@ export default function Home() {
                 </AnimatedGradientText>
               </h1>
               
-              <motion.p
+              <motion.div
                 className="text-base sm:text-lg lg:text-xl text-white/70 mb-6 sm:mb-8 max-w-xl leading-relaxed mx-auto lg:mx-0"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-                Explore our brand-new fitness center, equipped with the latest machines and premium amenities to kickstart your journey.
-              </motion.p>
+                <p className="mb-4">
+                  Explore our brand-new fitness center, equipped with the latest machines and premium amenities to 
+                </p>
+                <TypingText
+                  texts={[
+                    "transform your body.",
+                    "achieve your goals.",
+                    "build strength.",
+                    "improve your health.",
+                    "boost your confidence.",
+                    "kickstart your journey."
+                  ]}
+                  typingSpeed={80}
+                  deletingSpeed={40}
+                  pauseDuration={2000}
+                  startDelay={3000}
+                  className="text-primary font-semibold"
+                  cursor="█"
+                />
+              </motion.div>
 
               {/* Stats Row */}
               <motion.div
@@ -234,7 +270,19 @@ export default function Home() {
                     className="cursor-help"
                   >
                     <div className="text-center lg:text-left hover:scale-105 transition-transform duration-200">
-                      <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-primary">{stat.number}</div>
+                      <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold">
+                        {stat.isCounter ? (
+                          <Counter
+                            target={typeof stat.number === 'number' ? stat.number : 0}
+                            suffix={stat.suffix || ''}
+                            duration={2000 + index * 200}
+                            delay={500 + index * 100}
+                            className="text-lg sm:text-xl md:text-2xl lg:text-3xl"
+                          />
+                        ) : (
+                          <span className="text-primary">{stat.number}</span>
+                        )}
+                      </div>
                       <div className="text-xs sm:text-sm text-white/60">{stat.label}</div>
                     </div>
                   </SimpleTooltip>
@@ -344,6 +392,25 @@ export default function Home() {
                 BEST BODY
               </AnimatedGradientText>
             </h2>
+            <div className="text-base sm:text-lg text-white/70 max-w-2xl mx-auto">
+              <p className="mb-2">Comprehensive fitness programs designed to help you</p>
+              <TypingText
+                texts={[
+                  "build lean muscle mass.",
+                  "lose weight effectively.",
+                  "increase your strength.",
+                  "improve your endurance.",
+                  "enhance your flexibility.",
+                  "achieve your goals."
+                ]}
+                typingSpeed={60}
+                deletingSpeed={30}
+                pauseDuration={2000}
+                startDelay={1500}
+                className="text-emerald-400 font-semibold"
+                cursor="▌"
+              />
+            </div>
           </motion.div>
 
           {/* Main Content Container */}
@@ -733,7 +800,15 @@ export default function Home() {
                      transition={{ duration: 0.6, delay: 0.8 }}
                      whileHover={{ scale: 1.05 }}
                    >
-                     <div className="text-2xl sm:text-3xl font-bold text-primary">1000m²</div>
+                     <div className="text-2xl sm:text-3xl font-bold">
+                       <Counter
+                         target={500}
+                         suffix="m²"
+                         duration={2500}
+                         delay={1200}
+                         className="text-2xl sm:text-3xl"
+                       />
+                     </div>
                      <div className="text-white/80 text-sm">Training Space</div>
                    </motion.div>
                    
@@ -1101,6 +1176,158 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Facility Progress Section */}
+      <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden section-transition progress-bg fade-overlay section-blend">
+        {/* Background Elements with Parallax */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 opacity-70 parallax-element parallax-bg-1" />
+        <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl opacity-30 parallax-element parallax-float-2" />
+        <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl opacity-30 parallax-element parallax-float-3" />
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            className="text-center mb-12 sm:mb-20"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="inline-block bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-6"
+            >
+              <span className="text-blue-400 font-medium">🏗️ Construction Progress</span>
+            </motion.div>
+            
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6">
+              FACILITY <AnimatedGradientText 
+                className="inline-block"
+                colors={['#3b82f6', '#1d4ed8', '#1e40af', '#3b82f6']}
+                duration="4s"
+              >
+                COMPLETION
+              </AnimatedGradientText>
+            </h2>
+            <p className="text-base sm:text-lg lg:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
+              Track our progress as we put the finishing touches on our state-of-the-art facility. 
+              Each milestone brings us closer to opening day!
+            </p>
+          </motion.div>
+
+          {/* Facility Progress Grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mb-16 sm:mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-center"
+            >
+              <ProgressRing
+                value={100}
+                {...ProgressRingPresets.facility}
+                color="#10b981"
+                label="Equipment"
+                delay={500}
+                className="mx-auto mb-4"
+              />
+              <h3 className="text-lg font-semibold text-white mb-2">Equipment Setup</h3>
+              <p className="text-white/70 text-sm">All premium equipment installed and calibrated</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-center"
+            >
+              <ProgressRing
+                value={95}
+                {...ProgressRingPresets.facility}
+                color="#8b5cf6"
+                label="Interior"
+                delay={700}
+                className="mx-auto mb-4"
+              />
+              <h3 className="text-lg font-semibold text-white mb-2">Interior Design</h3>
+              <p className="text-white/70 text-sm">Modern design and lighting nearly complete</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-center"
+            >
+              <ProgressRing
+                value={88}
+                {...ProgressRingPresets.facility}
+                color="#f59e0b"
+                label="Systems"
+                delay={900}
+                className="mx-auto mb-4"
+              />
+              <h3 className="text-lg font-semibold text-white mb-2">Tech Systems</h3>
+              <p className="text-white/70 text-sm">Access control and audio systems installation</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="text-center"
+            >
+              <ProgressRing
+                value={75}
+                {...ProgressRingPresets.facility}
+                color="#ef4444"
+                label="Final Touches"
+                delay={1100}
+                className="mx-auto mb-4"
+              />
+              <h3 className="text-lg font-semibold text-white mb-2">Final Details</h3>
+              <p className="text-white/70 text-sm">Signage, cleaning, and finishing touches</p>
+            </motion.div>
+          </div>
+
+          {/* Overall Progress */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="text-center"
+          >
+            <div className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-3xl p-8 sm:p-12 max-w-2xl mx-auto">
+              <ProgressRing
+                value={90}
+                size="xl"
+                strokeWidth={12}
+                color="#3b82f6"
+                gradient={true}
+                glowEffect={true}
+                label="Overall Progress"
+                delay={1300}
+                duration={3000}
+                className="mx-auto mb-6"
+              />
+              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+                Almost Ready to Open!
+              </h3>
+              <p className="text-white/70 text-base sm:text-lg leading-relaxed">
+                Our facility is 90% complete and on track for our grand opening. 
+                The final 10% includes staff training, safety inspections, and member onboarding preparations.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Get Ready Section */}
       <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden section-transition success-bg fade-overlay section-blend">
         {/* Background Elements with Parallax */}
@@ -1175,7 +1402,7 @@ export default function Home() {
                 />
               </motion.div>
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">1000m²</div>
+                <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">500m²</div>
                 <h3 className="text-xl font-semibold text-white mb-3">Premium Space</h3>
                 <p className="text-white/70 text-sm sm:text-base">
                   Spacious training areas with natural lighting and modern ventilation for optimal comfort
@@ -1340,6 +1567,140 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Achievements Section */}
+      <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden section-transition">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-purple-500/5 to-blue-500/5" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-30" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl opacity-30" />
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            className="text-center mb-12 sm:mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="text-primary font-semibold text-sm sm:text-base lg:text-lg">OUR ACHIEVEMENTS</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-6 mt-2">
+              BUILT FOR <span className="gradient-text">SUCCESS</span>
+            </h2>
+            <p className="text-base sm:text-lg text-white/70 max-w-3xl mx-auto leading-relaxed">
+              Every number tells a story of excellence. From our state-of-the-art facility to our commitment 
+              to member satisfaction, these achievements reflect our dedication to fitness excellence.
+            </p>
+          </motion.div>
+
+          {/* Achievement Stats Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-6xl mx-auto">
+                         <motion.div
+               initial={{ opacity: 0, y: 50, scale: 0.9 }}
+               whileInView={{ opacity: 1, y: 0, scale: 1 }}
+               viewport={{ once: true }}
+               transition={{ duration: 0.6, delay: 0.1 }}
+               className="text-center bg-surface/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 hover:bg-surface/40 transition-all duration-300"
+             >
+               <div className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-2 text-primary">
+                 2025
+               </div>
+               <h3 className="text-sm sm:text-base font-semibold text-white/90 mb-2">Opening Year</h3>
+               <p className="text-xs sm:text-sm text-white/60">Brand new facility</p>
+             </motion.div>
+
+                         <motion.div
+               initial={{ opacity: 0, y: 50, scale: 0.9 }}
+               whileInView={{ opacity: 1, y: 0, scale: 1 }}
+               viewport={{ once: true }}
+               transition={{ duration: 0.6, delay: 0.2 }}
+               className="text-center bg-surface/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 hover:bg-surface/40 transition-all duration-300"
+             >
+               <div className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 text-primary">
+                 Premium
+               </div>
+               <h3 className="text-sm sm:text-base font-semibold text-white/90 mb-2">Equipment</h3>
+               <p className="text-xs sm:text-sm text-white/60">Latest fitness technology</p>
+             </motion.div>
+
+                         <motion.div
+               initial={{ opacity: 0, y: 50, scale: 0.9 }}
+               whileInView={{ opacity: 1, y: 0, scale: 1 }}
+               viewport={{ once: true }}
+               transition={{ duration: 0.6, delay: 0.3 }}
+               className="text-center bg-surface/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 hover:bg-surface/40 transition-all duration-300"
+             >
+               <div className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 text-primary">
+                 Coming<br/>Soon
+               </div>
+               <h3 className="text-sm sm:text-base font-semibold text-white/90 mb-2">Expert Trainers</h3>
+               <p className="text-xs sm:text-sm text-white/60">Professional guidance</p>
+             </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-center bg-surface/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 hover:bg-surface/40 transition-all duration-300"
+            >
+              <div className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-2">
+                <Counter
+                  target={99}
+                  suffix="%"
+                  duration={2800}
+                  delay={1100}
+                  className="text-4xl sm:text-5xl lg:text-6xl"
+                />
+              </div>
+              <h3 className="text-sm sm:text-base font-semibold text-white/90 mb-2">Satisfaction</h3>
+              <p className="text-xs sm:text-sm text-white/60">Member satisfaction rate</p>
+            </motion.div>
+          </div>
+
+          {/* Additional Stats Row */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="grid grid-cols-2 lg:grid-cols-3 gap-6 mt-8 sm:mt-12 max-w-4xl mx-auto"
+          >
+                         <div className="text-center bg-gradient-to-br from-primary/20 to-primary/5 backdrop-blur-sm border border-primary/20 rounded-xl p-4 sm:p-6">
+               <div className="text-2xl sm:text-3xl font-bold mb-1">
+                 <Counter
+                   target={500}
+                   suffix="m²"
+                   duration={2200}
+                   delay={1300}
+                   className="text-2xl sm:text-3xl"
+                 />
+               </div>
+               <div className="text-white/80 text-sm">Training Space</div>
+             </div>
+
+                         <div className="text-center bg-gradient-to-br from-purple-500/20 to-purple-500/5 backdrop-blur-sm border border-purple-500/20 rounded-xl p-4 sm:p-6">
+               <div className="space-y-1 mb-2">
+                 <div className="text-sm font-semibold text-purple-300">Mon-Fri</div>
+                 <div className="text-lg font-bold text-purple-400">6:00 - 23:00</div>
+               </div>
+               <div className="flex justify-between text-xs text-white/60 mt-3">
+                 <span>Sat: 7-22</span>
+                 <span>Sun: 7-20</span>
+               </div>
+               <div className="text-white/80 text-sm mt-2">Access Hours</div>
+             </div>
+
+                         <div className="text-center bg-gradient-to-br from-blue-500/20 to-blue-500/5 backdrop-blur-sm border border-blue-500/20 rounded-xl p-4 sm:p-6 col-span-2 lg:col-span-1">
+               <div className="text-2xl sm:text-3xl font-bold mb-1 text-blue-400">
+                 Coming<br/>Soon
+               </div>
+               <div className="text-white/80 text-sm">Programs</div>
+             </div>
+          </motion.div>
+        </div>
+      </section>
+
+
+
       {/* Pricing Section */}
       <section className="py-12 sm:py-16 lg:py-24 relative">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -1455,6 +1816,8 @@ export default function Home() {
         </div>
       </section>
 
+
+
       {/* FAQ Section */}
       <section className="py-12 sm:py-16 lg:py-24 relative">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -1531,5 +1894,9 @@ export default function Home() {
         </div>
       </section>
     </div>
+
+    {/* Floating Dock - Fixed to viewport */}
+            <GymFloatingDock position="bottom-right" />
+    </>
   )
 } 

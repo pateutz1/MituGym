@@ -2,16 +2,28 @@
 
 import { motion } from 'framer-motion'
 import { ReactNode } from 'react'
+import AnimatedBorderTrail from './ui/animated-border-trail'
 
 interface FeatureCardProps {
   icon: ReactNode
   title: string
   description: string
   delay?: number
+  animatedBorder?: boolean
+  borderVariant?: 'continuous' | 'pulse' | 'chase' | 'glow'
+  borderColor?: string
 }
 
-const FeatureCard = ({ icon, title, description, delay = 0 }: FeatureCardProps) => {
-  return (
+const FeatureCard = ({ 
+  icon, 
+  title, 
+  description, 
+  delay = 0, 
+  animatedBorder = false,
+  borderVariant = 'continuous',
+  borderColor = 'rgb(34, 197, 94)'
+}: FeatureCardProps) => {
+  const cardContent = (
     <motion.div
       className="group relative bg-surface/50 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-surface/70 transition-all duration-300"
       initial={{ opacity: 0, y: 50 }}
@@ -54,6 +66,23 @@ const FeatureCard = ({ icon, title, description, delay = 0 }: FeatureCardProps) 
         />
       </div>
     </motion.div>
+  )
+
+  return animatedBorder ? (
+    <AnimatedBorderTrail
+      variant={borderVariant}
+      trailColor={borderColor}
+      animationDuration={4 + delay}
+      borderWidth={1}
+      borderRadius="0.75rem"
+      trailOpacity={0.4}
+      glowIntensity={6}
+      className="h-full"
+    >
+      {cardContent}
+    </AnimatedBorderTrail>
+  ) : (
+    cardContent
   )
 }
 
