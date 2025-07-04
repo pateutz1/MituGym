@@ -1177,35 +1177,29 @@ export default function Home() {
       </section>
 
       {/* Facility Progress Section */}
-      <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden section-transition progress-bg fade-overlay section-blend">
-        {/* Background Elements with Parallax */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 opacity-70 parallax-element parallax-bg-1" />
-        <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl opacity-30 parallax-element parallax-float-2" />
-        <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl opacity-30 parallax-element parallax-float-3" />
+      <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden section-transition">
+        {/* Simplified Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 opacity-50" />
+        <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-blue-500/5 rounded-full blur-2xl opacity-20" />
+        <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-indigo-500/5 rounded-full blur-2xl opacity-20" />
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             className="text-center mb-12 sm:mb-20"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="inline-block bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-6"
-            >
+            <div className="inline-block bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-6">
               <span className="text-blue-400 font-medium">🏗️ Construction Progress</span>
-            </motion.div>
+            </div>
             
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6">
               FACILITY <AnimatedGradientText 
                 className="inline-block"
                 colors={['#3b82f6', '#1d4ed8', '#1e40af', '#3b82f6']}
-                duration="4s"
+                duration="6s"
               >
                 COMPLETION
               </AnimatedGradientText>
@@ -1216,13 +1210,13 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* Facility Progress Grid */}
+          {/* Facility Progress Grid - Optimized */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mb-16 sm:mb-20">
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.4, delay: 0.1 }}
               className="text-center"
             >
               <ProgressRing
@@ -1230,7 +1224,7 @@ export default function Home() {
                 {...ProgressRingPresets.facility}
                 color="#10b981"
                 label="Equipment"
-                delay={500}
+                delay={100}
                 className="mx-auto mb-4"
               />
               <h3 className="text-lg font-semibold text-white mb-2">Equipment Setup</h3>
@@ -1238,10 +1232,10 @@ export default function Home() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.4, delay: 0.15 }}
               className="text-center"
             >
               <ProgressRing
@@ -1249,7 +1243,7 @@ export default function Home() {
                 {...ProgressRingPresets.facility}
                 color="#8b5cf6"
                 label="Interior"
-                delay={700}
+                delay={150}
                 className="mx-auto mb-4"
               />
               <h3 className="text-lg font-semibold text-white mb-2">Interior Design</h3>
@@ -1257,10 +1251,10 @@ export default function Home() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.4, delay: 0.2 }}
               className="text-center"
             >
               <ProgressRing
@@ -1268,7 +1262,7 @@ export default function Home() {
                 {...ProgressRingPresets.facility}
                 color="#f59e0b"
                 label="Systems"
-                delay={900}
+                delay={200}
                 className="mx-auto mb-4"
               />
               <h3 className="text-lg font-semibold text-white mb-2">Tech Systems</h3>
@@ -1276,10 +1270,10 @@ export default function Home() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.4, delay: 0.25 }}
               className="text-center"
             >
               <ProgressRing
@@ -1287,7 +1281,7 @@ export default function Home() {
                 {...ProgressRingPresets.facility}
                 color="#ef4444"
                 label="Final Touches"
-                delay={1100}
+                delay={250}
                 className="mx-auto mb-4"
               />
               <h3 className="text-lg font-semibold text-white mb-2">Final Details</h3>
@@ -1295,12 +1289,12 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* Overall Progress */}
+          {/* Overall Progress - Optimized */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, delay: 0.5 }}
             className="text-center"
           >
             <div className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-3xl p-8 sm:p-12 max-w-2xl mx-auto">
@@ -1312,8 +1306,8 @@ export default function Home() {
                 gradient={true}
                 glowEffect={true}
                 label="Overall Progress"
-                delay={1300}
-                duration={3000}
+                delay={300}
+                duration={1500}
                 className="mx-auto mb-6"
               />
               <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
@@ -1646,8 +1640,8 @@ export default function Home() {
                 <Counter
                   target={99}
                   suffix="%"
-                  duration={2800}
-                  delay={1100}
+                  duration={1500}
+                  delay={400}
                   className="text-4xl sm:text-5xl lg:text-6xl"
                 />
               </div>

@@ -26,29 +26,29 @@ interface CounterProps {
   formatLargeNumbers?: boolean;
 }
 
-// Easing functions
+// Optimized easing functions
 const easingFunctions = {
   linear: (t: number) => t,
-  easeOut: (t: number) => 1 - Math.pow(1 - t, 3),
-  easeIn: (t: number) => t * t * t,
-  easeInOut: (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+  easeOut: (t: number) => 1 - Math.pow(1 - t, 2), // Simplified cubic to quadratic
+  easeInOut: (t: number) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2,
 };
 
-const formatNumber = (num: number, formatLarge: boolean = false): string => {
-  if (!formatLarge) return Math.floor(num).toLocaleString();
+// Optimized number formatting
+const formatNumber = (value: number, formatLarge: boolean = false): string => {
+  if (!formatLarge) return Math.round(value).toString();
   
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+  const absValue = Math.abs(value);
+  if (absValue >= 1000000) {
+    return (value / 1000000).toFixed(1) + 'M';
+  } else if (absValue >= 1000) {
+    return (value / 1000).toFixed(1) + 'K';
   }
-  if (num >= 1000) {
-    return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
-  }
-  return Math.floor(num).toLocaleString();
+  return Math.round(value).toString();
 };
 
 export const Counter: React.FC<CounterProps> = ({
   target,
-  duration = 2000,
+  duration = 1500, // Reduced from 2000ms
   start = 0,
   delay = 0,
   suffix = '',
@@ -65,7 +65,7 @@ export const Counter: React.FC<CounterProps> = ({
   const counterRef = useRef<HTMLSpanElement>(null);
   const animationRef = useRef<number>();
 
-  // Intersection Observer for trigger on view
+  // Optimized Intersection Observer
   useEffect(() => {
     if (!triggerOnView || hasAnimated) return;
 
@@ -76,7 +76,7 @@ export const Counter: React.FC<CounterProps> = ({
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.2, rootMargin: "-50px" } // Optimized threshold
     );
 
     if (counterRef.current) {
@@ -86,7 +86,7 @@ export const Counter: React.FC<CounterProps> = ({
     return () => observer.disconnect();
   }, [triggerOnView, hasAnimated]);
 
-  // Animation logic
+  // Optimized animation logic
   useEffect(() => {
     if (!isVisible || hasAnimated) return;
 
@@ -147,13 +147,13 @@ export const Counter: React.FC<CounterProps> = ({
   );
 };
 
-// Preset configurations for common use cases
+// Optimized preset configurations
 export const CounterPresets = {
   members: (count: number) => (
     <Counter
       target={count}
       suffix="+"
-      duration={2500}
+      duration={1800} // Reduced duration
       formatLargeNumbers={true}
       className="text-green-400"
     />
@@ -163,7 +163,7 @@ export const CounterPresets = {
     <Counter
       target={years}
       suffix="+ Years"
-      duration={2000}
+      duration={1500} // Reduced duration
       className="text-emerald-400"
     />
   ),
@@ -172,7 +172,7 @@ export const CounterPresets = {
     <Counter
       target={count}
       suffix="+"
-      duration={2200}
+      duration={1600} // Reduced duration
       formatLargeNumbers={true}
       className="text-green-500"
     />
@@ -182,7 +182,7 @@ export const CounterPresets = {
     <Counter
       target={percent}
       suffix="%"
-      duration={1800}
+      duration={1200} // Reduced duration
       className="text-emerald-500"
     />
   ),
@@ -191,7 +191,7 @@ export const CounterPresets = {
     <Counter
       target={amount}
       prefix="$"
-      duration={2000}
+      duration={1500} // Reduced duration
       formatLargeNumbers={true}
       className="text-green-400"
     />
