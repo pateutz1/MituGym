@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { useTranslation } from '@/hooks/useTranslation'
 import FaqSection from '@/components/ui/faq'
 import ShinyButton from '@/components/ui/shiny-button'

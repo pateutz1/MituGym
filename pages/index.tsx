@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useTranslation } from '@/hooks/useTranslation'
@@ -16,6 +16,11 @@ import Counter from '@/components/ui/counter'
 import TypingText from '@/components/ui/typing-text'
 import ProgressRing, { ProgressRingPresets } from '@/components/ui/progress-ring'
 import GymFloatingDock from '@/components/ui/gym-floating-dock'
+import ScrollProgress from '@/components/ui/scroll-progress'
+import MagneticButton from '@/components/ui/magnetic-button'
+import StaggeredList from '@/components/ui/staggered-list'
+import ExpandableCard from '@/components/ui/expandable-card'
+
 import { popularFAQs } from '@/data/faqData'
 
 interface StatItem {
@@ -171,6 +176,7 @@ export default function Home() {
 
   return (
     <>
+    <ScrollProgress />
     <div className="overflow-hidden parallax-container">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center pt-16 sm:pt-20 md:pt-24 section-transition hero-bg">
@@ -296,32 +302,20 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: 0.5 }}
               >
                 <Link href="/contact">
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
+                  <MagneticButton
+                    className="w-full sm:w-auto text-base sm:text-lg px-8 py-4"
+                    strength={0.4}
                   >
-                    <ShinyButton
-                      variant="primary"
-                      size="lg"
-                      className="w-full sm:w-auto text-base sm:text-lg"
-                    >
-                      Get Started Today
-                    </ShinyButton>
-                  </motion.div>
+                    Get Started Today
+                  </MagneticButton>
                 </Link>
                 <Link href="/about">
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                  <MagneticButton
+                    className="w-full sm:w-auto text-base sm:text-lg px-8 py-4 bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white"
+                    strength={0.3}
                   >
-                    <ShinyButton
-                      variant="outline"
-                      size="lg"
-                      className="w-full sm:w-auto text-base sm:text-lg"
-                    >
-                      Watch Demo
-                    </ShinyButton>
-                  </motion.div>
+                    Watch Demo
+                  </MagneticButton>
                 </Link>
               </motion.div>
 
@@ -829,6 +823,134 @@ export default function Home() {
                 <div className="absolute -z-10 top-8 -right-8 w-32 h-32 bg-primary/20 rounded-full blur-2xl" />
                 <div className="absolute -z-10 -bottom-8 -left-8 w-40 h-40 bg-purple-500/20 rounded-full blur-2xl" />
               </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Premium Amenities Section */}
+      <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden section-transition amenities-bg fade-overlay">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-500/5 opacity-60" />
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl opacity-30" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl opacity-30" />
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            className="text-center mb-12 sm:mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="inline-block bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6"
+            >
+              <span className="text-primary font-medium">🏋️ Premium Amenities</span>
+            </motion.div>
+            
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white mb-6">
+              WORLD-CLASS <AnimatedGradientText 
+                className="inline-block"
+                colors={['#1e9b71', '#3b82f6', '#8b5cf6', '#ef4444', '#1e9b71']}
+                duration="6s"
+              >
+                FACILITIES
+              </AnimatedGradientText>
+            </h2>
+            <p className="text-base sm:text-lg text-white/70 max-w-3xl mx-auto leading-relaxed">
+              Experience luxury and functionality combined. Our premium amenities are designed to enhance 
+              your fitness journey and provide unmatched comfort and convenience.
+            </p>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Staggered List */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <StaggeredList
+                items={[
+                  "🏃‍♂️ Cardio Zone - Latest treadmills, ellipticals, and stationary bikes",
+                  "🏋️‍♀️ Free Weights Area - Complete range of dumbbells and barbells",
+                  "💪 Strength Training - Premium resistance machines and cable systems",
+                  "🤸‍♂️ Functional Training - TRX, kettlebells, and functional movement tools",
+                  "🧘‍♀️ Flexibility Zone - Dedicated stretching and yoga area",
+                  "🚿 Luxury Locker Rooms - Spacious lockers with premium shower facilities",
+                  "❄️ Climate Control - Advanced HVAC system for optimal comfort",
+                  "🎵 Premium Sound System - Motivating music throughout the facility",
+                  "📱 Smart Technology - Digital workout tracking and progress monitoring",
+                  "🅿️ Free Parking - Convenient parking spaces for all members"
+                ]}
+                className="max-w-2xl"
+              />
+            </motion.div>
+
+            {/* Visual Content */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="relative"
+            >
+              <div className="relative h-[400px] sm:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                  alt="Premium gym facilities at MituGym"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                
+                {/* Floating amenity indicators */}
+                <motion.div
+                  className="absolute top-6 left-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-3 text-center"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.8 }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <div className="text-lg font-bold text-primary">24/7</div>
+                  <div className="text-white/80 text-xs">Access</div>
+                </motion.div>
+                
+                <motion.div
+                  className="absolute top-6 right-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-3 text-center"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 1 }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <div className="text-lg font-bold text-primary">A/C</div>
+                  <div className="text-white/80 text-xs">Climate</div>
+                </motion.div>
+                
+                <motion.div
+                  className="absolute bottom-6 left-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-3 text-center"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 1.2 }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <div className="text-lg font-bold text-primary">FREE</div>
+                  <div className="text-white/80 text-xs">Parking</div>
+                </motion.div>
+              </div>
+              
+              {/* Background decoration */}
+              <div className="absolute -z-10 top-8 -right-8 w-32 h-32 bg-primary/20 rounded-full blur-2xl" />
+              <div className="absolute -z-10 -bottom-8 -left-8 w-40 h-40 bg-blue-500/20 rounded-full blur-2xl" />
             </motion.div>
           </div>
         </div>
@@ -1811,6 +1933,87 @@ export default function Home() {
       </section>
 
 
+
+
+
+      {/* Quick Answers Section - Alternative FAQ with ExpandableCard */}
+      <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 opacity-60" />
+        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl opacity-30" />
+        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl opacity-30" />
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            className="text-center mb-12 sm:mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="inline-block bg-purple-500/10 border border-purple-500/20 rounded-full px-4 py-2 mb-6"
+            >
+              <span className="text-purple-400 font-medium">❓ Quick Answers</span>
+            </motion.div>
+            
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white mb-6">
+              MEMBERSHIP <AnimatedGradientText 
+                className="inline-block"
+                colors={['#8b5cf6', '#3b82f6', '#1e9b71', '#ef4444', '#8b5cf6']}
+                duration="5s"
+              >
+                ESSENTIALS
+              </AnimatedGradientText>
+            </h2>
+            <p className="text-base sm:text-lg text-white/70 max-w-3xl mx-auto leading-relaxed">
+              Everything you need to know about joining MituGym. Get instant answers to the most 
+              common questions about our facilities, memberships, and policies.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <ExpandableCard
+              title="Membership Options"
+              summary="What membership plans do you offer?"
+              content="We offer three flexible membership tiers: Silver ($29/month), Gold ($49/month), and Platinum ($89/month). Each plan includes different levels of access to equipment, classes, and premium amenities. All plans come with our grand opening discount and no long-term commitments required."
+            />
+            
+            <ExpandableCard
+              title="Operating Hours"
+              summary="When is the gym open?"
+              content="Once opened, MituGym will operate Monday-Friday 6AM-11PM, Saturday 7AM-10PM, and Sunday 7AM-8PM. We're planning to introduce 24/7 access for Gold and Platinum members after our initial launch period."
+            />
+            
+            <ExpandableCard
+              title="Equipment & Facilities"
+              summary="What equipment and amenities are available?"
+              content="Our 500m² facility features the latest cardio machines, complete free weights section, premium resistance equipment, functional training area, luxury locker rooms with showers, climate control, premium sound system, and free parking for all members."
+            />
+            
+            <ExpandableCard
+              title="Personal Training"
+              summary="Do you offer personal training services?"
+              content="Yes! Personal training sessions are included with Gold and Platinum memberships. Our certified trainers create customized workout plans, provide form guidance, and help you achieve your specific fitness goals with one-on-one attention."
+            />
+            
+            <ExpandableCard
+              title="Group Classes"
+              summary="What group fitness classes are available?"
+              content="We'll offer a variety of group classes including HIIT, yoga, spinning, strength training, and functional fitness. Class schedules will be available closer to our opening date, with early access for Gold and Platinum members."
+            />
+            
+            <ExpandableCard
+              title="Grand Opening"
+              summary="When do you officially open?"
+              content="MituGym officially opens Saturday, July 12th, 2025 at 10:00 AM! We're currently accepting founding member registrations with special pre-opening rates and exclusive benefits for early supporters."
+            />
+          </div>
+        </div>
+      </section>
 
       {/* FAQ Section */}
       <section className="py-12 sm:py-16 lg:py-24 relative">

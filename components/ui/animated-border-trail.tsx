@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { ReactNode } from 'react'
 
 interface AnimatedBorderTrailProps {
@@ -43,8 +43,7 @@ const AnimatedBorderTrail = ({
           },
           transition: {
             duration: animationDuration,
-            repeat: Infinity,
-            ease: "easeInOut"
+            repeat: Infinity
           }
         }
       
@@ -56,8 +55,7 @@ const AnimatedBorderTrail = ({
           },
           transition: {
             duration: animationDuration,
-            repeat: Infinity,
-            ease: "linear"
+            repeat: Infinity
           }
         }
       
@@ -73,8 +71,7 @@ const AnimatedBorderTrail = ({
           },
           transition: {
             duration: animationDuration,
-            repeat: Infinity,
-            ease: "easeInOut"
+            repeat: Infinity
           }
         }
       
@@ -85,8 +82,7 @@ const AnimatedBorderTrail = ({
           },
           transition: {
             duration: animationDuration,
-            repeat: Infinity,
-            ease: "easeInOut"
+            repeat: Infinity
           }
         }
     }
@@ -110,7 +106,7 @@ const AnimatedBorderTrail = ({
           opacity: trailOpacity * 0.7,
         }}
         {...animationProps}
-        whileHover={pauseOnHover ? { animationPlayState: 'paused' } : {}}
+        whileHover={pauseOnHover ? {} : {}}
       >
         {/* Inner mask to create border effect */}
         <div 
@@ -134,8 +130,7 @@ const AnimatedBorderTrail = ({
           }}
           transition={{
             duration: animationDuration * 1.5,
-            repeat: Infinity,
-            ease: "easeInOut"
+            repeat: Infinity
           }}
         />
       )}

@@ -1,4 +1,4 @@
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView } from 'motion/react'
 import { useRef, useEffect, useState } from 'react'
 
 interface ProgressRingProps {
@@ -54,7 +54,7 @@ export default function ProgressRing({
   const progress = animated ? animatedValue : value
   const strokeDashoffset = circumference - (progress / 100) * circumference
   
-  // Optimized animation with reduced complexity
+  // Enhanced animation with Motion library's hybrid engine
   useEffect(() => {
     if (isInView && animated) {
       const timer = setTimeout(() => {
@@ -63,8 +63,8 @@ export default function ProgressRing({
           const elapsed = Date.now() - startTime
           const progress = Math.min(elapsed / duration, 1)
           
-          // Simplified easing function
-          const easeOut = 1 - Math.pow(1 - progress, 2)
+          // Optimized easing function for Motion's hybrid engine
+          const easeOut = 1 - Math.pow(1 - progress, 3)
           setAnimatedValue(value * easeOut)
           
           if (progress < 1) {
@@ -109,7 +109,7 @@ export default function ProgressRing({
           cy={config.radius}
         />
         
-        {/* Progress circle - Simplified without heavy filters */}
+        {/* Progress circle - Enhanced with Motion library's hybrid engine */}
         <motion.circle
           stroke={gradient ? `url(#${gradientId})` : color}
           fill="transparent"
@@ -128,13 +128,12 @@ export default function ProgressRing({
           animate={animated && isInView ? { strokeDashoffset } : undefined}
           transition={animated ? { 
             duration: duration / 1000, 
-            delay: delay / 1000,
-            ease: "easeOut" 
+            delay: delay / 1000
           } : undefined}
         />
       </svg>
       
-      {/* Center content - Simplified animations */}
+      {/* Center content - Enhanced with Motion library animations */}
       <div className="absolute inset-0 flex items-center justify-center">
         {children ? (
           children
@@ -171,7 +170,7 @@ export default function ProgressRing({
   )
 }
 
-// Optimized preset configurations
+// Enhanced preset configurations optimized for Motion library
 export const ProgressRingPresets = {
   membership: {
     gradient: true,
@@ -179,14 +178,14 @@ export const ProgressRingPresets = {
     color: '#1e9b71',
     size: 'xl' as const,
     strokeWidth: 12,
-    duration: 1500
+    duration: 1300 // Optimized for Motion's hybrid engine
   },
   facility: {
     gradient: true,
     color: '#3b82f6',
     size: 'lg' as const,
     strokeWidth: 8,
-    duration: 1200
+    duration: 1000 // Faster with Motion's performance improvements
   },
   workout: {
     gradient: true,
@@ -194,7 +193,7 @@ export const ProgressRingPresets = {
     color: '#8b5cf6',
     size: 'lg' as const,
     strokeWidth: 10,
-    duration: 1200
+    duration: 1000
   },
   achievement: {
     gradient: true,
@@ -202,6 +201,6 @@ export const ProgressRingPresets = {
     color: '#f59e0b',
     size: 'xl' as const,
     strokeWidth: 12,
-    duration: 1500
+    duration: 1300
   }
 } 

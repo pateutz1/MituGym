@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import AnimatedBorderTrail from './animated-border-trail'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 
 const AnimatedBorderTrailDemo = () => {
   const [selectedVariant, setSelectedVariant] = useState<'continuous' | 'pulse' | 'chase' | 'glow'>('continuous')

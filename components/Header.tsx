@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { useTranslation } from '@/hooks/useTranslation'
 import LanguageSwitcher from './LanguageSwitcher'
 
@@ -25,6 +25,7 @@ const Header = () => {
     { href: '/about', label: t('navigation.about') },
     { href: '/prices', label: t('navigation.prices') },
     { href: '/gallery', label: t('navigation.gallery') },
+    { href: '/motion-demo', label: 'Motion Demo' },
     { href: '/contact', label: t('navigation.contact') },
   ]
 
