@@ -258,6 +258,31 @@ export const preloadCriticalComponents = () => {
   }
 }
 
+// Gallery components
+export const LazyGalleryModal = dynamic(
+  () => import('./gallery-modal'),
+  {
+    loading: () => <MotionLoadingFallback className="h-screen w-screen" />,
+    ssr: false
+  }
+)
+
+export const LazyFocusCards = dynamic(
+  () => import('./focus-cards'),
+  {
+    loading: () => <MotionLoadingFallback className="h-96" />,
+    ssr: false
+  }
+)
+
+export const LazyGalleryTestimonials = dynamic(
+  () => import('./gallery-testimonials'),
+  {
+    loading: () => <MotionLoadingFallback className="h-64" />,
+    ssr: false
+  }
+)
+
 // Component registry for dynamic imports
 export const MOTION_COMPONENTS = {
   'scroll-linked-animations': LazyScrollLinkedAnimations,
@@ -278,6 +303,9 @@ export const MOTION_COMPONENTS = {
   'staggered-patterns': LazyStaggeredPatterns,
   'orchestrated-animations': LazyOrchestratedAnimations,
   'coordinated-sequence': LazyCoordinatedSequence,
+  'gallery-modal': LazyGalleryModal,
+  'focus-cards': LazyFocusCards,
+  'gallery-testimonials': LazyGalleryTestimonials,
 } as const
 
 export type MotionComponentKey = keyof typeof MOTION_COMPONENTS 

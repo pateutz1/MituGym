@@ -45,6 +45,15 @@ export function usePerformanceMonitoring() {
   const frameTimesRef = useRef<number[]>([])
   const activeAnimationsRef = useRef<Map<string, AnimationTracker>>(new Map())
 
+  // Get memory usage if available
+  const getMemoryUsage = useCallback(() => {
+    if ('memory' in performance) {
+      const memory = (performance as any).memory
+      return memory.usedJSHeapSize / 1048576 // Convert to MB
+    }
+    return undefined
+  }, [])
+
   // FPS calculation
   const calculateFPS = useCallback(() => {
     const now = performance.now()
@@ -82,7 +91,7 @@ export function usePerformanceMonitoring() {
     if (isMonitoring) {
       animationFrameRef.current = requestAnimationFrame(calculateFPS)
     }
-  }, [isMonitoring])
+  }, [isMonitoring, getMemoryUsage])
 
   // Start monitoring
   const startMonitoring = useCallback(() => {
@@ -143,37 +152,7 @@ export function usePerformanceMonitoring() {
     }
   }, [])
 
-  // Get memory usage if available
-  const getMemoryUsage = useCallback(() => {
-    if ('memory' in performance) {
-      const memory = (performance as any).memory
-      return memory.usedJSHeapSize / 1048576 // Convert to MB
-    }
-    return undefined
-  }, [])
 
-  // Performance analysis
-  const getPerformanceAnalysis = useCallback(() => {
-    const recentAnimations = performanceLog.slice(-50) // Last 50 animations
-    const averageDuration = recentAnimations.length > 0
-      ? recentAnimations.reduce((sum, anim) => sum + anim.duration, 0) / recentAnimations.length
-      : 0
-
-    const slowAnimations = recentAnimations.filter(anim => anim.duration > 100)
-    const componentStats = recentAnimations.reduce((stats, anim) => {
-      stats[anim.component] = (stats[anim.component] || 0) + 1
-      return stats
-    }, {} as Record<string, number>)
-
-    return {
-      averageAnimationDuration: averageDuration,
-      slowAnimationsCount: slowAnimations.length,
-      totalAnimations: recentAnimations.length,
-      componentUsage: componentStats,
-      performanceScore: calculatePerformanceScore(),
-      recommendations: getPerformanceRecommendations()
-    }
-  }, [performanceLog])
 
   // Calculate performance score (0-100)
   const calculatePerformanceScore = useCallback(() => {
@@ -225,6 +204,29 @@ export function usePerformanceMonitoring() {
 
     return recommendations
   }, [metrics, performanceLog])
+
+  // Performance analysis
+  const getPerformanceAnalysis = useCallback(() => {
+    const recentAnimations = performanceLog.slice(-50) // Last 50 animations
+    const averageDuration = recentAnimations.length > 0
+      ? recentAnimations.reduce((sum, anim) => sum + anim.duration, 0) / recentAnimations.length
+      : 0
+
+    const slowAnimations = recentAnimations.filter(anim => anim.duration > 100)
+    const componentStats = recentAnimations.reduce((stats, anim) => {
+      stats[anim.component] = (stats[anim.component] || 0) + 1
+      return stats
+    }, {} as Record<string, number>)
+
+    return {
+      averageAnimationDuration: averageDuration,
+      slowAnimationsCount: slowAnimations.length,
+      totalAnimations: recentAnimations.length,
+      componentUsage: componentStats,
+      performanceScore: calculatePerformanceScore(),
+      recommendations: getPerformanceRecommendations()
+    }
+  }, [performanceLog, calculatePerformanceScore, getPerformanceRecommendations])
 
   // Export performance data
   const exportPerformanceData = useCallback(() => {

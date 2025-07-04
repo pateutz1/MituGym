@@ -93,7 +93,7 @@ export function useMotionConfig(): MotionConfig {
   }
 }
 
-export function createAccessibleVariants(variants: any) {
+export function useAccessibleVariants(variants: any) {
   const prefersReducedMotion = useReducedMotion()
   
   if (prefersReducedMotion) {
@@ -125,5 +125,12 @@ export function createAccessibleVariants(variants: any) {
     return accessibleVariants
   }
   
+  return variants
+}
+
+// Helper function for creating accessible variants without using hooks
+export function createAccessibleVariants(variants: any) {
+  // This is a helper function that can be used outside React components
+  // It doesn't use hooks and just returns the variants as-is
   return variants
 } 

@@ -129,8 +129,8 @@ export function useMotionConfig() {
   }
 }
 
-// Safe animation variants that respect reduced motion
-export function createAccessibleVariants(normalVariants: any, reducedVariants?: any) {
+// Safe animation variants that respect reduced motion (custom hook)
+export function useAccessibleVariants(normalVariants: any, reducedVariants?: any) {
   const prefersReducedMotion = useReducedMotion()
   
   if (prefersReducedMotion && reducedVariants) {
@@ -166,6 +166,13 @@ export function createAccessibleVariants(normalVariants: any, reducedVariants?: 
     return reducedMotionVariants
   }
   
+  return normalVariants
+}
+
+// Helper function for creating accessible variants without using hooks
+export function createAccessibleVariants(normalVariants: any, reducedVariants?: any) {
+  // This is a helper function that can be used outside React components
+  // It doesn't use hooks and just returns the variants as-is
   return normalVariants
 }
 
