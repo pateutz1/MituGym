@@ -2,7 +2,7 @@ import { motion } from 'motion/react'
 import Image from 'next/image'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
-import { useAnimationPerformance } from '@/hooks/usePerformanceMonitoring'
+// import { useAnimationPerformance } from '@/hooks/usePerformanceMonitoring'
 import { createAccessibleVariants } from '@/hooks/useMotionConfig'
 import ScrollProgress from '@/components/ui/scroll-progress'
 
@@ -15,7 +15,7 @@ import {
 export default function Gallery() {
   const { t } = useTranslation()
   const prefersReducedMotion = useReducedMotion()
-  const { startTracking, endTracking } = useAnimationPerformance('GalleryPage')
+  // const { startTracking, endTracking } = useAnimationPerformance('GalleryPage')
 
   // Accessible animation variants
   const headerVariants = createAccessibleVariants({

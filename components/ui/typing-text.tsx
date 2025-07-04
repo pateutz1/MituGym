@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { cn } from '@/libs/utils';
 
 interface TypingTextProps {
@@ -57,9 +57,24 @@ export const TypingText: React.FC<TypingTextProps> = ({
   const [isComplete, setIsComplete] = useState(false);
   const [showCursorChar, setShowCursorChar] = useState(true);
   const [hasStarted, setHasStarted] = useState(!autoStart);
+  const [isClient, setIsClient] = useState(false);
 
   const timeoutRef = useRef<NodeJS.Timeout>();
   const cursorIntervalRef = useRef<NodeJS.Timeout>();
+  
+  // Create stable reference for texts array
+  const stableTexts = useMemo(() => texts, [JSON.stringify(texts)]);
+  const stableOnComplete = useRef(onComplete);
+  
+  // Update ref when callback changes
+  useEffect(() => {
+    stableOnComplete.current = onComplete;
+  }, [onComplete]);
+
+  // Client-side check
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Cursor blinking effect
   useEffect(() => {
@@ -89,9 +104,9 @@ export const TypingText: React.FC<TypingTextProps> = ({
 
   // Main typing effect
   useEffect(() => {
-    if (!hasStarted || texts.length === 0) return;
+    if (!isClient || !hasStarted || stableTexts.length === 0) return;
 
-    const currentFullText = texts[currentTextIndex];
+    const currentFullText = stableTexts[currentTextIndex];
 
     if (isTyping) {
       // Typing phase
@@ -102,11 +117,11 @@ export const TypingText: React.FC<TypingTextProps> = ({
       } else {
         // Finished typing current text
         timeoutRef.current = setTimeout(() => {
-          if (loop || currentTextIndex < texts.length - 1) {
+          if (loop || currentTextIndex < stableTexts.length - 1) {
             setIsTyping(false);
           } else {
             setIsComplete(true);
-            onComplete?.();
+            stableOnComplete.current?.();
           }
         }, pauseDuration);
       }
@@ -121,9 +136,9 @@ export const TypingText: React.FC<TypingTextProps> = ({
         timeoutRef.current = setTimeout(() => {
           setCurrentTextIndex((prev) => {
             if (loop) {
-              return (prev + 1) % texts.length;
+              return (prev + 1) % stableTexts.length;
             }
-            return Math.min(prev + 1, texts.length - 1);
+            return Math.min(prev + 1, stableTexts.length - 1);
           });
           setIsTyping(true);
         }, deletePauseDuration);
@@ -139,14 +154,14 @@ export const TypingText: React.FC<TypingTextProps> = ({
     currentText, 
     currentTextIndex, 
     isTyping, 
-    texts, 
+    stableTexts, 
     typingSpeed, 
     deletingSpeed, 
     pauseDuration, 
     deletePauseDuration, 
     loop, 
-    onComplete,
-    hasStarted
+    hasStarted,
+    isClient
   ]);
 
   // Manual start function

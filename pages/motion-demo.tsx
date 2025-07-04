@@ -31,15 +31,15 @@ import {
 
 // Import accessibility and performance monitoring
 import { useReducedMotion, useMotionConfig } from '@/hooks/useReducedMotion'
-import { useAnimationPerformance } from '@/hooks/usePerformanceMonitoring'
-import { PerformanceMonitor } from '@/components/ui/performance-monitor'
+// import { useAnimationPerformance } from '@/hooks/usePerformanceMonitoring'
+// import { PerformanceMonitor } from '@/components/ui/performance-monitor'
 import { useEffect } from 'react'
 
 export default function MotionDemo() {
   const constraintsRef = useRef<HTMLDivElement>(null)
   const prefersReducedMotion = useReducedMotion()
   const motionConfig = useMotionConfig()
-  const { startTracking, endTracking } = useAnimationPerformance('MotionDemo')
+  // const { startTracking, endTracking } = useAnimationPerformance('MotionDemo')
 
   // Preload critical components on mount
   useEffect(() => {
@@ -88,11 +88,11 @@ export default function MotionDemo() {
       {/* Scroll Progress Bar */}
       <ScrollProgress />
       
-      {/* Performance Monitor - only in development */}
-      <PerformanceMonitor 
+      {/* Performance Monitor - Disabled */}
+      {/* <PerformanceMonitor 
         showDebugInfo={process.env.NODE_ENV === 'development'} 
         position="bottom-right" 
-      />
+      /> */}
       
       <div className="container mx-auto px-4 py-20 relative z-10">
         {/* Enhanced Header */}

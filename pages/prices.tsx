@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useTranslation } from '../hooks/useTranslation'
 import { useReducedMotion } from '../hooks/useReducedMotion'
-import { usePerformanceMonitoring } from '../hooks/usePerformanceMonitoring'
+// import { usePerformanceMonitoring } from '../hooks/usePerformanceMonitoring'
 import FaqSection from '../components/ui/faq'
 import { Counter } from '../components/ui/counter'
 import { TypingText } from '../components/ui/typing-text'
@@ -12,7 +12,7 @@ import { membershipFAQs } from '../data/faqData'
 export default function Prices() {
   const { t } = useTranslation()
   const prefersReducedMotion = useReducedMotion()
-  const { startTracking, endTracking } = usePerformanceMonitoring()
+  // const { startTracking, endTracking } = usePerformanceMonitoring()
 
   // Accessible animation variants
   const headerVariants = {

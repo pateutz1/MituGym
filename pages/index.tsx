@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { useMotionConfig, createAccessibleVariants } from '@/hooks/useMotionConfig'
-import { useAnimationPerformance } from '@/hooks/usePerformanceMonitoring'
+// import { useAnimationPerformance } from '@/hooks/usePerformanceMonitoring'
 import { useMultiParallax, useParallax, useIntersectionParallax } from '@/hooks/useParallax'
 import Countdown from '@/components/Countdown'
 import FeatureCard from '@/components/FeatureCard'
@@ -46,7 +46,7 @@ export default function Home() {
   const { t } = useTranslation()
   const prefersReducedMotion = useReducedMotion()
   const motionConfig = useMotionConfig()
-  const { startTracking, endTracking } = useAnimationPerformance('HomePage')
+  // const { startTracking, endTracking } = useAnimationPerformance('HomePage')
 
   // Parallax hooks - disable for reduced motion
   const scrollY = useMultiParallax()

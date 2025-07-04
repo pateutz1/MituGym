@@ -33,14 +33,15 @@ const Header = () => {
     <>
       {/* Desktop Navigation */}
       <motion.header
-        className="fixed top-6 left-1/4 transform -translate-x-1/4 z-50 hidden md:block w-full max-w-7xl px-1"
+        className="fixed top-6 left-0 right-0 z-50 hidden md:block"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
+        <div className="container mx-auto px-4 max-w-[75%]">
         <motion.div 
-          className="nav-glass-effect rounded-full shadow-2xl shadow-black/40 ring-1 ring-white/5 px-8 py-2 relative"
-          whileHover={{ scale: 1.02 }}
+          className="nav-glass-effect rounded-full shadow-2xl shadow-black/40 ring-1 ring-white/5 px-8 py-2 relative w-full"
+          whileHover={{ scale: 1.01 }}
           transition={{ duration: 0.3 }}
         >
           {/* Gradient overlay for premium effect */}
@@ -67,33 +68,36 @@ const Header = () => {
               </span>
             </Link>
 
-            {/* Navigation Links */}
-            <nav className="flex items-center space-x-10 flex-1 justify-center">
-              {navItems.map((item, index) => (
-                <motion.div
-                  key={`${item.href}-${index}`}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <Link
-                    href={item.href}
-                    className="text-gray-200 hover:text-primary transition-all duration-300 font-medium font-display text-sm tracking-wide relative group px-3 py-2 rounded-lg hover:bg-white/10"
+            {/* Navigation Links + Language Switcher */}
+            <div className="flex items-center space-x-8">
+              <nav className="flex items-center space-x-8">
+                {navItems.map((item, index) => (
+                  <motion.div
+                    key={`${item.href}-${index}`}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
-                    {item.label}
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-emerald-400 transition-all duration-300 group-hover:w-full rounded-full"></span>
-                    <span className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg blur-sm"></span>
-                  </Link>
-                </motion.div>
-              ))}
-            </nav>
+                    <Link
+                      href={item.href}
+                      className="text-gray-200 hover:text-primary transition-all duration-300 font-medium font-display text-sm tracking-wide relative group px-3 py-2 rounded-lg hover:bg-white/10"
+                    >
+                      {item.label}
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-emerald-400 transition-all duration-300 group-hover:w-full rounded-full"></span>
+                      <span className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg blur-sm"></span>
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
 
-            {/* Language Switcher */}
-            <div className="flex-shrink-0">
-              <LanguageSwitcher />
+              {/* Language Switcher */}
+              <div className="flex-shrink-0">
+                <LanguageSwitcher />
+              </div>
             </div>
           </div>
         </motion.div>
+        </div>
       </motion.header>
 
       {/* Mobile Navigation */}

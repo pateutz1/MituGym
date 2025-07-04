@@ -1,7 +1,7 @@
 import { motion } from 'motion/react'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
-import { useAnimationPerformance } from '@/hooks/usePerformanceMonitoring'
+// import { useAnimationPerformance } from '@/hooks/usePerformanceMonitoring'
 import { createAccessibleVariants } from '@/hooks/useMotionConfig'
 import ScrollProgress from '@/components/ui/scroll-progress'
 
@@ -13,7 +13,7 @@ import {
 export default function Contact() {
   const { t } = useTranslation()
   const prefersReducedMotion = useReducedMotion()
-  const { startTracking, endTracking } = useAnimationPerformance('ContactPage')
+  // const { startTracking, endTracking } = useAnimationPerformance('ContactPage')
 
   // Accessible animation variants
   const headerVariants = createAccessibleVariants({
