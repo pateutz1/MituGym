@@ -3,6 +3,7 @@
 import { FC } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import ShinyButton from './ui/shiny-button'
 
 export interface Feature {
   text: string
@@ -169,15 +170,7 @@ const PlanCard: FC<PlanCardProps> = ({
             transition={{ delay: delay + 0.6 }}
           >
             <Link href="/contact">
-              <motion.button
-                className={`
-                  w-full py-3 sm:py-4 px-4 sm:px-6 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg
-                  transition-all duration-300 relative overflow-hidden
-                  ${isPopular 
-                    ? 'bg-gradient-to-r from-[#1e9b71] to-[#16a085] text-white shadow-lg shadow-[#1e9b71]/30' 
-                    : 'bg-white/10 text-white border border-white/20 hover:bg-[#1e9b71] hover:border-[#1e9b71]'
-                  }
-                `}
+              <motion.div
                 whileHover={{ 
                   scale: 1.02,
                   boxShadow: isPopular 
@@ -186,31 +179,31 @@ const PlanCard: FC<PlanCardProps> = ({
                 }}
                 whileTap={{ scale: 0.98 }}
               >
-                {/* Button background effect */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-[#1e9b71] to-[#16a085] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ borderRadius: 'inherit' }}
-                />
-                
-                <span className="relative z-10 flex items-center justify-center">
-                  Get Started
-                  <motion.svg 
-                    className="w-4 h-4 sm:w-5 sm:h-5 ml-2"
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                    whileHover={{ x: 5 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth={2} 
-                      d="M17 8l4 4m0 0l-4 4m4-4H3" 
-                    />
-                  </motion.svg>
-                </span>
-              </motion.button>
+                <ShinyButton
+                  variant={isPopular ? "primary" : "outline"}
+                  size="lg"
+                  className="w-full text-sm sm:text-base lg:text-lg font-bold"
+                >
+                  <span className="flex items-center justify-center">
+                    Get Started
+                    <motion.svg 
+                      className="w-4 h-4 sm:w-5 sm:h-5 ml-2"
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                      whileHover={{ x: 5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth={2} 
+                        d="M17 8l4 4m0 0l-4 4m4-4H3" 
+                      />
+                    </motion.svg>
+                  </span>
+                </ShinyButton>
+              </motion.div>
             </Link>
           </motion.div>
         </div>

@@ -26,5 +26,17 @@
     "loading": "Se încarcă...",
     "error": "Eroare",
     "success": "Succes"
+  },
+  "faq": {
+    "titles": {
+      "membership": "Întrebări despre Abonamente",
+      "facility": "Informații despre Facilități",
+      "general": "Întrebări și Răspunsuri"
+    },
+    "subtitles": {
+      "membership": "Tot ce trebuie să știi despre planurile și politicile noastre de abonament",
+      "facility": "Află mai multe despre facilitățile, echipamentele și ce face MituGym special",
+      "general": "Obține răspunsuri rapide la cele mai frecvente întrebări despre MituGym"
+    }
   }
 } 

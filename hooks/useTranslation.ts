@@ -77,6 +77,18 @@ const translations: { [locale: string]: Translations } = {
         price: "$79",
         period: "/month"
       }
+    },
+    faq: {
+      titles: {
+        membership: "Membership Questions",
+        facility: "Facility Information", 
+        general: "Questions & Answers"
+      },
+      subtitles: {
+        membership: "Everything you need to know about our membership plans and policies",
+        facility: "Learn more about our facilities, equipment, and what makes MituGym special",
+        general: "Get quick answers to the most common questions about MituGym"
+      }
     }
   },
   ro: {
@@ -150,6 +162,18 @@ const translations: { [locale: string]: Translations } = {
         name: "VIP", 
         price: "369 RON",
         period: "/lună"
+      }
+    },
+    faq: {
+      titles: {
+        membership: "Întrebări despre Abonamente",
+        facility: "Informații despre Facilități",
+        general: "Întrebări și Răspunsuri"
+      },
+      subtitles: {
+        membership: "Tot ce trebuie să știi despre planurile și politicile noastre de abonament",
+        facility: "Află mai multe despre facilitățile, echipamentele și ce face MituGym special",
+        general: "Obține răspunsuri rapide la cele mai frecvente întrebări despre MituGym"
       }
     }
   }

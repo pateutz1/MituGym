@@ -26,5 +26,17 @@
     "loading": "Loading...",
     "error": "Error",
     "success": "Success"
+  },
+  "faq": {
+    "titles": {
+      "membership": "Membership Questions",
+      "facility": "Facility Information", 
+      "general": "Questions & Answers"
+    },
+    "subtitles": {
+      "membership": "Everything you need to know about our membership plans and policies",
+      "facility": "Learn more about our facilities, equipment, and what makes MituGym special",
+      "general": "Get quick answers to the most common questions about MituGym"
+    }
   }
 } 

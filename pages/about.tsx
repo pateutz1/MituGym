@@ -2,6 +2,9 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useTranslation } from '@/hooks/useTranslation'
+import FaqSection from '@/components/ui/faq'
+import ShinyButton from '@/components/ui/shiny-button'
+import { generalFAQs } from '@/data/faqData'
 
 export default function About() {
   const { t } = useTranslation()
@@ -65,6 +68,21 @@ export default function About() {
 
 
 
+        {/* FAQ Section */}
+        <motion.section
+          className="mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <FaqSection 
+            data={generalFAQs}
+            title={t('faq.titles.facility')}
+            subtitle={t('faq.subtitles.facility')}
+          />
+        </motion.section>
+
         {/* Call to Action */}
         <motion.div
           className="text-center bg-surface/50 backdrop-blur-sm border border-white/10 rounded-3xl p-8 lg:p-12"
@@ -81,22 +99,32 @@ export default function About() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact">
-              <motion.button
-                className="bg-primary text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/30"
+              <motion.div
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Get Started Today
-              </motion.button>
+                <ShinyButton
+                  variant="primary"
+                  size="lg"
+                  className="text-lg"
+                >
+                  Get Started Today
+                </ShinyButton>
+              </motion.div>
             </Link>
             <Link href="/prices">
-              <motion.button
-                className="border border-white/20 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white/10 transition-all duration-300"
+              <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                View Pricing
-              </motion.button>
+                <ShinyButton
+                  variant="outline"
+                  size="lg"
+                  className="text-lg"
+                >
+                  View Pricing
+                </ShinyButton>
+              </motion.div>
             </Link>
           </div>
         </motion.div>

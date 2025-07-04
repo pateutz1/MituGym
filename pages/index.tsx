@@ -9,6 +9,10 @@ import PlanCard from '@/components/PlanCard'
 import ParallaxCard from '@/components/ParallaxCard'
 import Tooltip from '@/components/Tooltip'
 import SimpleTooltip from '@/components/SimpleTooltip'
+import FaqSection from '@/components/ui/faq'
+import AnimatedGradientText from '@/components/ui/animated-gradient-text'
+import ShinyButton from '@/components/ui/shiny-button'
+import { popularFAQs } from '@/data/faqData'
 
 export default function Home() {
   const { t } = useTranslation()
@@ -198,7 +202,13 @@ export default function Home() {
                 <span className="text-white">DESTINATION IT</span>
                 <br />
                 <span className="text-white">IS A </span>
-                <span className="gradient-text">WAY OF LIFE.</span>
+                <AnimatedGradientText 
+                  className="inline-block"
+                  colors={['#1e9b71', '#10b981', '#3b82f6', '#8b5cf6', '#ef4444', '#1e9b71']}
+                  duration="6s"
+                >
+                  WAY OF LIFE.
+                </AnimatedGradientText>
               </h1>
               
               <motion.p
@@ -238,22 +248,32 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: 0.5 }}
               >
                 <Link href="/contact">
-                  <motion.button
-                    className="bg-primary text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/30 w-full sm:w-auto"
+                  <motion.div
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Get Started Today
-                  </motion.button>
+                    <ShinyButton
+                      variant="primary"
+                      size="lg"
+                      className="w-full sm:w-auto text-base sm:text-lg"
+                    >
+                      Get Started Today
+                    </ShinyButton>
+                  </motion.div>
                 </Link>
                 <Link href="/about">
-                  <motion.button
-                    className="border border-white/20 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-white/10 transition-all duration-300 w-full sm:w-auto"
+                  <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Watch Demo
-                  </motion.button>
+                    <ShinyButton
+                      variant="outline"
+                      size="lg"
+                      className="w-full sm:w-auto text-base sm:text-lg"
+                    >
+                      Watch Demo
+                    </ShinyButton>
+                  </motion.div>
                 </Link>
               </motion.div>
 
@@ -316,7 +336,13 @@ export default function Home() {
           >
             <span className="text-primary font-semibold text-sm sm:text-base lg:text-lg">OUR PROGRAMS</span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-6 mt-2">
-              BUILD YOUR <span className="gradient-text">BEST BODY</span>
+              BUILD YOUR <AnimatedGradientText 
+                className="inline-block"
+                colors={['#1e9b71', '#3b82f6', '#8b5cf6', '#ef4444', '#1e9b71']}
+                duration="5s"
+              >
+                BEST BODY
+              </AnimatedGradientText>
             </h2>
           </motion.div>
 
@@ -436,7 +462,13 @@ export default function Home() {
             </motion.div>
             
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6">
-              EXPERIENCE THE <span className="gradient-text">DIFFERENCE</span>
+              EXPERIENCE THE <AnimatedGradientText 
+                className="inline-block"
+                colors={['#1e9b71', '#10b981', '#3b82f6', '#8b5cf6', '#1e9b71']}
+                duration="7s"
+              >
+                DIFFERENCE
+              </AnimatedGradientText>
             </h2>
             <p className="text-base sm:text-lg lg:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
               Discover what sets us apart with premium facilities, expert guidance, and a community 
@@ -1036,21 +1068,31 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <Link href="/contact">
-                  <motion.button
-                    className="bg-primary text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-sm sm:text-base font-semibold hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/30"
+                  <motion.div
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Apply to Join Our Team
-                  </motion.button>
+                    <ShinyButton
+                      variant="primary"
+                      size="md"
+                      className="text-sm sm:text-base"
+                    >
+                      Apply to Join Our Team
+                    </ShinyButton>
+                  </motion.div>
                 </Link>
-                <motion.button
-                  className="border border-white/20 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-sm sm:text-base font-semibold hover:bg-white/10 transition-all duration-300"
+                <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Learn More
-                </motion.button>
+                  <ShinyButton
+                    variant="outline"
+                    size="md"
+                    className="text-sm sm:text-base"
+                  >
+                    Learn More
+                  </ShinyButton>
+                </motion.div>
               </div>
             </div>
           </motion.div>
@@ -1268,20 +1310,30 @@ export default function Home() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
-                <motion.button
-                  className="bg-primary text-white px-8 py-4 rounded-xl text-base font-semibold hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/30"
+                <motion.div
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Reserve Your Spot
-                </motion.button>
-                <motion.button
-                  className="border border-white/20 text-white px-8 py-4 rounded-xl text-base font-semibold hover:bg-white/10 transition-all duration-300"
+                  <ShinyButton
+                    variant="primary"
+                    size="lg"
+                    className="text-base"
+                  >
+                    Reserve Your Spot
+                  </ShinyButton>
+                </motion.div>
+                <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Get Notified
-                </motion.button>
+                  <ShinyButton
+                    variant="outline"
+                    size="lg"
+                    className="text-base"
+                  >
+                    Get Notified
+                  </ShinyButton>
+                </motion.div>
               </div>
             </div>
           </motion.div>
@@ -1386,14 +1438,37 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <Link href="/prices">
-              <motion.button
-                className="bg-white/10 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-primary hover:text-white transition-all duration-300 border border-white/20 hover:border-primary text-sm sm:text-base"
+              <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                View All Plans
-              </motion.button>
+                <ShinyButton
+                  variant="secondary"
+                  size="md"
+                  className="text-sm sm:text-base"
+                >
+                  View All Plans
+                </ShinyButton>
+              </motion.div>
             </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-12 sm:py-16 lg:py-24 relative">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <FaqSection 
+              data={popularFAQs}
+              title={t('faq.titles.general')}
+              subtitle={t('faq.subtitles.general')}
+            />
           </motion.div>
         </div>
       </section>
@@ -1410,7 +1485,13 @@ export default function Home() {
             className="bg-gradient-to-br from-primary/30 to-purple-600/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 glass-effect text-center"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold text-white mb-4 sm:mb-6">
-              JOIN OUR <span className="gradient-text">COMMUNITY</span>
+              JOIN OUR <AnimatedGradientText 
+                className="inline-block"
+                colors={['#1e9b71', '#3b82f6', '#8b5cf6', '#ef4444', '#f59e0b', '#1e9b71']}
+                duration="6s"
+              >
+                COMMUNITY
+              </AnimatedGradientText>
             </h2>
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-white/80 mb-6 sm:mb-8 max-w-3xl mx-auto">
               Get 15% off your first three months when you sign up for our newsletter. 
@@ -1429,13 +1510,18 @@ export default function Home() {
                 placeholder="Enter your email"
                 className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:outline-none focus:border-primary text-sm sm:text-base"
               />
-              <motion.button
-                className="bg-primary text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-primary/90 transition-all duration-300 whitespace-nowrap text-sm sm:text-base"
+              <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Get Started
-              </motion.button>
+                <ShinyButton
+                  variant="primary"
+                  size="md"
+                  className="whitespace-nowrap text-sm sm:text-base"
+                >
+                  Get Started
+                </ShinyButton>
+              </motion.div>
             </motion.div>
 
             <div className="text-white/60 text-xs sm:text-sm">
