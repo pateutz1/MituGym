@@ -31,7 +31,9 @@
     "typescript": "^5"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.0.6",
     "eslint": "^8",
-    "eslint-config-next": "^15.3.5"
+    "eslint-config-next": "^15.3.5",
+    "ultracite": "5.0.32"
   }
 }
