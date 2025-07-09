@@ -5,7 +5,7 @@
     "countdown": {
       "title": "Deschiderea Oficială În",
       "days": "Zile",
-      "hours": "Ore", 
+      "hours": "Ore",
       "minutes": "Minute",
       "seconds": "Secunde"
     }
@@ -43,7 +43,7 @@
       ]
     },
     "premium": {
-      "name": "Premium", 
+      "name": "Premium",
       "price": "229 RON",
       "period": "/lună",
       "features": [
@@ -65,4 +65,4 @@
       ]
     }
   }
-} 
+}

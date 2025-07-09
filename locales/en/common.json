@@ -30,7 +30,7 @@
   "faq": {
     "titles": {
       "membership": "Membership Questions",
-      "facility": "Facility Information", 
+      "facility": "Facility Information",
       "general": "Questions & Answers"
     },
     "subtitles": {
@@ -39,4 +39,4 @@
       "general": "Get quick answers to the most common questions about MituGym"
     }
   }
-} 
+}

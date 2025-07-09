@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import type React from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface CountdownProps {
   targetDate: Date;
@@ -84,7 +85,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ value, label, shouldFlip }) => {
         )}
       </div>
       <div className="flip-label">{label}</div>
-      
+
       <style jsx>{`
         .flip-container {
           display: flex;
@@ -227,44 +228,44 @@ const Countdown: React.FC<CountdownProps> = ({ targetDate }) => {
     days: 0,
     hours: 0,
     minutes: 0,
-    seconds: 0
+    seconds: 0,
   });
   const [shouldFlip, setShouldFlip] = useState({
     days: false,
     hours: false,
     minutes: false,
-    seconds: false
+    seconds: false,
   });
 
   const calculateTimeLeft = useCallback((): TimeLeft => {
-    const difference = targetDate.getTime() - new Date().getTime();
-    
+    const difference = targetDate.getTime() - Date.now();
+
     if (difference > 0) {
       return {
         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
         minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60)
+        seconds: Math.floor((difference / 1000) % 60),
       };
     }
-    
+
     return { days: 0, hours: 0, minutes: 0, seconds: 0 };
   }, [targetDate]);
 
   useEffect(() => {
     const timer = setInterval(() => {
       const newTimeLeft = calculateTimeLeft();
-      
+
       // Get previous time left using functional state update
-      setTimeLeft(prevTimeLeft => {
+      setTimeLeft((prevTimeLeft) => {
         // Determine which cards should flip
         setShouldFlip({
           seconds: newTimeLeft.seconds !== prevTimeLeft.seconds,
           minutes: newTimeLeft.minutes !== prevTimeLeft.minutes,
           hours: newTimeLeft.hours !== prevTimeLeft.hours,
-          days: newTimeLeft.days !== prevTimeLeft.days
+          days: newTimeLeft.days !== prevTimeLeft.days,
         });
-        
+
         return newTimeLeft;
       });
     }, 1000);
@@ -273,33 +274,33 @@ const Countdown: React.FC<CountdownProps> = ({ targetDate }) => {
     setTimeLeft(calculateTimeLeft());
 
     return () => clearInterval(timer);
-  }, [targetDate, calculateTimeLeft]);
+  }, [calculateTimeLeft]);
 
   return (
     <div className="countdown-container">
       <div className="countdown-grid">
         <FlipCard
-          value={timeLeft.days}
           label="Days"
           shouldFlip={shouldFlip.days}
+          value={timeLeft.days}
         />
         <FlipCard
-          value={timeLeft.hours}
           label="Hours"
           shouldFlip={shouldFlip.hours}
+          value={timeLeft.hours}
         />
         <FlipCard
-          value={timeLeft.minutes}
           label="Minutes"
           shouldFlip={shouldFlip.minutes}
+          value={timeLeft.minutes}
         />
         <FlipCard
-          value={timeLeft.seconds}
           label="Seconds"
           shouldFlip={shouldFlip.seconds}
+          value={timeLeft.seconds}
         />
       </div>
-      
+
       <style jsx>{`
         .countdown-container {
           display: flex;

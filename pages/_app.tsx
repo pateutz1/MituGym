@@ -1,8 +1,8 @@
-import type { AppProps } from 'next/app'
-import Head from 'next/head'
-import '@/styles/globals.css'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
+import '@/styles/globals.css';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 // import { PerformanceMonitor } from '@/components/ui/performance-monitor'
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -10,18 +10,21 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>MituGym - Premium Fitness Experience</title>
-        <meta name="description" content="Transform your body with premium fitness equipment, expert trainers, and a supportive community at MituGym." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta
+          content="Transform your body with premium fitness equipment, expert trainers, and a supportive community at MituGym."
+          name="description"
+        />
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <link href="/favicon.ico" rel="icon" />
       </Head>
-      
-      <div className="min-h-screen bg-background dark">
+
+      <div className="dark min-h-screen bg-background">
         <Header />
         <main>
           <Component {...pageProps} />
         </main>
         <Footer />
-        
+
         {/* Performance Monitor - Disabled */}
         {/* {process.env.NODE_ENV === 'development' && (
           <PerformanceMonitor 
@@ -31,5 +34,5 @@ export default function App({ Component, pageProps }: AppProps) {
         )} */}
       </div>
     </>
-  )
-} 
+  );
+}

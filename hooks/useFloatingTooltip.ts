@@ -1,23 +1,23 @@
-import { useState } from 'react'
 import {
-  useFloating,
   autoUpdate,
-  offset,
-  flip,
-  shift,
-  useHover,
-  useFocus,
-  useDismiss,
-  useRole,
-  useInteractions,
   FloatingPortal,
+  flip,
+  offset,
   type Placement,
-} from '@floating-ui/react'
+  shift,
+  useDismiss,
+  useFloating,
+  useFocus,
+  useHover,
+  useInteractions,
+  useRole,
+} from '@floating-ui/react';
+import { useState } from 'react';
 
 interface UseFloatingTooltipProps {
-  placement?: Placement
-  offset?: number
-  delay?: number
+  placement?: Placement;
+  offset?: number;
+  delay?: number;
 }
 
 export function useFloatingTooltip({
@@ -25,7 +25,7 @@ export function useFloatingTooltip({
   offset: offsetValue = 8,
   delay = 300,
 }: UseFloatingTooltipProps = {}) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
@@ -40,22 +40,22 @@ export function useFloatingTooltip({
     ],
     whileElementsMounted: autoUpdate,
     strategy: 'fixed',
-  })
+  });
 
-  const hover = useHover(context, { 
+  const hover = useHover(context, {
     delay: { open: delay, close: 100 },
     restMs: 100,
-  })
-  const focus = useFocus(context)
-  const dismiss = useDismiss(context)
-  const role = useRole(context, { role: 'tooltip' })
+  });
+  const focus = useFocus(context);
+  const dismiss = useDismiss(context);
+  const role = useRole(context, { role: 'tooltip' });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     hover,
     focus,
     dismiss,
     role,
-  ])
+  ]);
 
   return {
     isOpen,
@@ -64,5 +64,5 @@ export function useFloatingTooltip({
     getReferenceProps,
     getFloatingProps,
     FloatingPortal,
-  }
-} 
+  };
+}

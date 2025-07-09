@@ -1,92 +1,116 @@
-import { motion } from 'motion/react'
-import { useTranslation } from '@/hooks/useTranslation'
-import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { motion } from 'motion/react';
+import AnimatedContactForm from '@/components/ui/animated-contact-form';
+import ContactCards from '@/components/ui/contact-cards';
+import ContactFAQ from '@/components/ui/contact-faq';
+import LocationMap from '@/components/ui/location-map';
+import ScrollProgress from '@/components/ui/scroll-progress';
 // import { useAnimationPerformance } from '@/hooks/usePerformanceMonitoring'
-import { createAccessibleVariants } from '@/hooks/useMotionConfig'
-import ScrollProgress from '@/components/ui/scroll-progress'
-import AnimatedContactForm from '@/components/ui/animated-contact-form'
-import ContactCards from '@/components/ui/contact-cards'
-import ContactFAQ from '@/components/ui/contact-faq'
-import LocationMap from '@/components/ui/location-map'
-import { LazyScrollLinkedAnimations } from '@/components/ui/lazy-motion-components'
+import { createAccessibleVariants } from '@/hooks/useMotionConfig';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function Contact() {
-  const { t } = useTranslation()
-  const prefersReducedMotion = useReducedMotion()
+  const { t } = useTranslation();
+  const prefersReducedMotion = useReducedMotion();
   // const { startTracking, endTracking } = useAnimationPerformance('ContactPage')
 
   // Accessible animation variants
   const headerVariants = createAccessibleVariants({
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0 }
-  })
+    visible: { opacity: 1, y: 0 },
+  });
 
   const sectionVariants = createAccessibleVariants({
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
-  })
+    visible: { opacity: 1, y: 0 },
+  });
 
   return (
     <>
       <ScrollProgress />
       <div className="min-h-screen">
         {/* Hero Section */}
-        <section className="pt-24 pb-16 bg-gradient-to-br from-surface via-background to-surface relative overflow-hidden">
+        <section className="relative overflow-hidden bg-gradient-to-br from-surface via-background to-surface pt-24 pb-16">
           {/* Background Elements */}
           <div className="absolute inset-0 opacity-30">
-            <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl" />
-            <div className="absolute bottom-20 right-10 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
+            <div className="absolute top-20 left-10 h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
+            <div className="absolute right-10 bottom-20 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl" />
           </div>
 
-          <div className="container mx-auto px-4 relative z-10">
+          <div className="container relative z-10 mx-auto px-4">
             <motion.div
-              className="text-center max-w-4xl mx-auto"
-              variants={headerVariants}
-              initial="hidden"
               animate="visible"
-              transition={prefersReducedMotion ? { duration: 0.01 } : { duration: 0.8 }}
+              className="mx-auto max-w-4xl text-center"
+              initial="hidden"
+              transition={
+                prefersReducedMotion ? { duration: 0.01 } : { duration: 0.8 }
+              }
+              variants={headerVariants}
             >
               <motion.div
-                initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6, delay: 0.2 }}
-                className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-primary to-emerald-500 rounded-2xl flex items-center justify-center"
+                className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-emerald-500"
+                initial={{ scale: 0 }}
+                transition={
+                  prefersReducedMotion
+                    ? { duration: 0.01 }
+                    : { duration: 0.6, delay: 0.2 }
+                }
               >
-                <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                <svg
+                  className="h-10 w-10 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                  />
                 </svg>
               </motion.div>
 
-              <h1 className="text-4xl md:text-6xl font-display font-bold text-white mb-6">
+              <h1 className="mb-6 font-bold font-display text-4xl text-white md:text-6xl">
                 Let&apos;s Start Your
-                <span className="bg-gradient-to-r from-primary to-emerald-400 bg-clip-text text-transparent block">
+                <span className="block bg-gradient-to-r from-primary to-emerald-400 bg-clip-text text-transparent">
                   Fitness Journey
                 </span>
               </h1>
-              
-              <p className="text-xl md:text-2xl text-white/70 mb-8 leading-relaxed">
-                Ready to transform your life? Our expert team is here to guide you every step of the way. 
-                Get personalized support, premium facilities, and proven results.
+
+              <p className="mb-8 text-white/70 text-xl leading-relaxed md:text-2xl">
+                Ready to transform your life? Our expert team is here to guide
+                you every step of the way. Get personalized support, premium
+                facilities, and proven results.
               </p>
 
               <motion.div
-                className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6, delay: 0.4 }}
+                className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+                initial={{ opacity: 0, y: 20 }}
+                transition={
+                  prefersReducedMotion
+                    ? { duration: 0.01 }
+                    : { duration: 0.6, delay: 0.4 }
+                }
               >
                 <motion.a
+                  className="rounded-xl bg-gradient-to-r from-primary to-emerald-500 px-8 py-4 font-semibold text-white transition-all duration-300 hover:shadow-2xl hover:shadow-primary/25"
                   href="#contact-form"
-                  className="bg-gradient-to-r from-primary to-emerald-500 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-primary/25"
-                  whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
+                  whileHover={
+                    prefersReducedMotion ? undefined : { scale: 1.05 }
+                  }
                   whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
                 >
                   Start Your Journey
                 </motion.a>
                 <motion.a
+                  className="rounded-xl border border-primary px-8 py-4 font-semibold text-primary transition-all duration-300 hover:bg-primary hover:text-white"
                   href="tel:+40211234567"
-                  className="border border-primary text-primary font-semibold py-4 px-8 rounded-xl transition-all duration-300 hover:bg-primary hover:text-white"
-                  whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
+                  whileHover={
+                    prefersReducedMotion ? undefined : { scale: 1.05 }
+                  }
                   whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
                 >
                   Call Now: +40 21 123 4567
@@ -96,26 +120,28 @@ export default function Contact() {
           </div>
 
           {/* Decorative Elements */}
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
+          <div className="absolute right-0 bottom-0 left-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
         </section>
 
         {/* Contact Cards Section */}
-        <section className="py-20 bg-gradient-to-br from-background via-surface/50 to-background">
+        <section className="bg-gradient-to-br from-background via-surface/50 to-background py-20">
           <div className="container mx-auto px-4">
             <motion.div
-              variants={sectionVariants}
+              className="mb-16 text-center"
               initial="hidden"
-              whileInView="visible"
+              transition={
+                prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6 }
+              }
+              variants={sectionVariants}
               viewport={{ once: true, amount: 0.3 }}
-              transition={prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6 }}
-              className="text-center mb-16"
+              whileInView="visible"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              <h2 className="mb-4 font-bold text-3xl text-white md:text-4xl">
                 How to Reach Us
               </h2>
-              <p className="text-white/70 text-lg max-w-2xl mx-auto">
-                Choose the best way to connect with our team. We&apos;re here to answer your questions 
-                and help you achieve your fitness goals.
+              <p className="mx-auto max-w-2xl text-lg text-white/70">
+                Choose the best way to connect with our team. We&apos;re here to
+                answer your questions and help you achieve your fitness goals.
               </p>
             </motion.div>
 
@@ -124,22 +150,30 @@ export default function Contact() {
         </section>
 
         {/* Contact Form Section */}
-        <section id="contact-form" className="py-20 bg-gradient-to-br from-surface/30 to-background relative">
+        <section
+          className="relative bg-gradient-to-br from-surface/30 to-background py-20"
+          id="contact-form"
+        >
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-5">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            }} />
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              }}
+            />
           </div>
 
-          <div className="container mx-auto px-4 relative z-10">
+          <div className="container relative z-10 mx-auto px-4">
             <motion.div
-              variants={sectionVariants}
+              className="mx-auto max-w-2xl"
               initial="hidden"
-              whileInView="visible"
+              transition={
+                prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6 }
+              }
+              variants={sectionVariants}
               viewport={{ once: true, amount: 0.3 }}
-              transition={prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6 }}
-              className="max-w-2xl mx-auto"
+              whileInView="visible"
             >
               <AnimatedContactForm />
             </motion.div>
@@ -147,63 +181,77 @@ export default function Contact() {
         </section>
 
         {/* Location Section */}
-        <section className="py-20 bg-gradient-to-br from-background to-surface/50">
+        <section className="bg-gradient-to-br from-background to-surface/50 py-20">
           <div className="container mx-auto px-4">
             <LocationMap />
           </div>
         </section>
 
         {/* FAQ Section */}
-        <section className="py-20 bg-gradient-to-br from-surface/30 via-background to-surface/30">
+        <section className="bg-gradient-to-br from-surface/30 via-background to-surface/30 py-20">
           <div className="container mx-auto px-4">
             <ContactFAQ />
           </div>
         </section>
 
         {/* Social Proof Section */}
-        <section className="py-16 bg-gradient-to-r from-primary/10 via-emerald-500/10 to-primary/10 relative overflow-hidden">
+        <section className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-emerald-500/10 to-primary/10 py-16">
           {/* Background Elements */}
           <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary/30 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-emerald-500/30 rounded-full blur-3xl" />
+            <div className="absolute top-0 left-1/4 h-64 w-64 rounded-full bg-primary/30 blur-3xl" />
+            <div className="absolute right-1/4 bottom-0 h-64 w-64 rounded-full bg-emerald-500/30 blur-3xl" />
           </div>
 
-          <div className="container mx-auto px-4 relative z-10">
+          <div className="container relative z-10 mx-auto px-4">
             <motion.div
-              variants={sectionVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              transition={prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6 }}
               className="text-center"
+              initial="hidden"
+              transition={
+                prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6 }
+              }
+              variants={sectionVariants}
+              viewport={{ once: true, amount: 0.3 }}
+              whileInView="visible"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
+              <h2 className="mb-8 font-bold text-3xl text-white md:text-4xl">
                 Join the MituGym Community
               </h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+
+              <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-3">
                 <motion.div
                   className="text-center"
-                  whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
                   transition={{ duration: 0.3 }}
+                  whileHover={
+                    prefersReducedMotion ? undefined : { scale: 1.05 }
+                  }
                 >
-                  <div className="text-4xl font-bold text-primary mb-2">500+</div>
+                  <div className="mb-2 font-bold text-4xl text-primary">
+                    500+
+                  </div>
                   <p className="text-white/70">Happy Members</p>
                 </motion.div>
                 <motion.div
                   className="text-center"
-                  whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
                   transition={{ duration: 0.3 }}
+                  whileHover={
+                    prefersReducedMotion ? undefined : { scale: 1.05 }
+                  }
                 >
-                  <div className="text-4xl font-bold text-emerald-400 mb-2">50+</div>
+                  <div className="mb-2 font-bold text-4xl text-emerald-400">
+                    50+
+                  </div>
                   <p className="text-white/70">Expert Trainers</p>
                 </motion.div>
                 <motion.div
                   className="text-center"
-                  whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
                   transition={{ duration: 0.3 }}
+                  whileHover={
+                    prefersReducedMotion ? undefined : { scale: 1.05 }
+                  }
                 >
-                  <div className="text-4xl font-bold text-blue-400 mb-2">24/7</div>
+                  <div className="mb-2 font-bold text-4xl text-blue-400">
+                    24/7
+                  </div>
                   <p className="text-white/70">Premium Access</p>
                 </motion.div>
               </div>
@@ -211,20 +259,25 @@ export default function Contact() {
               <motion.div
                 className="mt-12"
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                transition={
+                  prefersReducedMotion
+                    ? { duration: 0.01 }
+                    : { duration: 0.6, delay: 0.3 }
+                }
                 viewport={{ once: true }}
-                transition={prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6, delay: 0.3 }}
+                whileInView={{ opacity: 1, y: 0 }}
               >
-                <p className="text-white/80 text-lg mb-6">
-                  &quot;The best decision I made for my health. The trainers are amazing and the facility is world-class!&quot;
+                <p className="mb-6 text-lg text-white/80">
+                  &quot;The best decision I made for my health. The trainers are
+                  amazing and the facility is world-class!&quot;
                 </p>
                 <div className="flex items-center justify-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-primary to-emerald-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-semibold">M</span>
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary to-emerald-500">
+                    <span className="font-semibold text-white">M</span>
                   </div>
                   <div className="text-left">
-                    <p className="text-white font-semibold">Maria Popescu</p>
-                    <p className="text-white/60 text-sm">Premium Member</p>
+                    <p className="font-semibold text-white">Maria Popescu</p>
+                    <p className="text-sm text-white/60">Premium Member</p>
                   </div>
                 </div>
               </motion.div>
@@ -233,44 +286,55 @@ export default function Contact() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-br from-background to-surface relative overflow-hidden">
+        <section className="relative overflow-hidden bg-gradient-to-br from-background to-surface py-20">
           <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-emerald-500/5" />
-          
-          <div className="container mx-auto px-4 relative z-10">
+
+          <div className="container relative z-10 mx-auto px-4">
             <motion.div
-              variants={sectionVariants}
+              className="mx-auto max-w-3xl text-center"
               initial="hidden"
-              whileInView="visible"
+              transition={
+                prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6 }
+              }
+              variants={sectionVariants}
               viewport={{ once: true, amount: 0.3 }}
-              transition={prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6 }}
-              className="text-center max-w-3xl mx-auto"
+              whileInView="visible"
             >
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+              <h2 className="mb-6 font-bold text-3xl text-white md:text-5xl">
                 Ready to Transform Your Life?
               </h2>
-              <p className="text-xl text-white/70 mb-8">
-                Don&apos;t wait another day to start your fitness journey. Our team is ready to help you achieve incredible results.
+              <p className="mb-8 text-white/70 text-xl">
+                Don&apos;t wait another day to start your fitness journey. Our
+                team is ready to help you achieve incredible results.
               </p>
-              
+
               <motion.div
-                className="flex flex-col sm:flex-row gap-4 justify-center"
+                className="flex flex-col justify-center gap-4 sm:flex-row"
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                transition={
+                  prefersReducedMotion
+                    ? { duration: 0.01 }
+                    : { duration: 0.6, delay: 0.2 }
+                }
                 viewport={{ once: true }}
-                transition={prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6, delay: 0.2 }}
+                whileInView={{ opacity: 1, y: 0 }}
               >
                 <motion.a
+                  className="rounded-xl bg-gradient-to-r from-primary to-emerald-500 px-8 py-4 font-semibold text-white transition-all duration-300 hover:shadow-2xl hover:shadow-primary/25"
                   href="#contact-form"
-                  className="bg-gradient-to-r from-primary to-emerald-500 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-primary/25"
-                  whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
+                  whileHover={
+                    prefersReducedMotion ? undefined : { scale: 1.05 }
+                  }
                   whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
                 >
                   Get Started Today
                 </motion.a>
                 <motion.a
+                  className="rounded-xl border border-white/20 px-8 py-4 font-semibold text-white transition-all duration-300 hover:bg-white/10"
                   href="#location"
-                  className="border border-white/20 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 hover:bg-white/10"
-                  whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
+                  whileHover={
+                    prefersReducedMotion ? undefined : { scale: 1.05 }
+                  }
                   whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
                 >
                   Visit Our Gym
@@ -281,5 +345,5 @@ export default function Contact() {
         </section>
       </div>
     </>
-  )
-} 
+  );
+}

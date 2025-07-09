@@ -5,7 +5,7 @@
     "countdown": {
       "title": "Grand Opening In",
       "days": "Days",
-      "hours": "Hours", 
+      "hours": "Hours",
       "minutes": "Minutes",
       "seconds": "Seconds"
     }
@@ -43,7 +43,7 @@
       ]
     },
     "premium": {
-      "name": "Premium", 
+      "name": "Premium",
       "price": "$49",
       "period": "/month",
       "features": [
@@ -65,4 +65,4 @@
       ]
     }
   }
-} 
+}

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "motion/react";
+import { motion, useInView } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
 
 interface NumberTickerProps {
   value: number;
-  direction?: "up" | "down";
+  direction?: 'up' | 'down';
   delay?: number;
   duration?: number;
   className?: string;
@@ -17,45 +17,48 @@ interface NumberTickerProps {
 
 export default function NumberTicker({
   value,
-  direction = "up",
+  direction = 'up',
   delay = 0,
   duration = 2,
-  className = "",
-  prefix = "",
-  suffix = "",
+  className = '',
+  prefix = '',
+  suffix = '',
   decimalPlaces = 0,
-  start = 0
+  start = 0,
 }: NumberTickerProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [displayValue, setDisplayValue] = useState(start);
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView) {
+      return;
+    }
 
     const startTime = Date.now() + delay * 1000;
     const endTime = startTime + duration * 1000;
 
     const updateValue = () => {
       const now = Date.now();
-      
+
       if (now < startTime) {
         requestAnimationFrame(updateValue);
         return;
       }
-      
+
       if (now >= endTime) {
         setDisplayValue(value);
         return;
       }
 
       const progress = (now - startTime) / (endTime - startTime);
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      
-      const currentValue = direction === "up" 
-        ? start + (value - start) * easeOutQuart
-        : start - (start - value) * easeOutQuart;
-      
+      const easeOutQuart = 1 - (1 - progress) ** 4;
+
+      const currentValue =
+        direction === 'up'
+          ? start + (value - start) * easeOutQuart
+          : start - (start - value) * easeOutQuart;
+
       setDisplayValue(currentValue);
       requestAnimationFrame(updateValue);
     };
@@ -72,17 +75,15 @@ export default function NumberTicker({
 
   return (
     <motion.span
-      ref={ref}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
       className={`inline-block ${className}`}
       initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: delay }}
+      ref={ref}
+      transition={{ duration: 0.5, delay }}
     >
       {prefix}
-      <span className="tabular-nums">
-        {formatNumber(displayValue)}
-      </span>
+      <span className="tabular-nums">{formatNumber(displayValue)}</span>
       {suffix}
     </motion.span>
   );
-} 
+}

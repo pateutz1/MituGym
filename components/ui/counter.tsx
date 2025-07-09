@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import type React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/libs/utils';
 
 interface CounterProps {
@@ -29,19 +30,22 @@ interface CounterProps {
 // Optimized easing functions
 const easingFunctions = {
   linear: (t: number) => t,
-  easeOut: (t: number) => 1 - Math.pow(1 - t, 2), // Simplified cubic to quadratic
-  easeInOut: (t: number) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2,
+  easeOut: (t: number) => 1 - (1 - t) ** 2, // Simplified cubic to quadratic
+  easeInOut: (t: number) => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2),
 };
 
 // Optimized number formatting
-const formatNumber = (value: number, formatLarge: boolean = false): string => {
-  if (!formatLarge) return Math.round(value).toString();
-  
+const formatNumber = (value: number, formatLarge = false): string => {
+  if (!formatLarge) {
+    return Math.round(value).toString();
+  }
+
   const absValue = Math.abs(value);
-  if (absValue >= 1000000) {
-    return (value / 1000000).toFixed(1) + 'M';
-  } else if (absValue >= 1000) {
-    return (value / 1000).toFixed(1) + 'K';
+  if (absValue >= 1_000_000) {
+    return `${(value / 1_000_000).toFixed(1)}M`;
+  }
+  if (absValue >= 1000) {
+    return `${(value / 1000).toFixed(1)}K`;
   }
   return Math.round(value).toString();
 };
@@ -67,7 +71,9 @@ export const Counter: React.FC<CounterProps> = ({
 
   // Optimized Intersection Observer
   useEffect(() => {
-    if (!triggerOnView || hasAnimated) return;
+    if (!triggerOnView || hasAnimated) {
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -76,7 +82,7 @@ export const Counter: React.FC<CounterProps> = ({
           observer.disconnect();
         }
       },
-      { threshold: 0.2, rootMargin: "-50px" } // Optimized threshold
+      { threshold: 0.2, rootMargin: '-50px' } // Optimized threshold
     );
 
     if (counterRef.current) {
@@ -88,7 +94,9 @@ export const Counter: React.FC<CounterProps> = ({
 
   // Optimized animation logic
   useEffect(() => {
-    if (!isVisible || hasAnimated) return;
+    if (!isVisible || hasAnimated) {
+      return;
+    }
 
     const startTime = Date.now() + delay;
     const startValue = start;
@@ -99,10 +107,10 @@ export const Counter: React.FC<CounterProps> = ({
       const now = Date.now();
       const elapsed = Math.max(0, now - startTime);
       const progress = Math.min(elapsed / totalDuration, 1);
-      
+
       const easedProgress = easing(progress);
       const newValue = startValue + (endValue - startValue) * easedProgress;
-      
+
       setCurrentValue(newValue);
 
       if (progress < 1) {
@@ -126,19 +134,28 @@ export const Counter: React.FC<CounterProps> = ({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isVisible, hasAnimated, target, duration, start, delay, easing, onComplete]);
+  }, [
+    isVisible,
+    hasAnimated,
+    target,
+    duration,
+    start,
+    delay,
+    easing,
+    onComplete,
+  ]);
 
   return (
     <span
-      ref={counterRef}
       className={cn(
-        "inline-block font-bold text-4xl md:text-5xl lg:text-6xl",
-        "bg-gradient-to-r from-green-400 via-emerald-500 to-green-600",
-        "bg-clip-text text-transparent",
-        "transition-all duration-300 ease-out",
-        "drop-shadow-lg",
+        'inline-block font-bold text-4xl md:text-5xl lg:text-6xl',
+        'bg-gradient-to-r from-green-400 via-emerald-500 to-green-600',
+        'bg-clip-text text-transparent',
+        'transition-all duration-300 ease-out',
+        'drop-shadow-lg',
         className
       )}
+      ref={counterRef}
     >
       {prefix}
       {formatNumber(currentValue, formatLargeNumbers)}
@@ -151,51 +168,51 @@ export const Counter: React.FC<CounterProps> = ({
 export const CounterPresets = {
   members: (count: number) => (
     <Counter
-      target={count}
-      suffix="+"
-      duration={1800} // Reduced duration
-      formatLargeNumbers={true}
       className="text-green-400"
+      duration={1800}
+      formatLargeNumbers={true} // Reduced duration
+      suffix="+"
+      target={count}
     />
   ),
-  
+
   experience: (years: number) => (
     <Counter
-      target={years}
-      suffix="+ Years"
-      duration={1500} // Reduced duration
       className="text-emerald-400"
+      duration={1500}
+      suffix="+ Years" // Reduced duration
+      target={years}
     />
   ),
-  
+
   equipment: (count: number) => (
     <Counter
-      target={count}
-      suffix="+"
-      duration={1600} // Reduced duration
-      formatLargeNumbers={true}
       className="text-green-500"
+      duration={1600}
+      formatLargeNumbers={true} // Reduced duration
+      suffix="+"
+      target={count}
     />
   ),
-  
+
   percentage: (percent: number) => (
     <Counter
-      target={percent}
-      suffix="%"
-      duration={1200} // Reduced duration
       className="text-emerald-500"
+      duration={1200}
+      suffix="%" // Reduced duration
+      target={percent}
     />
   ),
-  
+
   currency: (amount: number) => (
     <Counter
-      target={amount}
-      prefix="$"
-      duration={1500} // Reduced duration
-      formatLargeNumbers={true}
       className="text-green-400"
+      duration={1500}
+      formatLargeNumbers={true} // Reduced duration
+      prefix="$"
+      target={amount}
     />
   ),
 };
 
-export default Counter; 
+export default Counter;

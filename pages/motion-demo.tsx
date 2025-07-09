@@ -1,149 +1,159 @@
-import { motion } from 'motion/react'
-import { useRef } from 'react'
-import ScrollProgress from '@/components/ui/scroll-progress'
-import ExpandableCard from '@/components/ui/expandable-card'
-import DraggableCard from '@/components/ui/draggable-card'
-import MagneticButton from '@/components/ui/magnetic-button'
-import StaggeredList from '@/components/ui/staggered-list'
-
-// Import optimized lazy-loaded components
-import {
-  LazyScrollLinkedAnimations,
-  LazyScrollLinkedBackground,
-  LazyScrollLinkedTextReveal,
-  LazyScrollLinkedParallaxLayers,
-  LazyScrollLinkedCounter,
-  LazyDynamicGrid,
-  LazySharedLayoutTransitions,
-  LazyAnimatedTabs,
-  LazyReorderableList,
-  LazyPhysicsSpring,
-  LazyMouseTracker,
-  LazyTransformChains,
-  LazyGesturePhysics,
-  LazyPhysicsSimulation,
-  LazyVariantsShowcase,
-  LazyStaggeredPatterns,
-  LazyOrchestratedAnimations,
-  LazyCoordinatedSequence,
-  preloadCriticalComponents
-} from '@/components/ui/lazy-motion-components'
-
-// Import accessibility and performance monitoring
-import { useReducedMotion, useMotionConfig } from '@/hooks/useReducedMotion'
+import { motion } from 'motion/react';
 // import { useAnimationPerformance } from '@/hooks/usePerformanceMonitoring'
 // import { PerformanceMonitor } from '@/components/ui/performance-monitor'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react';
+import DraggableCard from '@/components/ui/draggable-card';
+import ExpandableCard from '@/components/ui/expandable-card';
+// Import optimized lazy-loaded components
+import {
+  LazyAnimatedTabs,
+  LazyCoordinatedSequence,
+  LazyDynamicGrid,
+  LazyGesturePhysics,
+  LazyMouseTracker,
+  LazyOrchestratedAnimations,
+  LazyPhysicsSimulation,
+  LazyPhysicsSpring,
+  LazyReorderableList,
+  LazyScrollLinkedAnimations,
+  LazyScrollLinkedBackground,
+  LazyScrollLinkedCounter,
+  LazyScrollLinkedParallaxLayers,
+  LazyScrollLinkedTextReveal,
+  LazySharedLayoutTransitions,
+  LazyStaggeredPatterns,
+  LazyTransformChains,
+  LazyVariantsShowcase,
+  preloadCriticalComponents,
+} from '@/components/ui/lazy-motion-components';
+import MagneticButton from '@/components/ui/magnetic-button';
+import ScrollProgress from '@/components/ui/scroll-progress';
+import StaggeredList from '@/components/ui/staggered-list';
+// Import accessibility and performance monitoring
+import { useMotionConfig, useReducedMotion } from '@/hooks/useReducedMotion';
 
 export default function MotionDemo() {
-  const constraintsRef = useRef<HTMLDivElement>(null)
-  const prefersReducedMotion = useReducedMotion()
-  const motionConfig = useMotionConfig()
+  const constraintsRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const motionConfig = useMotionConfig();
   // const { startTracking, endTracking } = useAnimationPerformance('MotionDemo')
 
   // Preload critical components on mount
   useEffect(() => {
-    preloadCriticalComponents()
-  }, [])
+    preloadCriticalComponents();
+  }, []);
 
   const features = [
-    "Enhanced scroll-linked animations with multiple transforms",
-    "Advanced layout animations with smooth transitions",
-    "Complex physics simulations with real-time controls",
-    "Sophisticated variant systems for coordinated animations",
-    "Interactive gesture-based physics demonstrations",
-    "Multi-layered parallax effects with spring physics",
-    "Dynamic content with automatic layout transitions"
-  ]
+    'Enhanced scroll-linked animations with multiple transforms',
+    'Advanced layout animations with smooth transitions',
+    'Complex physics simulations with real-time controls',
+    'Sophisticated variant systems for coordinated animations',
+    'Interactive gesture-based physics demonstrations',
+    'Multi-layered parallax effects with spring physics',
+    'Dynamic content with automatic layout transitions',
+  ];
 
   const expandableCards = [
     {
-      title: "Scroll-Linked Animations",
-      summary: "Advanced scroll-driven effects with physics",
-      content: "Enhanced scroll animations using Motion's useScroll hook with multiple transform values, spring physics, and complex interpolations for smooth, performance-optimized effects."
+      title: 'Scroll-Linked Animations',
+      summary: 'Advanced scroll-driven effects with physics',
+      content:
+        "Enhanced scroll animations using Motion's useScroll hook with multiple transform values, spring physics, and complex interpolations for smooth, performance-optimized effects.",
     },
     {
-      title: "Layout Animations",
-      summary: "Automatic layout transitions with shared elements",
-      content: "Sophisticated layout animations using Motion's layout prop with shared element transitions, dynamic grids, and seamless state changes without manual calculations."
+      title: 'Layout Animations',
+      summary: 'Automatic layout transitions with shared elements',
+      content:
+        "Sophisticated layout animations using Motion's layout prop with shared element transitions, dynamic grids, and seamless state changes without manual calculations.",
     },
     {
-      title: "Advanced Physics",
-      summary: "Real-time physics with interactive controls",
-      content: "Complex physics simulations including gravity, momentum, elasticity, and collision detection with real-time parameter adjustments and visual feedback."
+      title: 'Advanced Physics',
+      summary: 'Real-time physics with interactive controls',
+      content:
+        'Complex physics simulations including gravity, momentum, elasticity, and collision detection with real-time parameter adjustments and visual feedback.',
     },
     {
-      title: "Variant Systems",
-      summary: "Coordinated animations with staggered effects",
-      content: "Powerful variant system enabling complex choreographed animations with multiple stagger patterns, orchestrated sequences, and coordinated element behaviors."
-    }
-  ]
+      title: 'Variant Systems',
+      summary: 'Coordinated animations with staggered effects',
+      content:
+        'Powerful variant system enabling complex choreographed animations with multiple stagger patterns, orchestrated sequences, and coordinated element behaviors.',
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-background text-white relative overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-background text-white">
       {/* Enhanced Background Effects */}
       <LazyScrollLinkedBackground />
       <LazyScrollLinkedParallaxLayers />
-      
+
       {/* Scroll Progress Bar */}
       <ScrollProgress />
-      
+
       {/* Performance Monitor - Disabled */}
       {/* <PerformanceMonitor 
         showDebugInfo={process.env.NODE_ENV === 'development'} 
         position="bottom-right" 
       /> */}
-      
-      <div className="container mx-auto px-4 py-20 relative z-10">
+
+      <div className="container relative z-10 mx-auto px-4 py-20">
         {/* Enhanced Header */}
-        <LazyScrollLinkedTextReveal className="text-center mb-16">
-                      <motion.header 
+        <LazyScrollLinkedTextReveal className="mb-16 text-center">
+          <motion.header
+            animate={{ opacity: 1, y: 0 }}
             className="space-y-6"
             initial={{ opacity: 0, y: prefersReducedMotion ? 0 : -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={prefersReducedMotion ? motionConfig.fade : { duration: 0.8 }}
+            transition={
+              prefersReducedMotion ? motionConfig.fade : { duration: 0.8 }
+            }
           >
             <motion.div
-              className="inline-block bg-primary/10 border border-primary/20 rounded-full px-6 py-3 mb-6"
-              whileHover={{ scale: 1.05, backgroundColor: 'rgba(30, 155, 113, 0.2)' }}
+              className="mb-6 inline-block rounded-full border border-primary/20 bg-primary/10 px-6 py-3"
+              whileHover={{
+                scale: 1.05,
+                backgroundColor: 'rgba(30, 155, 113, 0.2)',
+              }}
             >
-              <span className="text-primary font-medium">🚀 Advanced Motion Features</span>
+              <span className="font-medium text-primary">
+                🚀 Advanced Motion Features
+              </span>
             </motion.div>
-            
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
+
+            <h1 className="mb-6 font-bold text-5xl md:text-6xl lg:text-7xl">
               <motion.span
-                className="bg-gradient-to-r from-primary via-blue-500 to-purple-500 bg-clip-text text-transparent"
                 animate={{
                   backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                 }}
+                className="bg-gradient-to-r from-primary via-blue-500 to-purple-500 bg-clip-text text-transparent"
                 transition={{
                   duration: 5,
-                  repeat: Infinity,
-                  ease: "linear"
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: 'linear',
                 }}
               >
                 Motion.dev
               </motion.span>{' '}
-              <br />Enhanced Demo
+              <br />
+              Enhanced Demo
             </h1>
-            
-            <p className="text-xl md:text-2xl text-white/70 max-w-4xl mx-auto leading-relaxed">
-              Experience the full power of Motion&apos;s hybrid animation engine with advanced 
-              scroll effects, layout transitions, physics simulations, and coordinated animations.
+
+            <p className="mx-auto max-w-4xl text-white/70 text-xl leading-relaxed md:text-2xl">
+              Experience the full power of Motion&apos;s hybrid animation engine
+              with advanced scroll effects, layout transitions, physics
+              simulations, and coordinated animations.
             </p>
-            
-            <LazyScrollLinkedCounter target={100} className="text-center" />
+
+            <LazyScrollLinkedCounter className="text-center" target={100} />
           </motion.header>
         </LazyScrollLinkedTextReveal>
 
         {/* Enhanced Features List */}
         <section className="mb-20">
           <LazyScrollLinkedAnimations>
-            <motion.h2 
-              className="text-3xl md:text-4xl font-bold mb-8 text-center"
+            <motion.h2
+              className="mb-8 text-center font-bold text-3xl md:text-4xl"
               initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
+              whileInView={{ opacity: 1 }}
             >
               Advanced Features
             </motion.h2>
@@ -153,21 +163,21 @@ export default function MotionDemo() {
 
         {/* Expandable Cards Section */}
         <section className="mb-20">
-          <motion.h2 
-            className="text-3xl md:text-4xl font-bold mb-8 text-center"
+          <motion.h2
+            className="mb-8 text-center font-bold text-3xl md:text-4xl"
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
+            whileInView={{ opacity: 1 }}
           >
             Feature Overview
           </motion.h2>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid gap-6 md:grid-cols-2">
             {expandableCards.map((card, index) => (
               <ExpandableCard
-                key={index}
-                title={card.title}
-                summary={card.summary}
                 content={card.content}
+                key={index}
+                summary={card.summary}
+                title={card.title}
               />
             ))}
           </div>
@@ -175,23 +185,28 @@ export default function MotionDemo() {
 
         {/* Scroll-Linked Animations Section */}
         <section className="mb-20">
-          <motion.h2 
-            className="text-3xl md:text-4xl font-bold mb-8 text-center"
+          <motion.h2
+            className="mb-8 text-center font-bold text-3xl md:text-4xl"
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
+            whileInView={{ opacity: 1 }}
           >
             1. Enhanced Scroll Animations
           </motion.h2>
-          
+
           <div className="space-y-12">
-            <div className="bg-surface/20 rounded-xl p-8 border border-white/10">
-              <h3 className="text-xl font-semibold mb-4 text-primary">Multi-Transform Scroll Effects</h3>
+            <div className="rounded-xl border border-white/10 bg-surface/20 p-8">
+              <h3 className="mb-4 font-semibold text-primary text-xl">
+                Multi-Transform Scroll Effects
+              </h3>
               <LazyScrollLinkedAnimations>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                   {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="bg-primary/20 p-6 rounded-lg text-center">
-                      <div className="text-2xl mb-2">🎯</div>
+                    <div
+                      className="rounded-lg bg-primary/20 p-6 text-center"
+                      key={i}
+                    >
+                      <div className="mb-2 text-2xl">🎯</div>
                       <p className="text-sm">Scroll Effect {i}</p>
                     </div>
                   ))}
@@ -203,33 +218,41 @@ export default function MotionDemo() {
 
         {/* Layout Animations Section */}
         <section className="mb-20">
-          <motion.h2 
-            className="text-3xl md:text-4xl font-bold mb-8 text-center"
+          <motion.h2
+            className="mb-8 text-center font-bold text-3xl md:text-4xl"
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
+            whileInView={{ opacity: 1 }}
           >
             2. Advanced Layout Animations
           </motion.h2>
-          
+
           <div className="space-y-12">
-            <div className="bg-surface/20 rounded-xl p-8 border border-white/10">
-              <h3 className="text-xl font-semibold mb-4 text-primary">Dynamic Grid with Shared Elements</h3>
+            <div className="rounded-xl border border-white/10 bg-surface/20 p-8">
+              <h3 className="mb-4 font-semibold text-primary text-xl">
+                Dynamic Grid with Shared Elements
+              </h3>
               <LazyDynamicGrid />
             </div>
-            
-            <div className="bg-surface/20 rounded-xl p-8 border border-white/10">
-              <h3 className="text-xl font-semibold mb-4 text-primary">Shared Layout Transitions</h3>
+
+            <div className="rounded-xl border border-white/10 bg-surface/20 p-8">
+              <h3 className="mb-4 font-semibold text-primary text-xl">
+                Shared Layout Transitions
+              </h3>
               <LazySharedLayoutTransitions />
             </div>
-            
-            <div className="bg-surface/20 rounded-xl p-8 border border-white/10">
-              <h3 className="text-xl font-semibold mb-4 text-primary">Animated Tab System</h3>
+
+            <div className="rounded-xl border border-white/10 bg-surface/20 p-8">
+              <h3 className="mb-4 font-semibold text-primary text-xl">
+                Animated Tab System
+              </h3>
               <LazyAnimatedTabs />
             </div>
-            
-            <div className="bg-surface/20 rounded-xl p-8 border border-white/10">
-              <h3 className="text-xl font-semibold mb-4 text-primary">Reorderable List</h3>
+
+            <div className="rounded-xl border border-white/10 bg-surface/20 p-8">
+              <h3 className="mb-4 font-semibold text-primary text-xl">
+                Reorderable List
+              </h3>
               <LazyReorderableList />
             </div>
           </div>
@@ -237,38 +260,48 @@ export default function MotionDemo() {
 
         {/* Advanced Physics Section */}
         <section className="mb-20">
-          <motion.h2 
-            className="text-3xl md:text-4xl font-bold mb-8 text-center"
+          <motion.h2
+            className="mb-8 text-center font-bold text-3xl md:text-4xl"
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
+            whileInView={{ opacity: 1 }}
           >
             3. Advanced Physics & Transform Values
           </motion.h2>
-          
+
           <div className="space-y-12">
-            <div className="bg-surface/20 rounded-xl p-8 border border-white/10">
-              <h3 className="text-xl font-semibold mb-4 text-primary">Physics-Based Springs</h3>
+            <div className="rounded-xl border border-white/10 bg-surface/20 p-8">
+              <h3 className="mb-4 font-semibold text-primary text-xl">
+                Physics-Based Springs
+              </h3>
               <LazyPhysicsSpring />
             </div>
-            
-            <div className="bg-surface/20 rounded-xl p-8 border border-white/10">
-              <h3 className="text-xl font-semibold mb-4 text-primary">Mouse Tracking with Physics</h3>
+
+            <div className="rounded-xl border border-white/10 bg-surface/20 p-8">
+              <h3 className="mb-4 font-semibold text-primary text-xl">
+                Mouse Tracking with Physics
+              </h3>
               <LazyMouseTracker />
             </div>
-            
-            <div className="bg-surface/20 rounded-xl p-8 border border-white/10">
-              <h3 className="text-xl font-semibold mb-4 text-primary">Complex Transform Chains</h3>
+
+            <div className="rounded-xl border border-white/10 bg-surface/20 p-8">
+              <h3 className="mb-4 font-semibold text-primary text-xl">
+                Complex Transform Chains
+              </h3>
               <LazyTransformChains />
             </div>
-            
-            <div className="bg-surface/20 rounded-xl p-8 border border-white/10">
-              <h3 className="text-xl font-semibold mb-4 text-primary">Gesture-Based Physics</h3>
+
+            <div className="rounded-xl border border-white/10 bg-surface/20 p-8">
+              <h3 className="mb-4 font-semibold text-primary text-xl">
+                Gesture-Based Physics
+              </h3>
               <LazyGesturePhysics />
             </div>
-            
-            <div className="bg-surface/20 rounded-xl p-8 border border-white/10">
-              <h3 className="text-xl font-semibold mb-4 text-primary">Real-Time Physics Simulation</h3>
+
+            <div className="rounded-xl border border-white/10 bg-surface/20 p-8">
+              <h3 className="mb-4 font-semibold text-primary text-xl">
+                Real-Time Physics Simulation
+              </h3>
               <LazyPhysicsSimulation />
             </div>
           </div>
@@ -276,33 +309,41 @@ export default function MotionDemo() {
 
         {/* Variants & Staggered Animations Section */}
         <section className="mb-20">
-          <motion.h2 
-            className="text-3xl md:text-4xl font-bold mb-8 text-center"
+          <motion.h2
+            className="mb-8 text-center font-bold text-3xl md:text-4xl"
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
+            whileInView={{ opacity: 1 }}
           >
             4. Variants & Staggered Animations
           </motion.h2>
-          
+
           <div className="space-y-12">
-            <div className="bg-surface/20 rounded-xl p-8 border border-white/10">
-              <h3 className="text-xl font-semibold mb-4 text-primary">Complex Variant System</h3>
+            <div className="rounded-xl border border-white/10 bg-surface/20 p-8">
+              <h3 className="mb-4 font-semibold text-primary text-xl">
+                Complex Variant System
+              </h3>
               <LazyVariantsShowcase />
             </div>
-            
-            <div className="bg-surface/20 rounded-xl p-8 border border-white/10">
-              <h3 className="text-xl font-semibold mb-4 text-primary">Staggered Animation Patterns</h3>
+
+            <div className="rounded-xl border border-white/10 bg-surface/20 p-8">
+              <h3 className="mb-4 font-semibold text-primary text-xl">
+                Staggered Animation Patterns
+              </h3>
               <LazyStaggeredPatterns />
             </div>
-            
-            <div className="bg-surface/20 rounded-xl p-8 border border-white/10">
-              <h3 className="text-xl font-semibold mb-4 text-primary">Orchestrated Animations</h3>
+
+            <div className="rounded-xl border border-white/10 bg-surface/20 p-8">
+              <h3 className="mb-4 font-semibold text-primary text-xl">
+                Orchestrated Animations
+              </h3>
               <LazyOrchestratedAnimations />
             </div>
-            
-            <div className="bg-surface/20 rounded-xl p-8 border border-white/10">
-              <h3 className="text-xl font-semibold mb-4 text-primary">Coordinated Sequence</h3>
+
+            <div className="rounded-xl border border-white/10 bg-surface/20 p-8">
+              <h3 className="mb-4 font-semibold text-primary text-xl">
+                Coordinated Sequence
+              </h3>
               <LazyCoordinatedSequence />
             </div>
           </div>
@@ -310,43 +351,51 @@ export default function MotionDemo() {
 
         {/* Original Draggable Cards Section - Enhanced */}
         <section className="mb-20">
-          <motion.h2 
-            className="text-3xl md:text-4xl font-bold mb-8 text-center"
+          <motion.h2
+            className="mb-8 text-center font-bold text-3xl md:text-4xl"
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
+            whileInView={{ opacity: 1 }}
           >
             5. Interactive Drag Gestures
           </motion.h2>
-          <div 
+          <div
+            className="relative h-96 overflow-hidden rounded-xl border border-white/10 bg-surface/20"
             ref={constraintsRef}
-            className="relative h-96 bg-surface/20 rounded-xl border border-white/10 overflow-hidden"
           >
-            <p className="absolute top-4 left-4 text-white/60 text-sm">
+            <p className="absolute top-4 left-4 text-sm text-white/60">
               Drag the cards around! They have physics and constraints.
             </p>
-            
-            <DraggableCard 
-              constraintsRef={constraintsRef}
+
+            <DraggableCard
               className="absolute top-16 left-8"
-            >
-              <h3 className="text-lg font-semibold text-white mb-2">Enhanced Card 1</h3>
-              <p className="text-white/70">Advanced drag physics with momentum!</p>
-            </DraggableCard>
-            
-            <DraggableCard 
               constraintsRef={constraintsRef}
-              className="absolute top-16 right-8"
             >
-              <h3 className="text-lg font-semibold text-white mb-2">Enhanced Card 2</h3>
+              <h3 className="mb-2 font-semibold text-lg text-white">
+                Enhanced Card 1
+              </h3>
+              <p className="text-white/70">
+                Advanced drag physics with momentum!
+              </p>
+            </DraggableCard>
+
+            <DraggableCard
+              className="absolute top-16 right-8"
+              constraintsRef={constraintsRef}
+            >
+              <h3 className="mb-2 font-semibold text-lg text-white">
+                Enhanced Card 2
+              </h3>
               <p className="text-white/70">Smooth spring animations on drag!</p>
             </DraggableCard>
-            
-            <DraggableCard 
+
+            <DraggableCard
+              className="-translate-x-1/2 absolute bottom-16 left-1/2 transform"
               constraintsRef={constraintsRef}
-              className="absolute bottom-16 left-1/2 transform -translate-x-1/2"
             >
-              <h3 className="text-lg font-semibold text-white mb-2">Enhanced Card 3</h3>
+              <h3 className="mb-2 font-semibold text-lg text-white">
+                Enhanced Card 3
+              </h3>
               <p className="text-white/70">Elastic constraints with physics!</p>
             </DraggableCard>
           </div>
@@ -354,55 +403,47 @@ export default function MotionDemo() {
 
         {/* Enhanced Magnetic Buttons Section */}
         <section className="mb-20">
-          <motion.h2 
-            className="text-3xl md:text-4xl font-bold mb-8 text-center"
+          <motion.h2
+            className="mb-8 text-center font-bold text-3xl md:text-4xl"
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
+            whileInView={{ opacity: 1 }}
           >
             6. Enhanced Magnetic Interactions
           </motion.h2>
           <div className="flex flex-wrap justify-center gap-6">
-            <MagneticButton strength={0.2}>
-              Subtle Magnetic
-            </MagneticButton>
-            <MagneticButton strength={0.4}>
-              Medium Magnetic
-            </MagneticButton>
-            <MagneticButton strength={0.6}>
-              Strong Magnetic
-            </MagneticButton>
-            <MagneticButton strength={0.8}>
-              Ultra Magnetic
-            </MagneticButton>
+            <MagneticButton strength={0.2}>Subtle Magnetic</MagneticButton>
+            <MagneticButton strength={0.4}>Medium Magnetic</MagneticButton>
+            <MagneticButton strength={0.6}>Strong Magnetic</MagneticButton>
+            <MagneticButton strength={0.8}>Ultra Magnetic</MagneticButton>
           </div>
-          <p className="text-center text-white/60 mt-6">
-            Hover over the buttons to experience different magnetic field strengths!
+          <p className="mt-6 text-center text-white/60">
+            Hover over the buttons to experience different magnetic field
+            strengths!
           </p>
         </section>
 
         {/* Footer */}
-        <motion.footer 
-          className="text-center py-16"
+        <motion.footer
+          className="py-16 text-center"
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
+          whileInView={{ opacity: 1 }}
         >
-          <div className="bg-gradient-to-br from-primary/20 to-blue-500/10 backdrop-blur-sm border border-white/10 rounded-3xl p-8">
-            <h3 className="text-2xl font-bold text-white mb-4">
+          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-primary/20 to-blue-500/10 p-8 backdrop-blur-sm">
+            <h3 className="mb-4 font-bold text-2xl text-white">
               Ready to Implement These Features?
             </h3>
-            <p className="text-white/70 mb-6 max-w-2xl mx-auto">
-              All these advanced animations are powered by Motion.dev&apos;s hybrid engine, 
-              combining the best of CSS and JavaScript animations for optimal performance.
-              Features lazy loading, reduced motion support, and real-time performance monitoring.
+            <p className="mx-auto mb-6 max-w-2xl text-white/70">
+              All these advanced animations are powered by Motion.dev&apos;s
+              hybrid engine, combining the best of CSS and JavaScript animations
+              for optimal performance. Features lazy loading, reduced motion
+              support, and real-time performance monitoring.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <MagneticButton strength={0.3}>
-                View Documentation
-              </MagneticButton>
-              <MagneticButton 
-                className="bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white"
+            <div className="flex flex-col justify-center gap-4 sm:flex-row">
+              <MagneticButton strength={0.3}>View Documentation</MagneticButton>
+              <MagneticButton
+                className="border-2 border-primary bg-transparent text-primary hover:bg-primary hover:text-white"
                 strength={0.2}
               >
                 Get Started
@@ -412,5 +453,5 @@ export default function MotionDemo() {
         </motion.footer>
       </div>
     </div>
-  )
-} 
+  );
+}

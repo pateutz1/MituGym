@@ -1,7 +1,10 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { useReducedMotion, AccessibleMotionOptions } from '../../hooks/useReducedMotion'
+import type React from 'react';
+import {
+  type AccessibleMotionOptions,
+  useReducedMotion,
+} from '../../hooks/useReducedMotion';
 
 // Component wrapper that automatically handles reduced motion
 export function withAccessibleMotion<T extends object>(
@@ -9,16 +12,18 @@ export function withAccessibleMotion<T extends object>(
   options: AccessibleMotionOptions<T> = {}
 ) {
   return function AccessibleMotionComponent(props: T) {
-    const prefersReducedMotion = useReducedMotion()
-    
+    const prefersReducedMotion = useReducedMotion();
+
     if (prefersReducedMotion && options.disableOnReducedMotion) {
-      return options.fallbackComponent ? 
-        <options.fallbackComponent {...props} /> : 
+      return options.fallbackComponent ? (
+        <options.fallbackComponent {...props} />
+      ) : (
         <div>Animation disabled due to accessibility preferences</div>
+      );
     }
-    
-    return <Component {...props} />
-  }
+
+    return <Component {...props} />;
+  };
 }
 
 // Alternative component-based approach for accessible motion
@@ -28,17 +33,19 @@ export function AccessibleMotionWrapper<T extends object>({
   disableOnReducedMotion = false,
   ...props
 }: {
-  children: React.ReactNode
-  fallbackComponent?: React.ComponentType<T>
-  disableOnReducedMotion?: boolean
+  children: React.ReactNode;
+  fallbackComponent?: React.ComponentType<T>;
+  disableOnReducedMotion?: boolean;
 } & T) {
-  const prefersReducedMotion = useReducedMotion()
-  
+  const prefersReducedMotion = useReducedMotion();
+
   if (prefersReducedMotion && disableOnReducedMotion) {
-    return FallbackComponent ? 
-      <FallbackComponent {...(props as T)} /> : 
+    return FallbackComponent ? (
+      <FallbackComponent {...(props as T)} />
+    ) : (
       <div>Animation disabled due to accessibility preferences</div>
+    );
   }
-  
-  return <>{children}</>
-} 
+
+  return <>{children}</>;
+}

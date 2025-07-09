@@ -1,36 +1,36 @@
-import { useReducedMotion } from './useReducedMotion'
+import { useReducedMotion } from './useReducedMotion';
 
 export interface MotionConfig {
   spring: {
-    type: 'spring'
-    stiffness: number
-    damping: number
-    mass: number
-  }
+    type: 'spring';
+    stiffness: number;
+    damping: number;
+    mass: number;
+  };
   fade: {
-    duration: number
-    ease: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut'
-  }
+    duration: number;
+    ease: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut';
+  };
   slideUp: {
-    duration: number
-    ease: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut'
-  }
+    duration: number;
+    ease: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut';
+  };
   slideDown: {
-    duration: number
-    ease: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut'
-  }
+    duration: number;
+    ease: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut';
+  };
   scale: {
-    duration: number
-    ease: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut'
-  }
+    duration: number;
+    ease: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut';
+  };
   rotate: {
-    duration: number
-    ease: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut'
-  }
+    duration: number;
+    ease: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut';
+  };
 }
 
 export function useMotionConfig(): MotionConfig {
-  const prefersReducedMotion = useReducedMotion()
+  const prefersReducedMotion = useReducedMotion();
 
   if (prefersReducedMotion) {
     return {
@@ -38,29 +38,29 @@ export function useMotionConfig(): MotionConfig {
         type: 'spring',
         stiffness: 300,
         damping: 30,
-        mass: 1
+        mass: 1,
       },
       fade: {
         duration: 0.01,
-        ease: 'linear'
+        ease: 'linear',
       },
       slideUp: {
         duration: 0.01,
-        ease: 'linear'
+        ease: 'linear',
       },
       slideDown: {
         duration: 0.01,
-        ease: 'linear'
+        ease: 'linear',
       },
       scale: {
         duration: 0.01,
-        ease: 'linear'
+        ease: 'linear',
       },
       rotate: {
         duration: 0.01,
-        ease: 'linear'
-      }
-    }
+        ease: 'linear',
+      },
+    };
   }
 
   return {
@@ -68,69 +68,69 @@ export function useMotionConfig(): MotionConfig {
       type: 'spring',
       stiffness: 400,
       damping: 25,
-      mass: 1
+      mass: 1,
     },
     fade: {
       duration: 0.6,
-      ease: 'easeOut'
+      ease: 'easeOut',
     },
     slideUp: {
       duration: 0.6,
-      ease: 'easeOut'
+      ease: 'easeOut',
     },
     slideDown: {
       duration: 0.6,
-      ease: 'easeOut'
+      ease: 'easeOut',
     },
     scale: {
       duration: 0.4,
-      ease: 'easeOut'
+      ease: 'easeOut',
     },
     rotate: {
       duration: 0.8,
-      ease: 'easeInOut'
-    }
-  }
+      ease: 'easeInOut',
+    },
+  };
 }
 
 export function useAccessibleVariants(variants: any) {
-  const prefersReducedMotion = useReducedMotion()
-  
+  const prefersReducedMotion = useReducedMotion();
+
   if (prefersReducedMotion) {
     // Remove potentially problematic animations
-    const accessibleVariants = { ...variants }
-    
-    Object.keys(accessibleVariants).forEach(key => {
-      const variant = accessibleVariants[key]
+    const accessibleVariants = { ...variants };
+
+    Object.keys(accessibleVariants).forEach((key) => {
+      const variant = accessibleVariants[key];
       if (typeof variant === 'object') {
         // Remove rotation and complex transforms
-        delete variant.rotate
-        delete variant.rotateX
-        delete variant.rotateY
-        delete variant.rotateZ
-        delete variant.scale
-        delete variant.scaleX
-        delete variant.scaleY
-        
+        variant.rotate = undefined;
+        variant.rotateX = undefined;
+        variant.rotateY = undefined;
+        variant.rotateZ = undefined;
+        variant.scale = undefined;
+        variant.scaleX = undefined;
+        variant.scaleY = undefined;
+
         // Reduce movement
         if (variant.y && Math.abs(variant.y) > 20) {
-          variant.y = variant.y > 0 ? 10 : -10
+          variant.y = variant.y > 0 ? 10 : -10;
         }
         if (variant.x && Math.abs(variant.x) > 20) {
-          variant.x = variant.x > 0 ? 10 : -10
+          variant.x = variant.x > 0 ? 10 : -10;
         }
       }
-    })
-    
-    return accessibleVariants
+    });
+
+    return accessibleVariants;
   }
-  
-  return variants
+
+  return variants;
 }
 
 // Helper function for creating accessible variants without using hooks
 export function createAccessibleVariants(variants: any) {
   // This is a helper function that can be used outside React components
   // It doesn't use hooks and just returns the variants as-is
-  return variants
-} 
+  return variants;
+}

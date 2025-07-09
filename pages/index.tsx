@@ -1,38 +1,33 @@
-import { motion } from 'motion/react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { useTranslation } from '@/hooks/useTranslation'
-import { useReducedMotion } from '@/hooks/useReducedMotion'
-import { useMotionConfig, createAccessibleVariants } from '@/hooks/useMotionConfig'
+import { motion } from 'motion/react';
+import Image from 'next/image';
+import Link from 'next/link';
+import Countdown from '@/components/Countdown';
+import ParallaxCard from '@/components/ParallaxCard';
+import PlanCard from '@/components/PlanCard';
+import SimpleTooltip from '@/components/SimpleTooltip';
+import Tooltip from '@/components/Tooltip';
+import AnimatedGradientText from '@/components/ui/animated-gradient-text';
+import Counter from '@/components/ui/counter';
+import ExpandableCard from '@/components/ui/expandable-card';
+import FaqSection from '@/components/ui/faq';
+import GymFloatingDock from '@/components/ui/gym-floating-dock';
+import MagneticButton from '@/components/ui/magnetic-button';
+import ProgressRing, {
+  ProgressRingPresets,
+} from '@/components/ui/progress-ring';
+import ScrollProgress from '@/components/ui/scroll-progress';
+import ShinyButton from '@/components/ui/shiny-button';
+import StaggeredList from '@/components/ui/staggered-list';
+import TypingText from '@/components/ui/typing-text';
+import { popularFAQs } from '@/data/faqData';
+import {
+  createAccessibleVariants,
+  useMotionConfig,
+} from '@/hooks/useMotionConfig';
 // import { useAnimationPerformance } from '@/hooks/usePerformanceMonitoring'
-import { useMultiParallax, useParallax, useIntersectionParallax } from '@/hooks/useParallax'
-import Countdown from '@/components/Countdown'
-import FeatureCard from '@/components/FeatureCard'
-import PlanCard from '@/components/PlanCard'
-import ParallaxCard from '@/components/ParallaxCard'
-import Tooltip from '@/components/Tooltip'
-import SimpleTooltip from '@/components/SimpleTooltip'
-import FaqSection from '@/components/ui/faq'
-import AnimatedGradientText from '@/components/ui/animated-gradient-text'
-import ShinyButton from '@/components/ui/shiny-button'
-import Counter from '@/components/ui/counter'
-import TypingText from '@/components/ui/typing-text'
-import ProgressRing, { ProgressRingPresets } from '@/components/ui/progress-ring'
-import GymFloatingDock from '@/components/ui/gym-floating-dock'
-import ScrollProgress from '@/components/ui/scroll-progress'
-import MagneticButton from '@/components/ui/magnetic-button'
-import StaggeredList from '@/components/ui/staggered-list'
-import ExpandableCard from '@/components/ui/expandable-card'
-
-// Lazy load advanced motion components
-import { 
-  LazyScrollLinkedAnimations,
-  LazyDynamicGrid,
-  LazyPhysicsSpring,
-  LazyVariantsShowcase
-} from '@/components/ui/lazy-motion-components'
-
-import { popularFAQs } from '@/data/faqData'
+import { useMultiParallax, useParallax } from '@/hooks/useParallax';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface StatItem {
   number: string | number;
@@ -43,2110 +38,2410 @@ interface StatItem {
 }
 
 export default function Home() {
-  const { t } = useTranslation()
-  const prefersReducedMotion = useReducedMotion()
-  const motionConfig = useMotionConfig()
+  const { t } = useTranslation();
+  const prefersReducedMotion = useReducedMotion();
+  const _motionConfig = useMotionConfig();
   // const { startTracking, endTracking } = useAnimationPerformance('HomePage')
 
   // Parallax hooks - disable for reduced motion
-  const scrollY = useMultiParallax()
-  const heroParallax = useParallax<HTMLDivElement>({ 
-    speed: prefersReducedMotion ? 0 : 0.5 
-  })
-  const floatingParallax1 = useParallax<HTMLDivElement>({ 
-    speed: prefersReducedMotion ? 0 : -0.3 
-  })
-  const floatingParallax2 = useParallax<HTMLDivElement>({ 
-    speed: prefersReducedMotion ? 0 : -0.6 
-  })
-  const imageParallax = useParallax<HTMLDivElement>({ 
-    speed: prefersReducedMotion ? 0 : 0.05 
-  })
+  const _scrollY = useMultiParallax();
+  const _heroParallax = useParallax<HTMLDivElement>({
+    speed: prefersReducedMotion ? 0 : 0.5,
+  });
+  const floatingParallax1 = useParallax<HTMLDivElement>({
+    speed: prefersReducedMotion ? 0 : -0.3,
+  });
+  const floatingParallax2 = useParallax<HTMLDivElement>({
+    speed: prefersReducedMotion ? 0 : -0.6,
+  });
+  const imageParallax = useParallax<HTMLDivElement>({
+    speed: prefersReducedMotion ? 0 : 0.05,
+  });
 
   // Accessible animation variants
   const heroVariants = createAccessibleVariants({
     hidden: { opacity: 0, y: 50, rotate: 5 },
-    visible: { opacity: 1, y: 0, rotate: 0 }
-  })
+    visible: { opacity: 1, y: 0, rotate: 0 },
+  });
 
-  const cardVariants = createAccessibleVariants({
+  const _cardVariants = createAccessibleVariants({
     hidden: { opacity: 0, y: 30, scale: 0.9 },
-    visible: { opacity: 1, y: 0, scale: 1 }
-  })
+    visible: { opacity: 1, y: 0, scale: 1 },
+  });
 
   // Stats data with tooltip content
   const stats: StatItem[] = [
-    { 
-      number: 'Opening', 
+    {
+      number: 'Opening',
       label: 'Soon',
-      tooltip: 'State-of-the-art facility opening Saturday, July 12th at 10 AM. Be part of our founding member community!',
-      isCounter: false
+      tooltip:
+        'State-of-the-art facility opening Saturday, July 12th at 10 AM. Be part of our founding member community!',
+      isCounter: false,
     },
-    { 
-      number: 500, 
+    {
+      number: 500,
       suffix: 'm²',
       label: 'Training Space',
-      tooltip: 'Spacious areas with dedicated zones for cardio, strength training, functional fitness, and group classes.',
-      isCounter: true
+      tooltip:
+        'Spacious areas with dedicated zones for cardio, strength training, functional fitness, and group classes.',
+      isCounter: true,
     },
-    { 
-      number: 'Premium', 
+    {
+      number: 'Premium',
       label: 'Equipment',
-      tooltip: 'Latest generation fitness equipment from top manufacturers like Technogym, Life Fitness, and Hammer Strength.',
-      isCounter: false
+      tooltip:
+        'Latest generation fitness equipment from top manufacturers like Technogym, Life Fitness, and Hammer Strength.',
+      isCounter: false,
     },
-    { 
-      number: 'Extended', 
+    {
+      number: 'Extended',
       label: 'Access Hours',
-      tooltip: 'Extended hours to fit your schedule: Monday-Friday 6AM-11PM, Saturday 7AM-10PM, Sunday 7AM-8PM.',
-      isCounter: false
-    }
-  ]
+      tooltip:
+        'Extended hours to fit your schedule: Monday-Friday 6AM-11PM, Saturday 7AM-10PM, Sunday 7AM-8PM.',
+      isCounter: false,
+    },
+  ];
 
   // Professional Icons Components with Gradients
-  const DumbbellIcon = () => (
-    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24">
+  const _DumbbellIcon = () => (
+    <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24">
       <defs>
-        <linearGradient id="dumbbellGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="dumbbellGrad" x1="0%" x2="100%" y1="0%" y2="100%">
           <stop offset="0%" stopColor="#1e9b71" />
           <stop offset="100%" stopColor="#10b981" />
         </linearGradient>
       </defs>
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} stroke="url(#dumbbellGrad)" d="M7 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h4m10 0h4a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-4M7 8V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3m-9 0v8m9-8v8M10 8v8m4-8v8" />
+      <path
+        d="M7 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h4m10 0h4a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-4M7 8V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3m-9 0v8m9-8v8M10 8v8m4-8v8"
+        stroke="url(#dumbbellGrad)"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+      />
     </svg>
-  )
+  );
 
-  const FitnessIcon = () => (
-    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24">
+  const _FitnessIcon = () => (
+    <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24">
       <defs>
-        <linearGradient id="fitnessGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="fitnessGrad" x1="0%" x2="100%" y1="0%" y2="100%">
           <stop offset="0%" stopColor="#8b5cf6" />
           <stop offset="100%" stopColor="#a855f7" />
         </linearGradient>
       </defs>
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} stroke="url(#fitnessGrad)" d="M13 10V3L4 14h7v7l9-11h-7z" />
-      <circle cx="12" cy="12" r="3" strokeWidth={1.5} stroke="url(#fitnessGrad)" />
+      <path
+        d="M13 10V3L4 14h7v7l9-11h-7z"
+        stroke="url(#fitnessGrad)"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+      />
+      <circle
+        cx="12"
+        cy="12"
+        r="3"
+        stroke="url(#fitnessGrad)"
+        strokeWidth={1.5}
+      />
     </svg>
-  )
+  );
 
-  const PersonalTrainerIcon = () => (
-    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24">
+  const _PersonalTrainerIcon = () => (
+    <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24">
       <defs>
-        <linearGradient id="trainerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="trainerGrad" x1="0%" x2="100%" y1="0%" y2="100%">
           <stop offset="0%" stopColor="#3b82f6" />
           <stop offset="100%" stopColor="#1d4ed8" />
         </linearGradient>
       </defs>
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} stroke="url(#trainerGrad)" d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM12 14a7 7 0 0 0-7 7h14a7 7 0 0 0-7-7z" />
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} stroke="url(#trainerGrad)" d="M15 11l2-2 4 4" />
+      <path
+        d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM12 14a7 7 0 0 0-7 7h14a7 7 0 0 0-7-7z"
+        stroke="url(#trainerGrad)"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+      />
+      <path
+        d="M15 11l2-2 4 4"
+        stroke="url(#trainerGrad)"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+      />
     </svg>
-  )
+  );
 
-  const TargetIcon = () => (
-    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24">
+  const _TargetIcon = () => (
+    <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24">
       <defs>
-        <linearGradient id="targetGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="targetGrad" x1="0%" x2="100%" y1="0%" y2="100%">
           <stop offset="0%" stopColor="#f59e0b" />
           <stop offset="100%" stopColor="#d97706" />
         </linearGradient>
       </defs>
-      <circle cx="12" cy="12" r="10" strokeWidth={1.5} stroke="url(#targetGrad)" />
-      <circle cx="12" cy="12" r="6" strokeWidth={1.5} stroke="url(#targetGrad)" />
-      <circle cx="12" cy="12" r="2" strokeWidth={1.5} stroke="url(#targetGrad)" />
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="url(#targetGrad)"
+        strokeWidth={1.5}
+      />
+      <circle
+        cx="12"
+        cy="12"
+        r="6"
+        stroke="url(#targetGrad)"
+        strokeWidth={1.5}
+      />
+      <circle
+        cx="12"
+        cy="12"
+        r="2"
+        stroke="url(#targetGrad)"
+        strokeWidth={1.5}
+      />
     </svg>
-  )
+  );
 
   // Feature icons with Gradients
-  const EquipmentIcon = () => (
-    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24">
+  const _EquipmentIcon = () => (
+    <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24">
       <defs>
-        <linearGradient id="equipmentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="equipmentGrad" x1="0%" x2="100%" y1="0%" y2="100%">
           <stop offset="0%" stopColor="#1e9b71" />
           <stop offset="100%" stopColor="#059669" />
         </linearGradient>
       </defs>
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} stroke="url(#equipmentGrad)" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+      <path
+        d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
+        stroke="url(#equipmentGrad)"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+      />
     </svg>
-  )
+  );
 
-  const TrainersIcon = () => (
-    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24">
+  const _TrainersIcon = () => (
+    <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24">
       <defs>
-        <linearGradient id="trainersGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="trainersGrad" x1="0%" x2="100%" y1="0%" y2="100%">
           <stop offset="0%" stopColor="#3b82f6" />
           <stop offset="100%" stopColor="#1e40af" />
         </linearGradient>
       </defs>
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} stroke="url(#trainersGrad)" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      <path
+        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+        stroke="url(#trainersGrad)"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+      />
     </svg>
-  )
+  );
 
-  const ClassesIcon = () => (
-    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24">
+  const _ClassesIcon = () => (
+    <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24">
       <defs>
-        <linearGradient id="classesGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="classesGrad" x1="0%" x2="100%" y1="0%" y2="100%">
           <stop offset="0%" stopColor="#8b5cf6" />
           <stop offset="100%" stopColor="#7c3aed" />
         </linearGradient>
       </defs>
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} stroke="url(#classesGrad)" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+      <path
+        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+        stroke="url(#classesGrad)"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+      />
     </svg>
-  )
+  );
 
-  const CommunityIcon = () => (
-    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24">
+  const _CommunityIcon = () => (
+    <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24">
       <defs>
-        <linearGradient id="communityGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="communityGrad" x1="0%" x2="100%" y1="0%" y2="100%">
           <stop offset="0%" stopColor="#ef4444" />
           <stop offset="100%" stopColor="#dc2626" />
         </linearGradient>
       </defs>
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} stroke="url(#communityGrad)" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+      <path
+        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+        stroke="url(#communityGrad)"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+      />
     </svg>
-  )
+  );
 
   return (
     <>
-    <ScrollProgress />
-    <div className="overflow-hidden parallax-container">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-16 sm:pt-20 md:pt-24 section-transition hero-bg">
-        {/* Background with Grid */}
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-surface opacity-80" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(30, 155, 113, 0.3) 1px, transparent 0)',
-            backgroundSize: '30px 30px sm:50px 50px'
-          }} />
-        </div>
-        
-        {/* Floating Elements with Parallax */}
-        <div 
-          ref={floatingParallax1.ref}
-          className="absolute top-20 left-4 sm:left-10 w-48 h-48 sm:w-72 sm:h-72 bg-primary/5 rounded-full blur-3xl animate-float parallax-element parallax-float-1"
-          style={{ transform: floatingParallax1.transform }}
-        />
-        <div 
-          ref={floatingParallax2.ref}
-          className="absolute bottom-20 right-4 sm:right-10 w-64 h-64 sm:w-96 sm:h-96 bg-primary/3 rounded-full blur-3xl animate-float parallax-element parallax-float-2"
-          style={{ transform: floatingParallax2.transform, animationDelay: '3s' }}
-        />
+      <ScrollProgress />
+      <div className="parallax-container overflow-hidden">
+        {/* Hero Section */}
+        <section className="section-transition hero-bg relative flex min-h-screen items-center justify-center pt-16 sm:pt-20 md:pt-24">
+          {/* Background with Grid */}
+          <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-surface opacity-80" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
+          <div className="absolute inset-0 opacity-20">
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  'radial-gradient(circle at 1px 1px, rgba(30, 155, 113, 0.3) 1px, transparent 0)',
+                backgroundSize: '30px 30px sm:50px 50px',
+              }}
+            />
+          </div>
 
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Content */}
-            <motion.div
-              variants={heroVariants}
-              initial="hidden"
-              animate="visible"
-              transition={prefersReducedMotion ? { duration: 0.01 } : { type: 'spring', stiffness: 400, damping: 25 }}
-              className="text-center lg:text-left"
-            >
+          {/* Floating Elements with Parallax */}
+          <div
+            className="parallax-element parallax-float-1 absolute top-20 left-4 h-48 w-48 animate-float rounded-full bg-primary/5 blur-3xl sm:left-10 sm:h-72 sm:w-72"
+            ref={floatingParallax1.ref}
+            style={{ transform: floatingParallax1.transform }}
+          />
+          <div
+            className="parallax-element parallax-float-2 absolute right-4 bottom-20 h-64 w-64 animate-float rounded-full bg-primary/3 blur-3xl sm:right-10 sm:h-96 sm:w-96"
+            ref={floatingParallax2.ref}
+            style={{
+              transform: floatingParallax2.transform,
+              animationDelay: '3s',
+            }}
+          />
+
+          <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
+              {/* Left Content */}
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="inline-block bg-primary/10 border border-primary/20 rounded-full px-3 sm:px-4 py-2 mb-4 sm:mb-6"
+                animate="visible"
+                className="text-center lg:text-left"
+                initial="hidden"
+                transition={
+                  prefersReducedMotion
+                    ? { duration: 0.01 }
+                    : { type: 'spring', stiffness: 400, damping: 25 }
+                }
+                variants={heroVariants}
               >
-                <span className="text-primary font-medium text-sm sm:text-base">✨ Premium Fitness Experience</span>
-              </motion.div>
-              
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold mb-4 sm:mb-6 leading-tight">
-                <span className="text-white">FITNESS IS NOT A</span>
-                <br />
-                <span className="text-white">DESTINATION IT</span>
-                <br />
-                <span className="text-white">IS A </span>
-                <AnimatedGradientText 
-                  className="inline-block"
-                  variant="wave"
-                  animationDuration={4}
-                  gradientFrom="from-[#1e9b71]"
-                  gradientVia="via-[#10b981]"
-                  gradientTo="to-[#3b82f6]"
+                <motion.div
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-4 inline-block rounded-full border border-primary/20 bg-primary/10 px-3 py-2 sm:mb-6 sm:px-4"
+                  initial={{ opacity: 0, y: 30 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                  WAY OF LIFE.
-                </AnimatedGradientText>
-              </h1>
-              
+                  <span className="font-medium text-primary text-sm sm:text-base">
+                    ✨ Premium Fitness Experience
+                  </span>
+                </motion.div>
+
+                <h1 className="mb-4 font-bold font-display text-3xl leading-tight sm:mb-6 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
+                  <span className="text-white">FITNESS IS NOT A</span>
+                  <br />
+                  <span className="text-white">DESTINATION IT</span>
+                  <br />
+                  <span className="text-white">IS A </span>
+                  <AnimatedGradientText
+                    animationDuration={4}
+                    className="inline-block"
+                    gradientFrom="from-[#1e9b71]"
+                    gradientTo="to-[#3b82f6]"
+                    gradientVia="via-[#10b981]"
+                    variant="wave"
+                  >
+                    WAY OF LIFE.
+                  </AnimatedGradientText>
+                </h1>
+
+                <motion.div
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mx-auto mb-6 max-w-xl text-base text-white/70 leading-relaxed sm:mb-8 sm:text-lg lg:mx-0 lg:text-xl"
+                  initial={{ opacity: 0, y: 30 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                >
+                  <p className="mb-4">
+                    Explore our brand-new fitness center, equipped with the
+                    latest machines and premium amenities to
+                  </p>
+                  <TypingText
+                    className="font-semibold text-primary"
+                    cursor="█"
+                    deletingSpeed={40}
+                    pauseDuration={2000}
+                    startDelay={3000}
+                    texts={[
+                      'transform your body.',
+                      'achieve your goals.',
+                      'build strength.',
+                      'improve your health.',
+                      'boost your confidence.',
+                      'kickstart your journey.',
+                    ]}
+                    typingSpeed={80}
+                  />
+                </motion.div>
+
+                {/* Stats Row */}
+                <motion.div
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-6 grid grid-cols-2 gap-4 sm:mb-8 sm:gap-6 md:grid-cols-4"
+                  initial={{ opacity: 0, y: 30 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                >
+                  {stats.map((stat, index) => (
+                    <SimpleTooltip
+                      className="cursor-help"
+                      content={stat.tooltip}
+                      key={index}
+                    >
+                      <div className="text-center transition-transform duration-200 hover:scale-105 lg:text-left">
+                        <div className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl">
+                          {stat.isCounter ? (
+                            <Counter
+                              className="text-lg sm:text-xl md:text-2xl lg:text-3xl"
+                              delay={500 + index * 100}
+                              duration={2000 + index * 200}
+                              suffix={stat.suffix || ''}
+                              target={
+                                typeof stat.number === 'number'
+                                  ? stat.number
+                                  : 0
+                              }
+                            />
+                          ) : (
+                            <span className="text-primary">{stat.number}</span>
+                          )}
+                        </div>
+                        <div className="text-white/60 text-xs sm:text-sm">
+                          {stat.label}
+                        </div>
+                      </div>
+                    </SimpleTooltip>
+                  ))}
+                </motion.div>
+
+                <motion.div
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-8 flex flex-col gap-3 sm:mb-12 sm:flex-row sm:gap-4"
+                  initial={{ opacity: 0, y: 30 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                >
+                  <Link href="/contact">
+                    <MagneticButton
+                      className="w-full px-8 py-4 text-base sm:w-auto sm:text-lg"
+                      strength={0.4}
+                    >
+                      Get Started Today
+                    </MagneticButton>
+                  </Link>
+                  <Link href="/about">
+                    <MagneticButton
+                      className="w-full border-2 border-primary bg-transparent px-8 py-4 text-base text-primary hover:bg-primary hover:text-white sm:w-auto sm:text-lg"
+                      strength={0.3}
+                    >
+                      Watch Demo
+                    </MagneticButton>
+                  </Link>
+                </motion.div>
+
+                <motion.div
+                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                >
+                  <div className="mb-6 text-center sm:mb-8">
+                    <h3 className="mb-4 font-bold text-lg text-white uppercase tracking-[0.15em] sm:text-xl md:text-2xl">
+                      {t('hero.countdown.title')}
+                    </h3>
+                  </div>
+                  <Countdown
+                    targetDate={(() => {
+                      // Grand Opening: Saturday 12 July 2025 at 10:00 AM
+                      const grandOpeningDate = new Date('2025-07-12T10:00:00');
+                      return grandOpeningDate;
+                    })()}
+                  />
+                </motion.div>
+              </motion.div>
+
+              {/* Right Content - Hero Image */}
               <motion.div
-                className="text-base sm:text-lg lg:text-xl text-white/70 mb-6 sm:mb-8 max-w-xl leading-relaxed mx-auto lg:mx-0"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="relative order-first lg:order-last"
+                initial={{ opacity: 0, x: 50 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-                <p className="mb-4">
-                  Explore our brand-new fitness center, equipped with the latest machines and premium amenities to 
+                <div className="relative text-center">
+                  <div
+                    className="parallax-element relative mx-auto h-96 w-96 sm:h-[800px] sm:w-[800px] lg:h-[1000px] lg:w-[1000px]"
+                    ref={imageParallax.ref}
+                    style={{ transform: imageParallax.transform }}
+                  >
+                    <Image
+                      alt="Strength Training"
+                      className="object-contain opacity-95 drop-shadow-2xl transition-opacity duration-300 hover:opacity-100"
+                      fill
+                      sizes="(max-width: 768px) 384px, (max-width: 1024px) 800px, 1000px"
+                      src="/images/fitness-activity.png"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Programs Section */}
+        <section className="section-transition programs-bg fade-overlay relative overflow-hidden py-12 sm:py-16 lg:py-24">
+          <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              className="mb-12 text-center sm:mb-16"
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <span className="font-semibold text-primary text-sm sm:text-base lg:text-lg">
+                OUR PROGRAMS
+              </span>
+              <h2 className="mt-2 mb-6 font-bold font-display text-2xl text-white sm:text-3xl md:text-4xl lg:text-5xl">
+                BUILD YOUR{' '}
+                <AnimatedGradientText
+                  animationDuration={3}
+                  className="inline-block"
+                  gradientFrom="from-[#1e9b71]"
+                  gradientTo="to-[#8b5cf6]"
+                  gradientVia="via-[#3b82f6]"
+                  variant="glow"
+                >
+                  BEST BODY
+                </AnimatedGradientText>
+              </h2>
+              <div className="mx-auto max-w-2xl text-base text-white/70 sm:text-lg">
+                <p className="mb-2">
+                  Comprehensive fitness programs designed to help you
                 </p>
                 <TypingText
-                  texts={[
-                    "transform your body.",
-                    "achieve your goals.",
-                    "build strength.",
-                    "improve your health.",
-                    "boost your confidence.",
-                    "kickstart your journey."
-                  ]}
-                  typingSpeed={80}
-                  deletingSpeed={40}
+                  className="font-semibold text-emerald-400"
+                  cursor="▌"
+                  deletingSpeed={30}
                   pauseDuration={2000}
-                  startDelay={3000}
-                  className="text-primary font-semibold"
-                  cursor="█"
+                  startDelay={1500}
+                  texts={[
+                    'build lean muscle mass.',
+                    'lose weight effectively.',
+                    'increase your strength.',
+                    'improve your endurance.',
+                    'enhance your flexibility.',
+                    'achieve your goals.',
+                  ]}
+                  typingSpeed={60}
                 />
-              </motion.div>
-
-              {/* Stats Row */}
-              <motion.div
-                className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              >
-                {stats.map((stat, index) => (
-                  <SimpleTooltip 
-                    key={index}
-                    content={stat.tooltip}
-                    className="cursor-help"
-                  >
-                    <div className="text-center lg:text-left hover:scale-105 transition-transform duration-200">
-                      <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold">
-                        {stat.isCounter ? (
-                          <Counter
-                            target={typeof stat.number === 'number' ? stat.number : 0}
-                            suffix={stat.suffix || ''}
-                            duration={2000 + index * 200}
-                            delay={500 + index * 100}
-                            className="text-lg sm:text-xl md:text-2xl lg:text-3xl"
-                          />
-                        ) : (
-                          <span className="text-primary">{stat.number}</span>
-                        )}
-                      </div>
-                      <div className="text-xs sm:text-sm text-white/60">{stat.label}</div>
-                    </div>
-                  </SimpleTooltip>
-                ))}
-              </motion.div>
-
-              <motion.div
-                className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-12"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-              >
-                <Link href="/contact">
-                  <MagneticButton
-                    className="w-full sm:w-auto text-base sm:text-lg px-8 py-4"
-                    strength={0.4}
-                  >
-                    Get Started Today
-                  </MagneticButton>
-                </Link>
-                <Link href="/about">
-                  <MagneticButton
-                    className="w-full sm:w-auto text-base sm:text-lg px-8 py-4 bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white"
-                    strength={0.3}
-                  >
-                    Watch Demo
-                  </MagneticButton>
-                </Link>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-              >
-                <div className="text-center mb-6 sm:mb-8">
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-4 uppercase tracking-[0.15em]">
-                    {t('hero.countdown.title')}
-                  </h3>
-                </div>
-                <Countdown 
-                  targetDate={(() => {
-                    // Grand Opening: Saturday 12 July 2025 at 10:00 AM
-                    const grandOpeningDate = new Date('2025-07-12T10:00:00');
-                    return grandOpeningDate;
-                  })()}
-                />
-              </motion.div>
-            </motion.div>
-
-            {/* Right Content - Hero Image */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative order-first lg:order-last"
-            >
-              <div className="relative text-center">
-                <div 
-                  ref={imageParallax.ref}
-                  className="w-96 h-96 sm:w-[800px] sm:h-[800px] lg:w-[1000px] lg:h-[1000px] mx-auto relative parallax-element"
-                  style={{ transform: imageParallax.transform }}
-                >
-                  <Image
-                    src="/images/fitness-activity.png"
-                    alt="Strength Training"
-                    fill
-                    className="object-contain opacity-95 hover:opacity-100 transition-opacity duration-300 drop-shadow-2xl"
-                    sizes="(max-width: 768px) 384px, (max-width: 1024px) 800px, 1000px"
-                  />
-                </div>
               </div>
             </motion.div>
-          </div>
-        </div>
-      </section>
 
-      {/* Programs Section */}
-      <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden section-transition programs-bg fade-overlay">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <motion.div
-            className="text-center mb-12 sm:mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="text-primary font-semibold text-sm sm:text-base lg:text-lg">OUR PROGRAMS</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-6 mt-2">
-              BUILD YOUR <AnimatedGradientText 
-                className="inline-block"
-                variant="glow"
-                animationDuration={3}
-                gradientFrom="from-[#1e9b71]"
-                gradientVia="via-[#3b82f6]"
-                gradientTo="to-[#8b5cf6]"
-              >
-                BEST BODY
-              </AnimatedGradientText>
-            </h2>
-            <div className="text-base sm:text-lg text-white/70 max-w-2xl mx-auto">
-              <p className="mb-2">Comprehensive fitness programs designed to help you</p>
-              <TypingText
-                texts={[
-                  "build lean muscle mass.",
-                  "lose weight effectively.",
-                  "increase your strength.",
-                  "improve your endurance.",
-                  "enhance your flexibility.",
-                  "achieve your goals."
-                ]}
-                typingSpeed={60}
-                deletingSpeed={30}
-                pauseDuration={2000}
-                startDelay={1500}
-                className="text-emerald-400 font-semibold"
-                cursor="▌"
-              />
-            </div>
-          </motion.div>
-
-          {/* Main Content Container */}
-          <div className="relative max-w-7xl mx-auto">
-            {/* Man Rope Image - Large Background with Parallax */}
-            <motion.div
-              className="hidden lg:block absolute left-0 bottom-0 transform -translate-y-1/2 z-0 parallax-element parallax-bg-2"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <Image
-                src="/images/man-rope.png"
-                alt="Battle Rope Training"
-                width={600}
-                height={800}
-                className="w-80 lg:w-96 xl:w-[28rem] h-auto opacity-90 drop-shadow-2xl"
-                priority
-              />
-            </motion.div>
-
-            {/* Parallax Cards Grid - Positioned to work with rope man */}
-            <div className="relative z-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:ml-64 xl:ml-80 max-w-5xl">
-              <ParallaxCard
-                title="Pure Muscle"
-                description="Professional strength training designed to build lean muscle mass and increase power through progressive overload."
-                icon={
-                  <div className="w-8 h-8 relative">
-                    <div 
-                      className="w-full h-full bg-gradient-to-br from-blue-400 to-blue-600"
-                      style={{
-                        WebkitMask: 'url(/images/programs/muscle.svg) no-repeat center',
-                        WebkitMaskSize: 'contain',
-                        mask: 'url(/images/programs/muscle.svg) no-repeat center',
-                        maskSize: 'contain',
-                        filter: 'drop-shadow(0 0 8px rgba(59, 130, 246, 0.5))'
-                      }}
-                    />
-                  </div>
-                }
-                gradient="bg-gradient-to-br from-blue-500/20 to-blue-600/5"
-                delay={0}
-              />
-              
-              <ParallaxCard
-                title="Cardio Training"
-                description="High-intensity cardio workouts to burn fat and improve cardiovascular health with dynamic exercises."
-                icon={
-                  <div className="w-8 h-8 relative">
-                    <div 
-                      className="w-full h-full bg-gradient-to-br from-purple-400 to-purple-600"
-                      style={{
-                        WebkitMask: 'url(/images/programs/cardio.svg) no-repeat center',
-                        WebkitMaskSize: 'contain',
-                        mask: 'url(/images/programs/cardio.svg) no-repeat center',
-                        maskSize: 'contain',
-                        filter: 'drop-shadow(0 0 8px rgba(139, 92, 246, 0.5))'
-                      }}
-                    />
-                  </div>
-                }
-                gradient="bg-gradient-to-br from-purple-500/20 to-purple-600/5"
-                delay={0.1}
-              />
-              
-              <ParallaxCard
-                title="Health Fitness"
-                description="Comprehensive health programs focusing on overall wellness and lifestyle transformation."
-                icon={
-                  <div className="w-8 h-8 relative">
-                    <div 
-                      className="w-full h-full bg-gradient-to-br from-orange-400 to-orange-600"
-                      style={{
-                        WebkitMask: 'url(/images/programs/health.svg) no-repeat center',
-                        WebkitMaskSize: 'contain',
-                        mask: 'url(/images/programs/health.svg) no-repeat center',
-                        maskSize: 'contain',
-                        filter: 'drop-shadow(0 0 8px rgba(245, 158, 11, 0.5))'
-                      }}
-                    />
-                  </div>
-                }
-                gradient="bg-gradient-to-br from-orange-500/20 to-orange-600/5"
-                delay={0.2}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us Section */}
-      <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden section-transition features-bg fade-overlay section-blend">
-        {/* Background Elements with Parallax */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-60 parallax-element parallax-bg-1" />
-        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl opacity-30 parallax-element parallax-float-1" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl opacity-30 parallax-element parallax-float-2" />
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Header */}
-          <motion.div
-            className="text-center mb-12 sm:mb-20"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="inline-block bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6"
-            >
-              <span className="text-primary font-medium">✨ Why Choose MituGym</span>
-            </motion.div>
-            
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6">
-              EXPERIENCE THE <AnimatedGradientText 
-                className="inline-block"
-                variant="shimmer"
-                animationDuration={4}
-                gradientFrom="from-[#1e9b71]"
-                gradientVia="via-[#10b981]"
-                gradientTo="to-[#3b82f6]"
-              >
-                DIFFERENCE
-              </AnimatedGradientText>
-            </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
-              Discover what sets us apart with premium facilities, expert guidance, and a community 
-              dedicated to helping you achieve extraordinary results.
-            </p>
-          </motion.div>
-
-          {/* Main Content Grid */}
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Features Grid */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="grid gap-6"
-            >
-              {/* Elite Training Programs */}
+            {/* Main Content Container */}
+            <div className="relative mx-auto max-w-7xl">
+              {/* Man Rope Image - Large Background with Parallax */}
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="-translate-y-1/2 parallax-element parallax-bg-2 absolute bottom-0 left-0 z-0 hidden transform lg:block"
+                initial={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-2xl p-6 glass-effect hover:border-primary/30 transition-all duration-300"
+                whileInView={{ opacity: 1, scale: 1 }}
               >
-                <div className="flex items-start gap-4">
-                  <motion.div
-                    className="flex-shrink-0"
-                    whileHover={{ rotate: 10, scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="w-14 h-14 bg-gradient-to-br from-black/40 to-black/20 backdrop-blur-sm border border-emerald-400/50 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/60 group-hover:shadow-emerald-500/80 transition-all duration-300 relative overflow-hidden">
-                      {/* Animated background glow */}
-                      <motion.div 
-                        className="absolute inset-0 bg-gradient-to-r from-emerald-500/30 via-teal-500/30 to-green-500/30 rounded-xl"
-                        animate={{
-                          background: [
-                            'linear-gradient(45deg, rgba(16, 185, 129, 0.3) 0%, rgba(20, 184, 166, 0.3) 50%, rgba(34, 197, 94, 0.3) 100%)',
-                            'linear-gradient(45deg, rgba(34, 197, 94, 0.3) 0%, rgba(16, 185, 129, 0.3) 50%, rgba(20, 184, 166, 0.3) 100%)',
-                            'linear-gradient(45deg, rgba(20, 184, 166, 0.3) 0%, rgba(34, 197, 94, 0.3) 50%, rgba(16, 185, 129, 0.3) 100%)'
-                          ]
-                        }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                      />
-                      <div
-                        className="w-7 h-7 relative z-10"
-                        style={{
-                          background: '#00ff88',
-                          WebkitMask: 'url("/images/icons/fitness-level.svg") no-repeat center',
-                          WebkitMaskSize: 'contain',
-                          mask: 'url("/images/icons/fitness-level.svg") no-repeat center',
-                          maskSize: 'contain',
-                          filter: 'drop-shadow(0 0 16px rgba(0, 255, 136, 0.8))'
-                        }}
-                      />
-                    </div>
-                  </motion.div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors duration-300">
-                      Elite Training Programs
-                    </h3>
-                    <p className="text-white/70 leading-relaxed">
-                      Scientifically designed workouts that adapt to your fitness level, ensuring optimal progress 
-                      and sustainable results with our certified elite trainers.
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-
-                             {/* Modern Facilities */}
-               <motion.div
-                 initial={{ opacity: 0, y: 30 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ duration: 0.6, delay: 0.4 }}
-                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                 className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-2xl p-6 glass-effect hover:border-primary/30 transition-all duration-300"
-               >
-                 <div className="flex items-start gap-4">
-                   <motion.div
-                     className="flex-shrink-0"
-                     whileHover={{ rotate: 10, scale: 1.1 }}
-                     transition={{ duration: 0.3 }}
-                   >
-                     <div className="w-14 h-14 bg-gradient-to-br from-black/40 to-black/20 backdrop-blur-sm border border-blue-400/50 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/60 group-hover:shadow-blue-500/80 transition-all duration-300 relative overflow-hidden">
-                       {/* Animated background glow */}
-                       <motion.div 
-                         className="absolute inset-0 bg-gradient-to-r from-blue-500/30 via-cyan-500/30 to-sky-500/30 rounded-xl"
-                         animate={{
-                           background: [
-                             'linear-gradient(45deg, rgba(59, 130, 246, 0.3) 0%, rgba(6, 182, 212, 0.3) 50%, rgba(14, 165, 233, 0.3) 100%)',
-                             'linear-gradient(45deg, rgba(14, 165, 233, 0.3) 0%, rgba(59, 130, 246, 0.3) 50%, rgba(6, 182, 212, 0.3) 100%)',
-                             'linear-gradient(45deg, rgba(6, 182, 212, 0.3) 0%, rgba(14, 165, 233, 0.3) 50%, rgba(59, 130, 246, 0.3) 100%)'
-                           ]
-                         }}
-                         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                       />
-                       <div
-                         className="w-7 h-7 relative z-10"
-                         style={{
-                           background: '#00aaff',
-                           WebkitMask: 'url("/images/icons/Facilities-icon.svg") no-repeat center',
-                           WebkitMaskSize: 'contain',
-                           mask: 'url("/images/icons/Facilities-icon.svg") no-repeat center',
-                           maskSize: 'contain',
-                           filter: 'drop-shadow(0 0 16px rgba(0, 170, 255, 0.8))'
-                         }}
-                       />
-                     </div>
-                   </motion.div>
-                   <div className="flex-1">
-                     <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors duration-300">
-                       Modern Facilities
-                     </h3>
-                     <p className="text-white/70 leading-relaxed">
-                       Brand new, spacious facilities with premium amenities including luxurious locker rooms, 
-                       private changing areas, and refreshing shower facilities for your comfort.
-                     </p>
-                   </div>
-                 </div>
-               </motion.div>
-
-              {/* State-of-the-Art Equipment */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-2xl p-6 glass-effect hover:border-primary/30 transition-all duration-300"
-              >
-                <div className="flex items-start gap-4">
-                  <motion.div
-                    className="flex-shrink-0"
-                    whileHover={{ rotate: 10, scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="w-14 h-14 bg-gradient-to-br from-black/40 to-black/20 backdrop-blur-sm border border-violet-400/50 rounded-xl flex items-center justify-center shadow-lg shadow-violet-500/60 group-hover:shadow-violet-500/80 transition-all duration-300 relative overflow-hidden">
-                      {/* Animated background glow */}
-                      <motion.div 
-                        className="absolute inset-0 bg-gradient-to-r from-violet-500/30 via-purple-500/30 to-fuchsia-500/30 rounded-xl"
-                        animate={{
-                          background: [
-                            'linear-gradient(45deg, rgba(139, 92, 246, 0.3) 0%, rgba(168, 85, 247, 0.3) 50%, rgba(217, 70, 239, 0.3) 100%)',
-                            'linear-gradient(45deg, rgba(217, 70, 239, 0.3) 0%, rgba(139, 92, 246, 0.3) 50%, rgba(168, 85, 247, 0.3) 100%)',
-                            'linear-gradient(45deg, rgba(168, 85, 247, 0.3) 0%, rgba(217, 70, 239, 0.3) 50%, rgba(139, 92, 246, 0.3) 100%)'
-                          ]
-                        }}
-                        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                      />
-                      <div
-                        className="w-7 h-7 relative z-10"
-                        style={{
-                          background: '#bb44ff',
-                          WebkitMask: 'url("/images/icons/Facilities-icon.svg") no-repeat center',
-                          WebkitMaskSize: 'contain',
-                          mask: 'url("/images/icons/Facilities-icon.svg") no-repeat center',
-                          maskSize: 'contain',
-                          filter: 'drop-shadow(0 0 16px rgba(187, 68, 255, 0.8))'
-                        }}
-                      />
-                    </div>
-                  </motion.div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors duration-300">
-                      Premium Equipment
-                    </h3>
-                    <p className="text-white/70 leading-relaxed">
-                      Latest generation fitness technology and commercial-grade equipment from top brands, 
-                      meticulously maintained for optimal performance and safety.
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-
-                             {/* Flexible Membership Plans */}
-               <motion.div
-                 initial={{ opacity: 0, y: 30 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ duration: 0.6, delay: 0.6 }}
-                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                 className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-2xl p-6 glass-effect hover:border-primary/30 transition-all duration-300"
-               >
-                 <div className="flex items-start gap-4">
-                   <motion.div
-                     className="flex-shrink-0"
-                     whileHover={{ rotate: 10, scale: 1.1 }}
-                     transition={{ duration: 0.3 }}
-                   >
-                     <div className="w-14 h-14 bg-gradient-to-br from-black/40 to-black/20 backdrop-blur-sm border border-orange-400/50 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/60 group-hover:shadow-orange-500/80 transition-all duration-300 relative overflow-hidden">
-                       {/* Animated background glow */}
-                       <motion.div 
-                         className="absolute inset-0 bg-gradient-to-r from-orange-500/30 via-amber-500/30 to-yellow-500/30 rounded-xl"
-                         animate={{
-                           background: [
-                             'linear-gradient(45deg, rgba(249, 115, 22, 0.3) 0%, rgba(245, 158, 11, 0.3) 50%, rgba(234, 179, 8, 0.3) 100%)',
-                             'linear-gradient(45deg, rgba(234, 179, 8, 0.3) 0%, rgba(249, 115, 22, 0.3) 50%, rgba(245, 158, 11, 0.3) 100%)',
-                             'linear-gradient(45deg, rgba(245, 158, 11, 0.3) 0%, rgba(234, 179, 8, 0.3) 50%, rgba(249, 115, 22, 0.3) 100%)'
-                           ]
-                         }}
-                         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                       />
-                       <div
-                         className="w-7 h-7 relative z-10"
-                         style={{
-                           background: '#ff8800',
-                           WebkitMask: 'url("/images/icons/membership-icon.svg") no-repeat center',
-                           WebkitMaskSize: 'contain',
-                           mask: 'url("/images/icons/membership-icon.svg") no-repeat center',
-                           maskSize: 'contain',
-                           filter: 'drop-shadow(0 0 16px rgba(255, 136, 0, 0.8))'
-                         }}
-                       />
-                     </div>
-                   </motion.div>
-                   <div className="flex-1">
-                     <h3 className="text-xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors duration-300">
-                       Flexible Membership Plans
-                     </h3>
-                     <p className="text-white/70 leading-relaxed">
-                       Choose from affordable membership options designed to fit your lifestyle and budget, 
-                       with no long-term commitments and special grand opening discounts available.
-                     </p>
-                   </div>
-                 </div>
-               </motion.div>
-            </motion.div>
-
-            {/* Interactive Image Section */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="relative order-first lg:order-last"
-            >
-              <div className="relative">
-                {/* Main Image */}
-                <motion.div
-                  className="relative h-[400px] sm:h-[500px] lg:h-[700px] rounded-3xl overflow-hidden"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Image
-                    src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                    alt="Professional fitness training at MituGym"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                  
-                                     {/* Floating Stats Cards */}
-                   <motion.div
-                     className="absolute top-6 right-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4 text-center"
-                     initial={{ opacity: 0, y: -20 }}
-                     whileInView={{ opacity: 1, y: 0 }}
-                     viewport={{ once: true }}
-                     transition={{ duration: 0.6, delay: 0.8 }}
-                     whileHover={{ scale: 1.05 }}
-                   >
-                     <div className="text-2xl sm:text-3xl font-bold">
-                       <Counter
-                         target={500}
-                         suffix="m²"
-                         duration={2500}
-                         delay={1200}
-                         className="text-2xl sm:text-3xl"
-                       />
-                     </div>
-                     <div className="text-white/80 text-sm">Training Space</div>
-                   </motion.div>
-                   
-                   <motion.div
-                     className="absolute bottom-6 left-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4 text-center"
-                     initial={{ opacity: 0, y: 20 }}
-                     whileInView={{ opacity: 1, y: 0 }}
-                     viewport={{ once: true }}
-                     transition={{ duration: 0.6, delay: 1 }}
-                     whileHover={{ scale: 1.05 }}
-                   >
-                     <div className="text-2xl sm:text-3xl font-bold text-primary">NEW</div>
-                     <div className="text-white/80 text-sm">Grand Opening</div>
-                   </motion.div>
-                </motion.div>
-
-                {/* Background Decoration */}
-                <div className="absolute -z-10 top-8 -right-8 w-32 h-32 bg-primary/20 rounded-full blur-2xl" />
-                <div className="absolute -z-10 -bottom-8 -left-8 w-40 h-40 bg-purple-500/20 rounded-full blur-2xl" />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Premium Amenities Section */}
-      <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden section-transition amenities-bg fade-overlay">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-500/5 opacity-60" />
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl opacity-30" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl opacity-30" />
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            className="text-center mb-12 sm:mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="inline-block bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6"
-            >
-              <span className="text-primary font-medium">🏋️ Premium Amenities</span>
-            </motion.div>
-            
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white mb-6">
-              WORLD-CLASS <AnimatedGradientText 
-                className="inline-block"
-                variant="pulse"
-                animationDuration={2}
-                gradientFrom="from-[#1e9b71]"
-                gradientVia="via-[#3b82f6]"
-                gradientTo="to-[#8b5cf6]"
-              >
-                FACILITIES
-              </AnimatedGradientText>
-            </h2>
-            <p className="text-base sm:text-lg text-white/70 max-w-3xl mx-auto leading-relaxed">
-              Experience luxury and functionality combined. Our premium amenities are designed to enhance 
-              your fitness journey and provide unmatched comfort and convenience.
-            </p>
-          </motion.div>
-
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Staggered List */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <StaggeredList
-                items={[
-                  "🏃‍♂️ Cardio Zone - Latest treadmills, ellipticals, and stationary bikes",
-                  "🏋️‍♀️ Free Weights Area - Complete range of dumbbells and barbells",
-                  "💪 Strength Training - Premium resistance machines and cable systems",
-                  "🤸‍♂️ Functional Training - TRX, kettlebells, and functional movement tools",
-                  "🧘‍♀️ Flexibility Zone - Dedicated stretching and yoga area",
-                  "🚿 Luxury Locker Rooms - Spacious lockers with premium shower facilities",
-                  "❄️ Climate Control - Advanced HVAC system for optimal comfort",
-                  "🎵 Premium Sound System - Motivating music throughout the facility",
-                  "📱 Smart Technology - Digital workout tracking and progress monitoring",
-                  "🅿️ Free Parking - Convenient parking spaces for all members"
-                ]}
-                className="max-w-2xl"
-              />
-            </motion.div>
-
-            {/* Visual Content */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="relative"
-            >
-              <div className="relative h-[400px] sm:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                  alt="Premium gym facilities at MituGym"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
+                  alt="Battle Rope Training"
+                  className="h-auto w-80 opacity-90 drop-shadow-2xl lg:w-96 xl:w-[28rem]"
+                  height={800}
+                  priority
+                  src="/images/man-rope.png"
+                  width={600}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                
-                {/* Floating amenity indicators */}
-                <motion.div
-                  className="absolute top-6 left-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-3 text-center"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.8 }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <div className="text-lg font-bold text-primary">24/7</div>
-                  <div className="text-white/80 text-xs">Access</div>
-                </motion.div>
-                
-                <motion.div
-                  className="absolute top-6 right-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-3 text-center"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 1 }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <div className="text-lg font-bold text-primary">A/C</div>
-                  <div className="text-white/80 text-xs">Climate</div>
-                </motion.div>
-                
-                <motion.div
-                  className="absolute bottom-6 left-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-3 text-center"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 1.2 }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <div className="text-lg font-bold text-primary">FREE</div>
-                  <div className="text-white/80 text-xs">Parking</div>
-                </motion.div>
+              </motion.div>
+
+              {/* Parallax Cards Grid - Positioned to work with rope man */}
+              <div className="relative z-10 grid max-w-5xl gap-6 sm:gap-8 md:grid-cols-2 lg:ml-64 lg:grid-cols-3 xl:ml-80">
+                <ParallaxCard
+                  delay={0}
+                  description="Professional strength training designed to build lean muscle mass and increase power through progressive overload."
+                  gradient="bg-gradient-to-br from-blue-500/20 to-blue-600/5"
+                  icon={
+                    <div className="relative h-8 w-8">
+                      <div
+                        className="h-full w-full bg-gradient-to-br from-blue-400 to-blue-600"
+                        style={{
+                          WebkitMask:
+                            'url(/images/programs/muscle.svg) no-repeat center',
+                          WebkitMaskSize: 'contain',
+                          mask: 'url(/images/programs/muscle.svg) no-repeat center',
+                          maskSize: 'contain',
+                          filter:
+                            'drop-shadow(0 0 8px rgba(59, 130, 246, 0.5))',
+                        }}
+                      />
+                    </div>
+                  }
+                  title="Pure Muscle"
+                />
+
+                <ParallaxCard
+                  delay={0.1}
+                  description="High-intensity cardio workouts to burn fat and improve cardiovascular health with dynamic exercises."
+                  gradient="bg-gradient-to-br from-purple-500/20 to-purple-600/5"
+                  icon={
+                    <div className="relative h-8 w-8">
+                      <div
+                        className="h-full w-full bg-gradient-to-br from-purple-400 to-purple-600"
+                        style={{
+                          WebkitMask:
+                            'url(/images/programs/cardio.svg) no-repeat center',
+                          WebkitMaskSize: 'contain',
+                          mask: 'url(/images/programs/cardio.svg) no-repeat center',
+                          maskSize: 'contain',
+                          filter:
+                            'drop-shadow(0 0 8px rgba(139, 92, 246, 0.5))',
+                        }}
+                      />
+                    </div>
+                  }
+                  title="Cardio Training"
+                />
+
+                <ParallaxCard
+                  delay={0.2}
+                  description="Comprehensive health programs focusing on overall wellness and lifestyle transformation."
+                  gradient="bg-gradient-to-br from-orange-500/20 to-orange-600/5"
+                  icon={
+                    <div className="relative h-8 w-8">
+                      <div
+                        className="h-full w-full bg-gradient-to-br from-orange-400 to-orange-600"
+                        style={{
+                          WebkitMask:
+                            'url(/images/programs/health.svg) no-repeat center',
+                          WebkitMaskSize: 'contain',
+                          mask: 'url(/images/programs/health.svg) no-repeat center',
+                          maskSize: 'contain',
+                          filter:
+                            'drop-shadow(0 0 8px rgba(245, 158, 11, 0.5))',
+                        }}
+                      />
+                    </div>
+                  }
+                  title="Health Fitness"
+                />
               </div>
-              
-              {/* Background decoration */}
-              <div className="absolute -z-10 top-8 -right-8 w-32 h-32 bg-primary/20 rounded-full blur-2xl" />
-              <div className="absolute -z-10 -bottom-8 -left-8 w-40 h-40 bg-blue-500/20 rounded-full blur-2xl" />
-            </motion.div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Future Training Excellence Section */}
-      <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden section-transition training-bg fade-overlay section-blend">
-        {/* Background Elements with Parallax */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-70 parallax-element parallax-bg-1" />
-        <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl opacity-40 parallax-element parallax-float-2" />
-        <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl opacity-40 parallax-element parallax-float-3" />
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            className="text-center mb-12 sm:mb-20"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="inline-block bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-6"
-            >
-              <span className="text-blue-400 font-medium">🚀 Coming Soon</span>
-            </motion.div>
-            
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6">
-              EXPERT GUIDANCE <span className="gradient-text">AWAITS</span>
-            </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
-              We&apos;re assembling a team of elite fitness professionals who will provide personalized training, 
-              nutrition guidance, and motivation to help you achieve extraordinary results.
-            </p>
-          </motion.div>
+        {/* Why Choose Us Section */}
+        <section className="section-transition features-bg fade-overlay section-blend relative overflow-hidden py-12 sm:py-16 lg:py-24">
+          {/* Background Elements with Parallax */}
+          <div className="parallax-element parallax-bg-1 absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-60" />
+          <div className="parallax-element parallax-float-1 absolute top-1/2 left-1/4 h-64 w-64 rounded-full bg-primary/10 opacity-30 blur-3xl" />
+          <div className="parallax-element parallax-float-2 absolute right-1/4 bottom-1/4 h-96 w-96 rounded-full bg-purple-500/10 opacity-30 blur-3xl" />
 
-          {/* Training Excellence Cards */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
-            {/* Strength & Conditioning */}
+          <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Header */}
             <motion.div
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              className="mb-12 text-center sm:mb-20"
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              transition={{ 
-                duration: 0.6, 
-                delay: 0,
-                type: "spring",
-                stiffness: 100 
-              }}
-              className="group"
+              whileInView={{ opacity: 1, y: 0 }}
             >
               <motion.div
-                className="relative overflow-hidden rounded-3xl h-full bg-gradient-to-br from-primary/20 to-primary/5 border border-white/10 backdrop-blur-sm shadow-2xl group-hover:shadow-3xl transition-all duration-500"
-                whileHover={{ 
-                  y: -8,
-                  boxShadow: "0 25px 50px -12px rgba(30, 155, 113, 0.3)",
-                }}
+                className="mb-6 inline-block rounded-full border border-primary/20 bg-primary/10 px-4 py-2"
+                initial={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, scale: 1 }}
               >
-                                {/* Icon Header */}
-                <div className="relative p-6 sm:p-8 text-center">
-                  <Tooltip 
-                    content="Progressive strength training with professional coaching to build muscle mass and increase power output safely and effectively."
-                    placement="top"
-                  >
-                    <motion.div
-                    className="w-20 h-20 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 backdrop-blur-sm border border-emerald-400/30 rounded-xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg shadow-emerald-500/40 cursor-help group-hover:shadow-emerald-400/60 transition-all duration-300 relative overflow-hidden"
-                    whileHover={{ rotate: 10, scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {/* Animated background glow */}
-                    <motion.div 
-                      className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 via-teal-400/20 to-green-400/20 rounded-xl"
-                      animate={{
-                        background: [
-                          'linear-gradient(45deg, rgba(16, 185, 129, 0.2) 0%, rgba(20, 184, 166, 0.2) 50%, rgba(34, 197, 94, 0.2) 100%)',
-                          'linear-gradient(45deg, rgba(34, 197, 94, 0.2) 0%, rgba(16, 185, 129, 0.2) 50%, rgba(20, 184, 166, 0.2) 100%)',
-                          'linear-gradient(45deg, rgba(20, 184, 166, 0.2) 0%, rgba(34, 197, 94, 0.2) 50%, rgba(16, 185, 129, 0.2) 100%)'
-                        ]
-                      }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    />
-                    <div
-                      className="w-10 h-10 relative z-10"
-                      style={{
-                        background: 'linear-gradient(135deg, #10b981 0%, #14b8a6 50%, #22c55e 100%)',
-                        WebkitMask: 'url("/images/icons/dumbbell.svg") no-repeat center',
-                        WebkitMaskSize: 'contain',
-                        mask: 'url("/images/icons/dumbbell.svg") no-repeat center',
-                        maskSize: 'contain',
-                        filter: 'drop-shadow(0 0 12px rgba(16, 185, 129, 0.6))'
-                      }}
-                    />
-                  </motion.div>
-                  </Tooltip>
-                  
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">Strength & Conditioning</h3>
-                  <p className="text-white/70 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
-                    Expert-led strength training programs designed to build muscle, increase power, and improve athletic performance.
-                  </p>
-                  
-                  {/* Future Features */}
-                  <div className="space-y-2 sm:space-y-3">
-                    <div className="flex items-center justify-center gap-2 sm:gap-3">
-                      <div className="w-2 h-2 bg-primary rounded-full" />
-                      <span className="text-white/80 text-xs sm:text-sm">Powerlifting & Olympic Lifting</span>
-                    </div>
-                    <div className="flex items-center justify-center gap-2 sm:gap-3">
-                      <div className="w-2 h-2 bg-primary rounded-full" />
-                      <span className="text-white/80 text-xs sm:text-sm">Progressive Overload Programs</span>
-                    </div>
-                    <div className="flex items-center justify-center gap-2 sm:gap-3">
-                      <div className="w-2 h-2 bg-primary rounded-full" />
-                      <span className="text-white/80 text-xs sm:text-sm">Form & Technique Mastery</span>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Status Badge */}
-                <div className="absolute top-4 right-4">
-                  <span className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs font-medium">
-                    Coming Soon
-                  </span>
-                </div>
+                <span className="font-medium text-primary">
+                  ✨ Why Choose MituGym
+                </span>
               </motion.div>
-            </motion.div>
 
-            {/* Functional Training */}
-            <motion.div
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ 
-                duration: 0.6, 
-                delay: 0.1,
-                type: "spring",
-                stiffness: 100 
-              }}
-              className="group"
-            >
-              <motion.div
-                className="relative overflow-hidden rounded-3xl h-full bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-white/10 backdrop-blur-sm shadow-2xl group-hover:shadow-3xl transition-all duration-500"
-                whileHover={{ 
-                  y: -8,
-                  boxShadow: "0 25px 50px -12px rgba(147, 51, 234, 0.3)",
-                }}
-              >
-                {/* Icon Header */}
-                <div className="relative p-6 sm:p-8 text-center">
-                  <motion.div
-                    className="w-20 h-20 bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 backdrop-blur-sm border border-violet-400/30 rounded-xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg shadow-violet-500/40 group-hover:shadow-violet-400/60 transition-all duration-300 relative overflow-hidden"
-                    whileHover={{ rotate: 10, scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {/* Animated background glow */}
-                    <motion.div 
-                      className="absolute inset-0 bg-gradient-to-r from-violet-400/20 via-purple-400/20 to-fuchsia-400/20 rounded-xl"
-                      animate={{
-                        background: [
-                          'linear-gradient(45deg, rgba(139, 92, 246, 0.2) 0%, rgba(168, 85, 247, 0.2) 50%, rgba(217, 70, 239, 0.2) 100%)',
-                          'linear-gradient(45deg, rgba(217, 70, 239, 0.2) 0%, rgba(139, 92, 246, 0.2) 50%, rgba(168, 85, 247, 0.2) 100%)',
-                          'linear-gradient(45deg, rgba(168, 85, 247, 0.2) 0%, rgba(217, 70, 239, 0.2) 50%, rgba(139, 92, 246, 0.2) 100%)'
-                        ]
-                      }}
-                      transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                    />
-                    <div
-                      className="w-10 h-10 relative z-10"
-                      style={{
-                        background: 'linear-gradient(135deg, #8b5cf6 0%, #a855f7 50%, #d946ef 100%)',
-                        WebkitMask: 'url("/images/icons/lightning-bolt.svg") no-repeat center',
-                        WebkitMaskSize: 'contain',
-                        mask: 'url("/images/icons/lightning-bolt.svg") no-repeat center',
-                        maskSize: 'contain',
-                        filter: 'drop-shadow(0 0 12px rgba(139, 92, 246, 0.6))'
-                      }}
-                    />
-                  </motion.div>
-                  
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">Functional Training</h3>
-                  <p className="text-white/70 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
-                    Movement-based workouts that improve daily activities, mobility, and overall functional fitness.
-                  </p>
-                  
-                  {/* Future Features */}
-                  <div className="space-y-2 sm:space-y-3">
-                    <div className="flex items-center justify-center gap-2 sm:gap-3">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full" />
-                      <span className="text-white/80 text-xs sm:text-sm">HIIT & Circuit Training</span>
-                    </div>
-                    <div className="flex items-center justify-center gap-2 sm:gap-3">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full" />
-                      <span className="text-white/80 text-xs sm:text-sm">Mobility & Flexibility</span>
-                    </div>
-                    <div className="flex items-center justify-center gap-2 sm:gap-3">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full" />
-                      <span className="text-white/80 text-xs sm:text-sm">Injury Prevention</span>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Status Badge */}
-                <div className="absolute top-4 right-4">
-                  <span className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs font-medium">
-                    Coming Soon
-                  </span>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* Wellness & Recovery */}
-            <motion.div
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ 
-                duration: 0.6, 
-                delay: 0.2,
-                type: "spring",
-                stiffness: 100 
-              }}
-              className="group sm:col-span-2 lg:col-span-1"
-            >
-              <motion.div
-                className="relative overflow-hidden rounded-3xl h-full bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-white/10 backdrop-blur-sm shadow-2xl group-hover:shadow-3xl transition-all duration-500"
-                whileHover={{ 
-                  y: -8,
-                  boxShadow: "0 25px 50px -12px rgba(59, 130, 246, 0.3)",
-                }}
-              >
-                {/* Icon Header */}
-                <div className="relative p-6 sm:p-8 text-center">
-                  <motion.div
-                    className="w-20 h-20 bg-gradient-to-br from-sky-500/20 to-blue-500/20 backdrop-blur-sm border border-sky-400/30 rounded-xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg shadow-sky-500/40 group-hover:shadow-sky-400/60 transition-all duration-300 relative overflow-hidden"
-                    whileHover={{ rotate: 10, scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {/* Animated background glow */}
-                    <motion.div 
-                      className="absolute inset-0 bg-gradient-to-r from-sky-400/20 via-blue-400/20 to-cyan-400/20 rounded-xl"
-                      animate={{
-                        background: [
-                          'linear-gradient(45deg, rgba(59, 130, 246, 0.2) 0%, rgba(14, 165, 233, 0.2) 50%, rgba(6, 182, 212, 0.2) 100%)',
-                          'linear-gradient(45deg, rgba(6, 182, 212, 0.2) 0%, rgba(59, 130, 246, 0.2) 50%, rgba(14, 165, 233, 0.2) 100%)',
-                          'linear-gradient(45deg, rgba(14, 165, 233, 0.2) 0%, rgba(6, 182, 212, 0.2) 50%, rgba(59, 130, 246, 0.2) 100%)'
-                        ]
-                      }}
-                      transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                    />
-                    <div
-                      className="w-10 h-10 relative z-10"
-                      style={{
-                        background: 'linear-gradient(135deg, #3b82f6 0%, #0ea5e9 50%, #06b6d4 100%)',
-                        WebkitMask: 'url("/images/icons/heart.svg") no-repeat center',
-                        WebkitMaskSize: 'contain',
-                        mask: 'url("/images/icons/heart.svg") no-repeat center',
-                        maskSize: 'contain',
-                        filter: 'drop-shadow(0 0 12px rgba(59, 130, 246, 0.6))'
-                      }}
-                    />
-                  </motion.div>
-                  
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">Wellness & Recovery</h3>
-                  <p className="text-white/70 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
-                    Holistic approach to health including nutrition guidance, stress management, and recovery protocols.
-                  </p>
-                  
-                  {/* Future Features */}
-                  <div className="space-y-2 sm:space-y-3">
-                    <div className="flex items-center justify-center gap-2 sm:gap-3">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full" />
-                      <span className="text-white/80 text-xs sm:text-sm">Nutrition Counseling</span>
-                    </div>
-                    <div className="flex items-center justify-center gap-2 sm:gap-3">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full" />
-                      <span className="text-white/80 text-xs sm:text-sm">Yoga & Mindfulness</span>
-                    </div>
-                    <div className="flex items-center justify-center gap-2 sm:gap-3">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full" />
-                      <span className="text-white/80 text-xs sm:text-sm">Recovery Protocols</span>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Status Badge */}
-                <div className="absolute top-4 right-4">
-                  <span className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs font-medium">
-                    Coming Soon
-                  </span>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-
-          {/* Call to Action */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-center mt-12 sm:mt-16"
-          >
-            <div className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-3xl p-6 sm:p-8 lg:p-10 max-w-4xl mx-auto">
-              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-                Interested in <span className="text-primary">Joining Our Team?</span>
-              </h3>
-              <p className="text-white/70 mb-6 sm:mb-8 text-sm sm:text-base leading-relaxed">
-                We&apos;re looking for passionate, certified fitness professionals who share our commitment to excellence. 
-                If you&apos;re ready to inspire and transform lives, we&apos;d love to hear from you.
+              <h2 className="mb-6 font-bold font-display text-3xl text-white sm:text-4xl md:text-5xl lg:text-6xl">
+                EXPERIENCE THE{' '}
+                <AnimatedGradientText
+                  animationDuration={4}
+                  className="inline-block"
+                  gradientFrom="from-[#1e9b71]"
+                  gradientTo="to-[#3b82f6]"
+                  gradientVia="via-[#10b981]"
+                  variant="shimmer"
+                >
+                  DIFFERENCE
+                </AnimatedGradientText>
+              </h2>
+              <p className="mx-auto max-w-3xl text-base text-white/70 leading-relaxed sm:text-lg lg:text-xl">
+                Discover what sets us apart with premium facilities, expert
+                guidance, and a community dedicated to helping you achieve
+                extraordinary results.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <Link href="/contact">
+            </motion.div>
+
+            {/* Main Content Grid */}
+            <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+              {/* Features Grid */}
+              <motion.div
+                className="grid gap-6"
+                initial={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, x: 0 }}
+              >
+                {/* Elite Training Programs */}
+                <motion.div
+                  className="group glass-effect rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-6 backdrop-blur-sm transition-all duration-300 hover:border-primary/30"
+                  initial={{ opacity: 0, y: 30 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                >
+                  <div className="flex items-start gap-4">
+                    <motion.div
+                      className="flex-shrink-0"
+                      transition={{ duration: 0.3 }}
+                      whileHover={{ rotate: 10, scale: 1.1 }}
+                    >
+                      <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-xl border border-emerald-400/50 bg-gradient-to-br from-black/40 to-black/20 shadow-emerald-500/60 shadow-lg backdrop-blur-sm transition-all duration-300 group-hover:shadow-emerald-500/80">
+                        {/* Animated background glow */}
+                        <motion.div
+                          animate={{
+                            background: [
+                              'linear-gradient(45deg, rgba(16, 185, 129, 0.3) 0%, rgba(20, 184, 166, 0.3) 50%, rgba(34, 197, 94, 0.3) 100%)',
+                              'linear-gradient(45deg, rgba(34, 197, 94, 0.3) 0%, rgba(16, 185, 129, 0.3) 50%, rgba(20, 184, 166, 0.3) 100%)',
+                              'linear-gradient(45deg, rgba(20, 184, 166, 0.3) 0%, rgba(34, 197, 94, 0.3) 50%, rgba(16, 185, 129, 0.3) 100%)',
+                            ],
+                          }}
+                          className="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-500/30 via-teal-500/30 to-green-500/30"
+                          transition={{
+                            duration: 3,
+                            repeat: Number.POSITIVE_INFINITY,
+                            ease: 'easeInOut',
+                          }}
+                        />
+                        <div
+                          className="relative z-10 h-7 w-7"
+                          style={{
+                            background: '#00ff88',
+                            WebkitMask:
+                              'url("/images/icons/fitness-level.svg") no-repeat center',
+                            WebkitMaskSize: 'contain',
+                            mask: 'url("/images/icons/fitness-level.svg") no-repeat center',
+                            maskSize: 'contain',
+                            filter:
+                              'drop-shadow(0 0 16px rgba(0, 255, 136, 0.8))',
+                          }}
+                        />
+                      </div>
+                    </motion.div>
+                    <div className="flex-1">
+                      <h3 className="mb-2 font-bold text-white text-xl transition-colors duration-300 group-hover:text-emerald-400">
+                        Elite Training Programs
+                      </h3>
+                      <p className="text-white/70 leading-relaxed">
+                        Scientifically designed workouts that adapt to your
+                        fitness level, ensuring optimal progress and sustainable
+                        results with our certified elite trainers.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Modern Facilities */}
+                <motion.div
+                  className="group glass-effect rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-6 backdrop-blur-sm transition-all duration-300 hover:border-primary/30"
+                  initial={{ opacity: 0, y: 30 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                >
+                  <div className="flex items-start gap-4">
+                    <motion.div
+                      className="flex-shrink-0"
+                      transition={{ duration: 0.3 }}
+                      whileHover={{ rotate: 10, scale: 1.1 }}
+                    >
+                      <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-xl border border-blue-400/50 bg-gradient-to-br from-black/40 to-black/20 shadow-blue-500/60 shadow-lg backdrop-blur-sm transition-all duration-300 group-hover:shadow-blue-500/80">
+                        {/* Animated background glow */}
+                        <motion.div
+                          animate={{
+                            background: [
+                              'linear-gradient(45deg, rgba(59, 130, 246, 0.3) 0%, rgba(6, 182, 212, 0.3) 50%, rgba(14, 165, 233, 0.3) 100%)',
+                              'linear-gradient(45deg, rgba(14, 165, 233, 0.3) 0%, rgba(59, 130, 246, 0.3) 50%, rgba(6, 182, 212, 0.3) 100%)',
+                              'linear-gradient(45deg, rgba(6, 182, 212, 0.3) 0%, rgba(14, 165, 233, 0.3) 50%, rgba(59, 130, 246, 0.3) 100%)',
+                            ],
+                          }}
+                          className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/30 via-cyan-500/30 to-sky-500/30"
+                          transition={{
+                            duration: 2.5,
+                            repeat: Number.POSITIVE_INFINITY,
+                            ease: 'easeInOut',
+                          }}
+                        />
+                        <div
+                          className="relative z-10 h-7 w-7"
+                          style={{
+                            background: '#00aaff',
+                            WebkitMask:
+                              'url("/images/icons/Facilities-icon.svg") no-repeat center',
+                            WebkitMaskSize: 'contain',
+                            mask: 'url("/images/icons/Facilities-icon.svg") no-repeat center',
+                            maskSize: 'contain',
+                            filter:
+                              'drop-shadow(0 0 16px rgba(0, 170, 255, 0.8))',
+                          }}
+                        />
+                      </div>
+                    </motion.div>
+                    <div className="flex-1">
+                      <h3 className="mb-2 font-bold text-white text-xl transition-colors duration-300 group-hover:text-blue-400">
+                        Modern Facilities
+                      </h3>
+                      <p className="text-white/70 leading-relaxed">
+                        Brand new, spacious facilities with premium amenities
+                        including luxurious locker rooms, private changing
+                        areas, and refreshing shower facilities for your
+                        comfort.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* State-of-the-Art Equipment */}
+                <motion.div
+                  className="group glass-effect rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-6 backdrop-blur-sm transition-all duration-300 hover:border-primary/30"
+                  initial={{ opacity: 0, y: 30 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                >
+                  <div className="flex items-start gap-4">
+                    <motion.div
+                      className="flex-shrink-0"
+                      transition={{ duration: 0.3 }}
+                      whileHover={{ rotate: 10, scale: 1.1 }}
+                    >
+                      <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-xl border border-violet-400/50 bg-gradient-to-br from-black/40 to-black/20 shadow-lg shadow-violet-500/60 backdrop-blur-sm transition-all duration-300 group-hover:shadow-violet-500/80">
+                        {/* Animated background glow */}
+                        <motion.div
+                          animate={{
+                            background: [
+                              'linear-gradient(45deg, rgba(139, 92, 246, 0.3) 0%, rgba(168, 85, 247, 0.3) 50%, rgba(217, 70, 239, 0.3) 100%)',
+                              'linear-gradient(45deg, rgba(217, 70, 239, 0.3) 0%, rgba(139, 92, 246, 0.3) 50%, rgba(168, 85, 247, 0.3) 100%)',
+                              'linear-gradient(45deg, rgba(168, 85, 247, 0.3) 0%, rgba(217, 70, 239, 0.3) 50%, rgba(139, 92, 246, 0.3) 100%)',
+                            ],
+                          }}
+                          className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-500/30 via-purple-500/30 to-fuchsia-500/30"
+                          transition={{
+                            duration: 3.5,
+                            repeat: Number.POSITIVE_INFINITY,
+                            ease: 'easeInOut',
+                          }}
+                        />
+                        <div
+                          className="relative z-10 h-7 w-7"
+                          style={{
+                            background: '#bb44ff',
+                            WebkitMask:
+                              'url("/images/icons/Facilities-icon.svg") no-repeat center',
+                            WebkitMaskSize: 'contain',
+                            mask: 'url("/images/icons/Facilities-icon.svg") no-repeat center',
+                            maskSize: 'contain',
+                            filter:
+                              'drop-shadow(0 0 16px rgba(187, 68, 255, 0.8))',
+                          }}
+                        />
+                      </div>
+                    </motion.div>
+                    <div className="flex-1">
+                      <h3 className="mb-2 font-bold text-white text-xl transition-colors duration-300 group-hover:text-purple-400">
+                        Premium Equipment
+                      </h3>
+                      <p className="text-white/70 leading-relaxed">
+                        Latest generation fitness technology and
+                        commercial-grade equipment from top brands, meticulously
+                        maintained for optimal performance and safety.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Flexible Membership Plans */}
+                <motion.div
+                  className="group glass-effect rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-6 backdrop-blur-sm transition-all duration-300 hover:border-primary/30"
+                  initial={{ opacity: 0, y: 30 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                >
+                  <div className="flex items-start gap-4">
+                    <motion.div
+                      className="flex-shrink-0"
+                      transition={{ duration: 0.3 }}
+                      whileHover={{ rotate: 10, scale: 1.1 }}
+                    >
+                      <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-xl border border-orange-400/50 bg-gradient-to-br from-black/40 to-black/20 shadow-lg shadow-orange-500/60 backdrop-blur-sm transition-all duration-300 group-hover:shadow-orange-500/80">
+                        {/* Animated background glow */}
+                        <motion.div
+                          animate={{
+                            background: [
+                              'linear-gradient(45deg, rgba(249, 115, 22, 0.3) 0%, rgba(245, 158, 11, 0.3) 50%, rgba(234, 179, 8, 0.3) 100%)',
+                              'linear-gradient(45deg, rgba(234, 179, 8, 0.3) 0%, rgba(249, 115, 22, 0.3) 50%, rgba(245, 158, 11, 0.3) 100%)',
+                              'linear-gradient(45deg, rgba(245, 158, 11, 0.3) 0%, rgba(234, 179, 8, 0.3) 50%, rgba(249, 115, 22, 0.3) 100%)',
+                            ],
+                          }}
+                          className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-500/30 via-amber-500/30 to-yellow-500/30"
+                          transition={{
+                            duration: 4,
+                            repeat: Number.POSITIVE_INFINITY,
+                            ease: 'easeInOut',
+                          }}
+                        />
+                        <div
+                          className="relative z-10 h-7 w-7"
+                          style={{
+                            background: '#ff8800',
+                            WebkitMask:
+                              'url("/images/icons/membership-icon.svg") no-repeat center',
+                            WebkitMaskSize: 'contain',
+                            mask: 'url("/images/icons/membership-icon.svg") no-repeat center',
+                            maskSize: 'contain',
+                            filter:
+                              'drop-shadow(0 0 16px rgba(255, 136, 0, 0.8))',
+                          }}
+                        />
+                      </div>
+                    </motion.div>
+                    <div className="flex-1">
+                      <h3 className="mb-2 font-bold text-white text-xl transition-colors duration-300 group-hover:text-orange-400">
+                        Flexible Membership Plans
+                      </h3>
+                      <p className="text-white/70 leading-relaxed">
+                        Choose from affordable membership options designed to
+                        fit your lifestyle and budget, with no long-term
+                        commitments and special grand opening discounts
+                        available.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              {/* Interactive Image Section */}
+              <motion.div
+                className="relative order-first lg:order-last"
+                initial={{ opacity: 0, x: 50 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, x: 0 }}
+              >
+                <div className="relative">
+                  {/* Main Image */}
+                  <motion.div
+                    className="relative h-[400px] overflow-hidden rounded-3xl sm:h-[500px] lg:h-[700px]"
+                    transition={{ duration: 0.3 }}
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <Image
+                      alt="Professional fitness training at MituGym"
+                      className="object-cover"
+                      fill
+                      priority
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
+                      src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+
+                    {/* Floating Stats Cards */}
+                    <motion.div
+                      className="absolute top-6 right-6 rounded-2xl border border-white/20 bg-white/10 p-4 text-center backdrop-blur-sm"
+                      initial={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.6, delay: 0.8 }}
+                      viewport={{ once: true }}
+                      whileHover={{ scale: 1.05 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                    >
+                      <div className="font-bold text-2xl sm:text-3xl">
+                        <Counter
+                          className="text-2xl sm:text-3xl"
+                          delay={1200}
+                          duration={2500}
+                          suffix="m²"
+                          target={500}
+                        />
+                      </div>
+                      <div className="text-sm text-white/80">
+                        Training Space
+                      </div>
+                    </motion.div>
+
+                    <motion.div
+                      className="absolute bottom-6 left-6 rounded-2xl border border-white/20 bg-white/10 p-4 text-center backdrop-blur-sm"
+                      initial={{ opacity: 0, y: 20 }}
+                      transition={{ duration: 0.6, delay: 1 }}
+                      viewport={{ once: true }}
+                      whileHover={{ scale: 1.05 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                    >
+                      <div className="font-bold text-2xl text-primary sm:text-3xl">
+                        NEW
+                      </div>
+                      <div className="text-sm text-white/80">Grand Opening</div>
+                    </motion.div>
+                  </motion.div>
+
+                  {/* Background Decoration */}
+                  <div className="-z-10 -right-8 absolute top-8 h-32 w-32 rounded-full bg-primary/20 blur-2xl" />
+                  <div className="-z-10 -bottom-8 -left-8 absolute h-40 w-40 rounded-full bg-purple-500/20 blur-2xl" />
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Premium Amenities Section */}
+        <section className="section-transition amenities-bg fade-overlay relative overflow-hidden py-12 sm:py-16 lg:py-24">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-500/5 opacity-60" />
+          <div className="absolute top-1/4 left-1/4 h-64 w-64 rounded-full bg-primary/10 opacity-30 blur-3xl" />
+          <div className="absolute right-1/4 bottom-1/4 h-80 w-80 rounded-full bg-blue-500/10 opacity-30 blur-3xl" />
+
+          <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              className="mb-12 text-center sm:mb-16"
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <motion.div
+                className="mb-6 inline-block rounded-full border border-primary/20 bg-primary/10 px-4 py-2"
+                initial={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, scale: 1 }}
+              >
+                <span className="font-medium text-primary">
+                  🏋️ Premium Amenities
+                </span>
+              </motion.div>
+
+              <h2 className="mb-6 font-bold font-display text-3xl text-white sm:text-4xl md:text-5xl">
+                WORLD-CLASS{' '}
+                <AnimatedGradientText
+                  animationDuration={2}
+                  className="inline-block"
+                  gradientFrom="from-[#1e9b71]"
+                  gradientTo="to-[#8b5cf6]"
+                  gradientVia="via-[#3b82f6]"
+                  variant="pulse"
+                >
+                  FACILITIES
+                </AnimatedGradientText>
+              </h2>
+              <p className="mx-auto max-w-3xl text-base text-white/70 leading-relaxed sm:text-lg">
+                Experience luxury and functionality combined. Our premium
+                amenities are designed to enhance your fitness journey and
+                provide unmatched comfort and convenience.
+              </p>
+            </motion.div>
+
+            <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+              {/* Staggered List */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, x: 0 }}
+              >
+                <StaggeredList
+                  className="max-w-2xl"
+                  items={[
+                    '🏃‍♂️ Cardio Zone - Latest treadmills, ellipticals, and stationary bikes',
+                    '🏋️‍♀️ Free Weights Area - Complete range of dumbbells and barbells',
+                    '💪 Strength Training - Premium resistance machines and cable systems',
+                    '🤸‍♂️ Functional Training - TRX, kettlebells, and functional movement tools',
+                    '🧘‍♀️ Flexibility Zone - Dedicated stretching and yoga area',
+                    '🚿 Luxury Locker Rooms - Spacious lockers with premium shower facilities',
+                    '❄️ Climate Control - Advanced HVAC system for optimal comfort',
+                    '🎵 Premium Sound System - Motivating music throughout the facility',
+                    '📱 Smart Technology - Digital workout tracking and progress monitoring',
+                    '🅿️ Free Parking - Convenient parking spaces for all members',
+                  ]}
+                />
+              </motion.div>
+
+              {/* Visual Content */}
+              <motion.div
+                className="relative"
+                initial={{ opacity: 0, x: 50 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, x: 0 }}
+              >
+                <div className="relative h-[400px] overflow-hidden rounded-3xl sm:h-[500px] lg:h-[600px]">
+                  <Image
+                    alt="Premium gym facilities at MituGym"
+                    className="object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
+                    src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+
+                  {/* Floating amenity indicators */}
+                  <motion.div
+                    className="absolute top-6 left-6 rounded-2xl border border-white/20 bg-white/10 p-3 text-center backdrop-blur-sm"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.6, delay: 0.8 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.05 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                  >
+                    <div className="font-bold text-lg text-primary">24/7</div>
+                    <div className="text-white/80 text-xs">Access</div>
+                  </motion.div>
+
+                  <motion.div
+                    className="absolute top-6 right-6 rounded-2xl border border-white/20 bg-white/10 p-3 text-center backdrop-blur-sm"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.6, delay: 1 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.05 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                  >
+                    <div className="font-bold text-lg text-primary">A/C</div>
+                    <div className="text-white/80 text-xs">Climate</div>
+                  </motion.div>
+
+                  <motion.div
+                    className="absolute bottom-6 left-6 rounded-2xl border border-white/20 bg-white/10 p-3 text-center backdrop-blur-sm"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.6, delay: 1.2 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.05 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                  >
+                    <div className="font-bold text-lg text-primary">FREE</div>
+                    <div className="text-white/80 text-xs">Parking</div>
+                  </motion.div>
+                </div>
+
+                {/* Background decoration */}
+                <div className="-z-10 -right-8 absolute top-8 h-32 w-32 rounded-full bg-primary/20 blur-2xl" />
+                <div className="-z-10 -bottom-8 -left-8 absolute h-40 w-40 rounded-full bg-blue-500/20 blur-2xl" />
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Future Training Excellence Section */}
+        <section className="section-transition training-bg fade-overlay section-blend relative overflow-hidden py-12 sm:py-16 lg:py-24">
+          {/* Background Elements with Parallax */}
+          <div className="parallax-element parallax-bg-1 absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-70" />
+          <div className="parallax-element parallax-float-2 absolute top-1/4 right-1/4 h-80 w-80 rounded-full bg-blue-500/10 opacity-40 blur-3xl" />
+          <div className="parallax-element parallax-float-3 absolute bottom-1/4 left-1/4 h-96 w-96 rounded-full bg-purple-500/10 opacity-40 blur-3xl" />
+
+          <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              className="mb-12 text-center sm:mb-20"
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <motion.div
+                className="mb-6 inline-block rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-2"
+                initial={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, scale: 1 }}
+              >
+                <span className="font-medium text-blue-400">
+                  🚀 Coming Soon
+                </span>
+              </motion.div>
+
+              <h2 className="mb-6 font-bold font-display text-3xl text-white sm:text-4xl md:text-5xl lg:text-6xl">
+                EXPERT GUIDANCE <span className="gradient-text">AWAITS</span>
+              </h2>
+              <p className="mx-auto max-w-3xl text-base text-white/70 leading-relaxed sm:text-lg lg:text-xl">
+                We&apos;re assembling a team of elite fitness professionals who
+                will provide personalized training, nutrition guidance, and
+                motivation to help you achieve extraordinary results.
+              </p>
+            </motion.div>
+
+            {/* Training Excellence Cards */}
+            <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
+              {/* Strength & Conditioning */}
+              <motion.div
+                className="group"
+                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                transition={{
+                  duration: 0.6,
+                  delay: 0,
+                  type: 'spring',
+                  stiffness: 100,
+                }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              >
+                <motion.div
+                  className="relative h-full overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-primary/20 to-primary/5 shadow-2xl backdrop-blur-sm transition-all duration-500 group-hover:shadow-3xl"
+                  whileHover={{
+                    y: -8,
+                    boxShadow: '0 25px 50px -12px rgba(30, 155, 113, 0.3)',
+                  }}
+                >
+                  {/* Icon Header */}
+                  <div className="relative p-6 text-center sm:p-8">
+                    <Tooltip
+                      content="Progressive strength training with professional coaching to build muscle mass and increase power output safely and effectively."
+                      placement="top"
+                    >
+                      <motion.div
+                        className="relative mx-auto mb-4 flex h-20 w-20 cursor-help items-center justify-center overflow-hidden rounded-xl border border-emerald-400/30 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 shadow-emerald-500/40 shadow-lg backdrop-blur-sm transition-all duration-300 group-hover:shadow-emerald-400/60 sm:mb-6"
+                        transition={{ duration: 0.3 }}
+                        whileHover={{ rotate: 10, scale: 1.1 }}
+                      >
+                        {/* Animated background glow */}
+                        <motion.div
+                          animate={{
+                            background: [
+                              'linear-gradient(45deg, rgba(16, 185, 129, 0.2) 0%, rgba(20, 184, 166, 0.2) 50%, rgba(34, 197, 94, 0.2) 100%)',
+                              'linear-gradient(45deg, rgba(34, 197, 94, 0.2) 0%, rgba(16, 185, 129, 0.2) 50%, rgba(20, 184, 166, 0.2) 100%)',
+                              'linear-gradient(45deg, rgba(20, 184, 166, 0.2) 0%, rgba(34, 197, 94, 0.2) 50%, rgba(16, 185, 129, 0.2) 100%)',
+                            ],
+                          }}
+                          className="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-400/20 via-teal-400/20 to-green-400/20"
+                          transition={{
+                            duration: 3,
+                            repeat: Number.POSITIVE_INFINITY,
+                            ease: 'easeInOut',
+                          }}
+                        />
+                        <div
+                          className="relative z-10 h-10 w-10"
+                          style={{
+                            background:
+                              'linear-gradient(135deg, #10b981 0%, #14b8a6 50%, #22c55e 100%)',
+                            WebkitMask:
+                              'url("/images/icons/dumbbell.svg") no-repeat center',
+                            WebkitMaskSize: 'contain',
+                            mask: 'url("/images/icons/dumbbell.svg") no-repeat center',
+                            maskSize: 'contain',
+                            filter:
+                              'drop-shadow(0 0 12px rgba(16, 185, 129, 0.6))',
+                          }}
+                        />
+                      </motion.div>
+                    </Tooltip>
+
+                    <h3 className="mb-2 font-bold text-white text-xl sm:mb-3 sm:text-2xl">
+                      Strength & Conditioning
+                    </h3>
+                    <p className="mb-4 text-sm text-white/70 leading-relaxed sm:mb-6 sm:text-base">
+                      Expert-led strength training programs designed to build
+                      muscle, increase power, and improve athletic performance.
+                    </p>
+
+                    {/* Future Features */}
+                    <div className="space-y-2 sm:space-y-3">
+                      <div className="flex items-center justify-center gap-2 sm:gap-3">
+                        <div className="h-2 w-2 rounded-full bg-primary" />
+                        <span className="text-white/80 text-xs sm:text-sm">
+                          Powerlifting & Olympic Lifting
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-center gap-2 sm:gap-3">
+                        <div className="h-2 w-2 rounded-full bg-primary" />
+                        <span className="text-white/80 text-xs sm:text-sm">
+                          Progressive Overload Programs
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-center gap-2 sm:gap-3">
+                        <div className="h-2 w-2 rounded-full bg-primary" />
+                        <span className="text-white/80 text-xs sm:text-sm">
+                          Form & Technique Mastery
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Status Badge */}
+                  <div className="absolute top-4 right-4">
+                    <span className="rounded-full bg-blue-500/20 px-3 py-1 font-medium text-blue-400 text-xs">
+                      Coming Soon
+                    </span>
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              {/* Functional Training */}
+              <motion.div
+                className="group"
+                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                transition={{
+                  duration: 0.6,
+                  delay: 0.1,
+                  type: 'spring',
+                  stiffness: 100,
+                }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              >
+                <motion.div
+                  className="relative h-full overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-purple-500/20 to-purple-500/5 shadow-2xl backdrop-blur-sm transition-all duration-500 group-hover:shadow-3xl"
+                  whileHover={{
+                    y: -8,
+                    boxShadow: '0 25px 50px -12px rgba(147, 51, 234, 0.3)',
+                  }}
+                >
+                  {/* Icon Header */}
+                  <div className="relative p-6 text-center sm:p-8">
+                    <motion.div
+                      className="relative mx-auto mb-4 flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl border border-violet-400/30 bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 shadow-lg shadow-violet-500/40 backdrop-blur-sm transition-all duration-300 group-hover:shadow-violet-400/60 sm:mb-6"
+                      transition={{ duration: 0.3 }}
+                      whileHover={{ rotate: 10, scale: 1.1 }}
+                    >
+                      {/* Animated background glow */}
+                      <motion.div
+                        animate={{
+                          background: [
+                            'linear-gradient(45deg, rgba(139, 92, 246, 0.2) 0%, rgba(168, 85, 247, 0.2) 50%, rgba(217, 70, 239, 0.2) 100%)',
+                            'linear-gradient(45deg, rgba(217, 70, 239, 0.2) 0%, rgba(139, 92, 246, 0.2) 50%, rgba(168, 85, 247, 0.2) 100%)',
+                            'linear-gradient(45deg, rgba(168, 85, 247, 0.2) 0%, rgba(217, 70, 239, 0.2) 50%, rgba(139, 92, 246, 0.2) 100%)',
+                          ],
+                        }}
+                        className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-400/20 via-purple-400/20 to-fuchsia-400/20"
+                        transition={{
+                          duration: 2.5,
+                          repeat: Number.POSITIVE_INFINITY,
+                          ease: 'easeInOut',
+                        }}
+                      />
+                      <div
+                        className="relative z-10 h-10 w-10"
+                        style={{
+                          background:
+                            'linear-gradient(135deg, #8b5cf6 0%, #a855f7 50%, #d946ef 100%)',
+                          WebkitMask:
+                            'url("/images/icons/lightning-bolt.svg") no-repeat center',
+                          WebkitMaskSize: 'contain',
+                          mask: 'url("/images/icons/lightning-bolt.svg") no-repeat center',
+                          maskSize: 'contain',
+                          filter:
+                            'drop-shadow(0 0 12px rgba(139, 92, 246, 0.6))',
+                        }}
+                      />
+                    </motion.div>
+
+                    <h3 className="mb-2 font-bold text-white text-xl sm:mb-3 sm:text-2xl">
+                      Functional Training
+                    </h3>
+                    <p className="mb-4 text-sm text-white/70 leading-relaxed sm:mb-6 sm:text-base">
+                      Movement-based workouts that improve daily activities,
+                      mobility, and overall functional fitness.
+                    </p>
+
+                    {/* Future Features */}
+                    <div className="space-y-2 sm:space-y-3">
+                      <div className="flex items-center justify-center gap-2 sm:gap-3">
+                        <div className="h-2 w-2 rounded-full bg-purple-500" />
+                        <span className="text-white/80 text-xs sm:text-sm">
+                          HIIT & Circuit Training
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-center gap-2 sm:gap-3">
+                        <div className="h-2 w-2 rounded-full bg-purple-500" />
+                        <span className="text-white/80 text-xs sm:text-sm">
+                          Mobility & Flexibility
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-center gap-2 sm:gap-3">
+                        <div className="h-2 w-2 rounded-full bg-purple-500" />
+                        <span className="text-white/80 text-xs sm:text-sm">
+                          Injury Prevention
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Status Badge */}
+                  <div className="absolute top-4 right-4">
+                    <span className="rounded-full bg-blue-500/20 px-3 py-1 font-medium text-blue-400 text-xs">
+                      Coming Soon
+                    </span>
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              {/* Wellness & Recovery */}
+              <motion.div
+                className="group sm:col-span-2 lg:col-span-1"
+                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                transition={{
+                  duration: 0.6,
+                  delay: 0.2,
+                  type: 'spring',
+                  stiffness: 100,
+                }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              >
+                <motion.div
+                  className="relative h-full overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-blue-500/20 to-blue-500/5 shadow-2xl backdrop-blur-sm transition-all duration-500 group-hover:shadow-3xl"
+                  whileHover={{
+                    y: -8,
+                    boxShadow: '0 25px 50px -12px rgba(59, 130, 246, 0.3)',
+                  }}
+                >
+                  {/* Icon Header */}
+                  <div className="relative p-6 text-center sm:p-8">
+                    <motion.div
+                      className="relative mx-auto mb-4 flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl border border-sky-400/30 bg-gradient-to-br from-sky-500/20 to-blue-500/20 shadow-lg shadow-sky-500/40 backdrop-blur-sm transition-all duration-300 group-hover:shadow-sky-400/60 sm:mb-6"
+                      transition={{ duration: 0.3 }}
+                      whileHover={{ rotate: 10, scale: 1.1 }}
+                    >
+                      {/* Animated background glow */}
+                      <motion.div
+                        animate={{
+                          background: [
+                            'linear-gradient(45deg, rgba(59, 130, 246, 0.2) 0%, rgba(14, 165, 233, 0.2) 50%, rgba(6, 182, 212, 0.2) 100%)',
+                            'linear-gradient(45deg, rgba(6, 182, 212, 0.2) 0%, rgba(59, 130, 246, 0.2) 50%, rgba(14, 165, 233, 0.2) 100%)',
+                            'linear-gradient(45deg, rgba(14, 165, 233, 0.2) 0%, rgba(6, 182, 212, 0.2) 50%, rgba(59, 130, 246, 0.2) 100%)',
+                          ],
+                        }}
+                        className="absolute inset-0 rounded-xl bg-gradient-to-r from-sky-400/20 via-blue-400/20 to-cyan-400/20"
+                        transition={{
+                          duration: 3.5,
+                          repeat: Number.POSITIVE_INFINITY,
+                          ease: 'easeInOut',
+                        }}
+                      />
+                      <div
+                        className="relative z-10 h-10 w-10"
+                        style={{
+                          background:
+                            'linear-gradient(135deg, #3b82f6 0%, #0ea5e9 50%, #06b6d4 100%)',
+                          WebkitMask:
+                            'url("/images/icons/heart.svg") no-repeat center',
+                          WebkitMaskSize: 'contain',
+                          mask: 'url("/images/icons/heart.svg") no-repeat center',
+                          maskSize: 'contain',
+                          filter:
+                            'drop-shadow(0 0 12px rgba(59, 130, 246, 0.6))',
+                        }}
+                      />
+                    </motion.div>
+
+                    <h3 className="mb-2 font-bold text-white text-xl sm:mb-3 sm:text-2xl">
+                      Wellness & Recovery
+                    </h3>
+                    <p className="mb-4 text-sm text-white/70 leading-relaxed sm:mb-6 sm:text-base">
+                      Holistic approach to health including nutrition guidance,
+                      stress management, and recovery protocols.
+                    </p>
+
+                    {/* Future Features */}
+                    <div className="space-y-2 sm:space-y-3">
+                      <div className="flex items-center justify-center gap-2 sm:gap-3">
+                        <div className="h-2 w-2 rounded-full bg-blue-500" />
+                        <span className="text-white/80 text-xs sm:text-sm">
+                          Nutrition Counseling
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-center gap-2 sm:gap-3">
+                        <div className="h-2 w-2 rounded-full bg-blue-500" />
+                        <span className="text-white/80 text-xs sm:text-sm">
+                          Yoga & Mindfulness
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-center gap-2 sm:gap-3">
+                        <div className="h-2 w-2 rounded-full bg-blue-500" />
+                        <span className="text-white/80 text-xs sm:text-sm">
+                          Recovery Protocols
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Status Badge */}
+                  <div className="absolute top-4 right-4">
+                    <span className="rounded-full bg-blue-500/20 px-3 py-1 font-medium text-blue-400 text-xs">
+                      Coming Soon
+                    </span>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </div>
+
+            {/* Call to Action */}
+            <motion.div
+              className="mt-12 text-center sm:mt-16"
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <div className="mx-auto max-w-4xl rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-6 backdrop-blur-sm sm:p-8 lg:p-10">
+                <h3 className="mb-4 font-bold text-2xl text-white sm:text-3xl">
+                  Interested in{' '}
+                  <span className="text-primary">Joining Our Team?</span>
+                </h3>
+                <p className="mb-6 text-sm text-white/70 leading-relaxed sm:mb-8 sm:text-base">
+                  We&apos;re looking for passionate, certified fitness
+                  professionals who share our commitment to excellence. If
+                  you&apos;re ready to inspire and transform lives, we&apos;d
+                  love to hear from you.
+                </p>
+                <div className="flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
+                  <Link href="/contact">
+                    <motion.div
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <ShinyButton
+                        className="text-sm sm:text-base"
+                        size="md"
+                        variant="primary"
+                      >
+                        Apply to Join Our Team
+                      </ShinyButton>
+                    </motion.div>
+                  </Link>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <ShinyButton
+                      className="text-sm sm:text-base"
+                      size="md"
+                      variant="outline"
+                    >
+                      Learn More
+                    </ShinyButton>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Facility Progress Section */}
+        <section className="section-transition relative overflow-hidden py-12 sm:py-16 lg:py-24">
+          {/* Simplified Background Elements */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 opacity-50" />
+          <div className="absolute top-1/4 right-1/4 h-80 w-80 rounded-full bg-blue-500/5 opacity-20 blur-2xl" />
+          <div className="absolute bottom-1/4 left-1/4 h-96 w-96 rounded-full bg-indigo-500/5 opacity-20 blur-2xl" />
+
+          <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              className="mb-12 text-center sm:mb-20"
+              initial={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true, margin: '-50px' }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <div className="mb-6 inline-block rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-2">
+                <span className="font-medium text-blue-400">
+                  🏗️ Construction Progress
+                </span>
+              </div>
+
+              <h2 className="mb-6 font-bold font-display text-3xl text-white sm:text-4xl md:text-5xl lg:text-6xl">
+                FACILITY{' '}
+                <AnimatedGradientText
+                  animationDuration={3}
+                  className="inline-block"
+                  gradientFrom="from-[#3b82f6]"
+                  gradientTo="to-[#1e40af]"
+                  gradientVia="via-[#1d4ed8]"
+                  variant="wave"
+                >
+                  COMPLETION
+                </AnimatedGradientText>
+              </h2>
+              <p className="mx-auto max-w-3xl text-base text-white/70 leading-relaxed sm:text-lg lg:text-xl">
+                Track our progress as we put the finishing touches on our
+                state-of-the-art facility. Each milestone brings us closer to
+                opening day!
+              </p>
+            </motion.div>
+
+            {/* Facility Progress Grid - Optimized */}
+            <div className="mb-16 grid gap-8 sm:mb-20 sm:grid-cols-2 sm:gap-12 lg:grid-cols-4">
+              <motion.div
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                viewport={{ once: true, margin: '-50px' }}
+                whileInView={{ opacity: 1, y: 0 }}
+              >
+                <ProgressRing
+                  value={100}
+                  {...ProgressRingPresets.facility}
+                  className="mx-auto mb-4"
+                  color="#10b981"
+                  delay={100}
+                  label="Equipment"
+                />
+                <h3 className="mb-2 font-semibold text-lg text-white">
+                  Equipment Setup
+                </h3>
+                <p className="text-sm text-white/70">
+                  All premium equipment installed and calibrated
+                </p>
+              </motion.div>
+
+              <motion.div
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.4, delay: 0.15 }}
+                viewport={{ once: true, margin: '-50px' }}
+                whileInView={{ opacity: 1, y: 0 }}
+              >
+                <ProgressRing
+                  value={95}
+                  {...ProgressRingPresets.facility}
+                  className="mx-auto mb-4"
+                  color="#8b5cf6"
+                  delay={150}
+                  label="Interior"
+                />
+                <h3 className="mb-2 font-semibold text-lg text-white">
+                  Interior Design
+                </h3>
+                <p className="text-sm text-white/70">
+                  Modern design and lighting nearly complete
+                </p>
+              </motion.div>
+
+              <motion.div
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+                viewport={{ once: true, margin: '-50px' }}
+                whileInView={{ opacity: 1, y: 0 }}
+              >
+                <ProgressRing
+                  value={88}
+                  {...ProgressRingPresets.facility}
+                  className="mx-auto mb-4"
+                  color="#f59e0b"
+                  delay={200}
+                  label="Systems"
+                />
+                <h3 className="mb-2 font-semibold text-lg text-white">
+                  Tech Systems
+                </h3>
+                <p className="text-sm text-white/70">
+                  Access control and audio systems installation
+                </p>
+              </motion.div>
+
+              <motion.div
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.4, delay: 0.25 }}
+                viewport={{ once: true, margin: '-50px' }}
+                whileInView={{ opacity: 1, y: 0 }}
+              >
+                <ProgressRing
+                  value={75}
+                  {...ProgressRingPresets.facility}
+                  className="mx-auto mb-4"
+                  color="#ef4444"
+                  delay={250}
+                  label="Final Touches"
+                />
+                <h3 className="mb-2 font-semibold text-lg text-white">
+                  Final Details
+                </h3>
+                <p className="text-sm text-white/70">
+                  Signage, cleaning, and finishing touches
+                </p>
+              </motion.div>
+            </div>
+
+            {/* Overall Progress - Optimized */}
+            <motion.div
+              className="text-center"
+              initial={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              viewport={{ once: true, margin: '-50px' }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <div className="mx-auto max-w-2xl rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-8 backdrop-blur-sm sm:p-12">
+                <ProgressRing
+                  className="mx-auto mb-6"
+                  color="#3b82f6"
+                  delay={300}
+                  duration={1500}
+                  glowEffect={true}
+                  gradient={true}
+                  label="Overall Progress"
+                  size="xl"
+                  strokeWidth={12}
+                  value={90}
+                />
+                <h3 className="mb-4 font-bold text-2xl text-white sm:text-3xl">
+                  Almost Ready to Open!
+                </h3>
+                <p className="text-base text-white/70 leading-relaxed sm:text-lg">
+                  Our facility is 90% complete and on track for our grand
+                  opening. The final 10% includes staff training, safety
+                  inspections, and member onboarding preparations.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Get Ready Section */}
+        <section className="section-transition success-bg fade-overlay section-blend relative overflow-hidden py-12 sm:py-16 lg:py-24">
+          {/* Background Elements with Parallax */}
+          <div className="parallax-element parallax-bg-2 absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-500/5 opacity-70" />
+          <div className="parallax-element parallax-float-1 absolute top-1/4 left-1/4 h-80 w-80 rounded-full bg-primary/10 opacity-30 blur-3xl" />
+          <div className="parallax-element parallax-float-3 absolute right-1/4 bottom-1/4 h-96 w-96 rounded-full bg-purple-500/10 opacity-30 blur-3xl" />
+
+          <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              className="mb-12 text-center sm:mb-20"
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <motion.div
+                className="mb-6 inline-block rounded-full border border-primary/20 bg-primary/10 px-4 py-2"
+                initial={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, scale: 1 }}
+              >
+                <span className="font-medium text-primary">
+                  ⏰ Opening Soon
+                </span>
+              </motion.div>
+
+              <h2 className="mb-6 font-bold font-display text-3xl text-white sm:text-4xl md:text-5xl lg:text-6xl">
+                GET READY FOR{' '}
+                <span className="gradient-text">SOMETHING AMAZING</span>
+              </h2>
+              <p className="mx-auto max-w-3xl text-base text-white/70 leading-relaxed sm:text-lg lg:text-xl">
+                We&apos;re putting the finishing touches on our brand-new
+                facility! Be among the first to experience premium equipment,
+                modern amenities, and a welcoming community atmosphere.
+              </p>
+            </motion.div>
+
+            {/* Pre-Opening Features */}
+            <div className="mb-12 grid gap-6 sm:mb-16 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
+              <motion.div
+                className="group glass-effect rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-6 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 sm:p-8"
+                initial={{ opacity: 0, y: 30 }}
+                transition={{ duration: 0.6, delay: 0 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                whileInView={{ opacity: 1, y: 0 }}
+              >
+                <motion.div
+                  className="relative mx-auto mb-6 flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl border border-emerald-400/60 bg-gradient-to-br from-black/50 to-black/30 shadow-emerald-500/70 shadow-lg backdrop-blur-sm transition-all duration-300 group-hover:shadow-emerald-500/90"
+                  transition={{ duration: 0.3 }}
+                  whileHover={{ rotate: 10, scale: 1.1 }}
+                >
+                  {/* Animated background glow */}
+                  <motion.div
+                    animate={{
+                      background: [
+                        'linear-gradient(45deg, rgba(16, 185, 129, 0.35) 0%, rgba(20, 184, 166, 0.35) 50%, rgba(34, 197, 94, 0.35) 100%)',
+                        'linear-gradient(45deg, rgba(34, 197, 94, 0.35) 0%, rgba(16, 185, 129, 0.35) 50%, rgba(20, 184, 166, 0.35) 100%)',
+                        'linear-gradient(45deg, rgba(20, 184, 166, 0.35) 0%, rgba(34, 197, 94, 0.35) 50%, rgba(16, 185, 129, 0.35) 100%)',
+                      ],
+                    }}
+                    className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-500/35 via-teal-500/35 to-green-500/35"
+                    transition={{
+                      duration: 3,
+                      repeat: Number.POSITIVE_INFINITY,
+                      ease: 'easeInOut',
+                    }}
+                  />
+                  <div
+                    className="relative z-10 h-8 w-8"
+                    style={{
+                      background: '#00ff88',
+                      WebkitMask:
+                        'url("/images/icons/premium-icon.svg") no-repeat center',
+                      WebkitMaskSize: 'contain',
+                      mask: 'url("/images/icons/premium-icon.svg") no-repeat center',
+                      maskSize: 'contain',
+                      filter: 'drop-shadow(0 0 18px rgba(0, 255, 136, 0.9))',
+                    }}
+                  />
+                </motion.div>
+                <div className="text-center">
+                  <div className="mb-2 font-bold text-3xl text-primary sm:text-4xl">
+                    500m²
+                  </div>
+                  <h3 className="mb-3 font-semibold text-white text-xl">
+                    Premium Space
+                  </h3>
+                  <p className="text-sm text-white/70 sm:text-base">
+                    Spacious training areas with natural lighting and modern
+                    ventilation for optimal comfort
+                  </p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="group glass-effect rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-6 backdrop-blur-sm transition-all duration-300 hover:border-purple-400/30 sm:p-8"
+                initial={{ opacity: 0, y: 30 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                whileInView={{ opacity: 1, y: 0 }}
+              >
+                <motion.div
+                  className="relative mx-auto mb-6 flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl border border-violet-400/60 bg-gradient-to-br from-black/50 to-black/30 shadow-lg shadow-violet-500/70 backdrop-blur-sm transition-all duration-300 group-hover:shadow-violet-500/90"
+                  transition={{ duration: 0.3 }}
+                  whileHover={{ rotate: 10, scale: 1.1 }}
+                >
+                  {/* Animated background glow */}
+                  <motion.div
+                    animate={{
+                      background: [
+                        'linear-gradient(45deg, rgba(139, 92, 246, 0.35) 0%, rgba(168, 85, 247, 0.35) 50%, rgba(217, 70, 239, 0.35) 100%)',
+                        'linear-gradient(45deg, rgba(217, 70, 239, 0.35) 0%, rgba(139, 92, 246, 0.35) 50%, rgba(168, 85, 247, 0.35) 100%)',
+                        'linear-gradient(45deg, rgba(168, 85, 247, 0.35) 0%, rgba(217, 70, 239, 0.35) 50%, rgba(139, 92, 246, 0.35) 100%)',
+                      ],
+                    }}
+                    className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-500/35 via-purple-500/35 to-fuchsia-500/35"
+                    transition={{
+                      duration: 2.5,
+                      repeat: Number.POSITIVE_INFINITY,
+                      ease: 'easeInOut',
+                    }}
+                  />
+                  <div
+                    className="relative z-10 h-8 w-8"
+                    style={{
+                      background: '#bb44ff',
+                      WebkitMask:
+                        'url("/images/icons/new-Equipment.svg") no-repeat center',
+                      WebkitMaskSize: 'contain',
+                      mask: 'url("/images/icons/new-Equipment.svg") no-repeat center',
+                      maskSize: 'contain',
+                      filter: 'drop-shadow(0 0 18px rgba(187, 68, 255, 0.9))',
+                    }}
+                  />
+                </motion.div>
+                <div className="text-center">
+                  <div className="mb-2 font-bold text-3xl text-purple-400 sm:text-4xl">
+                    Latest
+                  </div>
+                  <h3 className="mb-3 font-semibold text-white text-xl">
+                    Equipment
+                  </h3>
+                  <p className="text-sm text-white/70 sm:text-base">
+                    Brand new commercial-grade fitness machines and free weights
+                    from top manufacturers
+                  </p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="group glass-effect rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-6 backdrop-blur-sm transition-all duration-300 hover:border-blue-400/30 sm:col-span-2 sm:p-8 lg:col-span-1"
+                initial={{ opacity: 0, y: 30 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                whileInView={{ opacity: 1, y: 0 }}
+              >
+                <motion.div
+                  className="relative mx-auto mb-6 flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl border border-sky-400/60 bg-gradient-to-br from-black/50 to-black/30 shadow-lg shadow-sky-500/70 backdrop-blur-sm transition-all duration-300 group-hover:shadow-sky-500/90"
+                  transition={{ duration: 0.3 }}
+                  whileHover={{ rotate: 10, scale: 1.1 }}
+                >
+                  {/* Animated background glow */}
+                  <motion.div
+                    animate={{
+                      background: [
+                        'linear-gradient(45deg, rgba(59, 130, 246, 0.35) 0%, rgba(14, 165, 233, 0.35) 50%, rgba(6, 182, 212, 0.35) 100%)',
+                        'linear-gradient(45deg, rgba(6, 182, 212, 0.35) 0%, rgba(59, 130, 246, 0.35) 50%, rgba(14, 165, 233, 0.35) 100%)',
+                        'linear-gradient(45deg, rgba(14, 165, 233, 0.35) 0%, rgba(6, 182, 212, 0.35) 50%, rgba(59, 130, 246, 0.35) 100%)',
+                      ],
+                    }}
+                    className="absolute inset-0 rounded-2xl bg-gradient-to-r from-sky-500/35 via-blue-500/35 to-cyan-500/35"
+                    transition={{
+                      duration: 3.5,
+                      repeat: Number.POSITIVE_INFINITY,
+                      ease: 'easeInOut',
+                    }}
+                  />
+                  <div
+                    className="relative z-10 h-8 w-8"
+                    style={{
+                      background: '#0099ff',
+                      WebkitMask:
+                        'url("/images/icons/community.svg") no-repeat center',
+                      WebkitMaskSize: 'contain',
+                      mask: 'url("/images/icons/community.svg") no-repeat center',
+                      maskSize: 'contain',
+                      filter: 'drop-shadow(0 0 18px rgba(0, 153, 255, 0.9))',
+                    }}
+                  />
+                </motion.div>
+                <div className="text-center">
+                  <div className="mb-2 font-bold text-3xl text-blue-400 sm:text-4xl">
+                    New
+                  </div>
+                  <h3 className="mb-3 font-semibold text-white text-xl">
+                    Community
+                  </h3>
+                  <p className="text-sm text-white/70 sm:text-base">
+                    Join our growing community of fitness enthusiasts and be
+                    part of something special from day one
+                  </p>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Opening Success Call to Action */}
+            <motion.div
+              className="text-center"
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <div className="mx-auto max-w-4xl rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-8 backdrop-blur-sm sm:p-12 lg:p-16">
+                <motion.div
+                  className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/80 shadow-lg shadow-primary/30"
+                  transition={{ duration: 0.8 }}
+                  whileHover={{ scale: 1.1, rotate: 360 }}
+                >
+                  <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24">
+                    <defs>
+                      <linearGradient
+                        id="starGrad"
+                        x1="0%"
+                        x2="100%"
+                        y1="0%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stopColor="#ffffff" />
+                        <stop offset="100%" stopColor="#f0f9ff" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                      stroke="url(#starGrad)"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                    />
+                  </svg>
+                </motion.div>
+
+                <h3 className="mb-6 font-bold text-2xl text-white sm:text-3xl lg:text-4xl">
+                  Reserve Your{' '}
+                  <span className="gradient-text">Founding Membership</span>
+                </h3>
+                <p className="mx-auto mb-8 max-w-2xl text-base text-white/70 leading-relaxed sm:text-lg lg:text-xl">
+                  Secure your spot as a founding member of MituGym. Get
+                  exclusive pre-opening rates, priority access, and special
+                  benefits when we officially open our doors.
+                </p>
+
+                <div className="flex flex-col justify-center gap-4 sm:flex-row sm:gap-6">
                   <motion.div
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     <ShinyButton
+                      className="text-base"
+                      size="lg"
                       variant="primary"
-                      size="md"
-                      className="text-sm sm:text-base"
                     >
-                      Apply to Join Our Team
+                      Reserve Your Spot
                     </ShinyButton>
                   </motion.div>
-                </Link>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <ShinyButton
-                    variant="outline"
-                    size="md"
-                    className="text-sm sm:text-base"
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    Learn More
-                  </ShinyButton>
-                </motion.div>
+                    <ShinyButton
+                      className="text-base"
+                      size="lg"
+                      variant="outline"
+                    >
+                      Get Notified
+                    </ShinyButton>
+                  </motion.div>
+                </div>
               </div>
-            </div>
-          </motion.div>
-
-          
-        </div>
-      </section>
-
-      {/* Facility Progress Section */}
-      <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden section-transition">
-        {/* Simplified Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 opacity-50" />
-        <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-blue-500/5 rounded-full blur-2xl opacity-20" />
-        <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-indigo-500/5 rounded-full blur-2xl opacity-20" />
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            className="text-center mb-12 sm:mb-20"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="inline-block bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-6">
-              <span className="text-blue-400 font-medium">🏗️ Construction Progress</span>
-            </div>
-            
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6">
-              FACILITY <AnimatedGradientText 
-                className="inline-block"
-                variant="wave"
-                animationDuration={3}
-                gradientFrom="from-[#3b82f6]"
-                gradientVia="via-[#1d4ed8]"
-                gradientTo="to-[#1e40af]"
-              >
-                COMPLETION
-              </AnimatedGradientText>
-            </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
-              Track our progress as we put the finishing touches on our state-of-the-art facility. 
-              Each milestone brings us closer to opening day!
-            </p>
-          </motion.div>
-
-          {/* Facility Progress Grid - Optimized */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mb-16 sm:mb-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="text-center"
-            >
-              <ProgressRing
-                value={100}
-                {...ProgressRingPresets.facility}
-                color="#10b981"
-                label="Equipment"
-                delay={100}
-                className="mx-auto mb-4"
-              />
-              <h3 className="text-lg font-semibold text-white mb-2">Equipment Setup</h3>
-              <p className="text-white/70 text-sm">All premium equipment installed and calibrated</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.4, delay: 0.15 }}
-              className="text-center"
-            >
-              <ProgressRing
-                value={95}
-                {...ProgressRingPresets.facility}
-                color="#8b5cf6"
-                label="Interior"
-                delay={150}
-                className="mx-auto mb-4"
-              />
-              <h3 className="text-lg font-semibold text-white mb-2">Interior Design</h3>
-              <p className="text-white/70 text-sm">Modern design and lighting nearly complete</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.4, delay: 0.2 }}
-              className="text-center"
-            >
-              <ProgressRing
-                value={88}
-                {...ProgressRingPresets.facility}
-                color="#f59e0b"
-                label="Systems"
-                delay={200}
-                className="mx-auto mb-4"
-              />
-              <h3 className="text-lg font-semibold text-white mb-2">Tech Systems</h3>
-              <p className="text-white/70 text-sm">Access control and audio systems installation</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.4, delay: 0.25 }}
-              className="text-center"
-            >
-              <ProgressRing
-                value={75}
-                {...ProgressRingPresets.facility}
-                color="#ef4444"
-                label="Final Touches"
-                delay={250}
-                className="mx-auto mb-4"
-              />
-              <h3 className="text-lg font-semibold text-white mb-2">Final Details</h3>
-              <p className="text-white/70 text-sm">Signage, cleaning, and finishing touches</p>
             </motion.div>
           </div>
+        </section>
 
-          {/* Overall Progress - Optimized */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="text-center"
-          >
-            <div className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-3xl p-8 sm:p-12 max-w-2xl mx-auto">
-              <ProgressRing
-                value={90}
-                size="xl"
-                strokeWidth={12}
-                color="#3b82f6"
-                gradient={true}
-                glowEffect={true}
-                label="Overall Progress"
-                delay={300}
-                duration={1500}
-                className="mx-auto mb-6"
-              />
-              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-                Almost Ready to Open!
-              </h3>
-              <p className="text-white/70 text-base sm:text-lg leading-relaxed">
-                Our facility is 90% complete and on track for our grand opening. 
-                The final 10% includes staff training, safety inspections, and member onboarding preparations.
+        {/* Achievements Section */}
+        <section className="section-transition relative overflow-hidden py-12 sm:py-16 lg:py-24">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-purple-500/5 to-blue-500/5" />
+          <div className="absolute top-1/4 left-1/4 h-96 w-96 rounded-full bg-primary/10 opacity-30 blur-3xl" />
+          <div className="absolute right-1/4 bottom-1/4 h-80 w-80 rounded-full bg-purple-500/10 opacity-30 blur-3xl" />
+
+          <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              className="mb-12 text-center sm:mb-16"
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <span className="font-semibold text-primary text-sm sm:text-base lg:text-lg">
+                OUR ACHIEVEMENTS
+              </span>
+              <h2 className="mt-2 mb-6 font-bold font-display text-2xl text-white sm:text-3xl md:text-4xl lg:text-5xl">
+                BUILT FOR <span className="gradient-text">SUCCESS</span>
+              </h2>
+              <p className="mx-auto max-w-3xl text-base text-white/70 leading-relaxed sm:text-lg">
+                Every number tells a story of excellence. From our
+                state-of-the-art facility to our commitment to member
+                satisfaction, these achievements reflect our dedication to
+                fitness excellence.
               </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Get Ready Section */}
-      <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden section-transition success-bg fade-overlay section-blend">
-        {/* Background Elements with Parallax */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-500/5 opacity-70 parallax-element parallax-bg-2" />
-        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-primary/10 rounded-full blur-3xl opacity-30 parallax-element parallax-float-1" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl opacity-30 parallax-element parallax-float-3" />
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            className="text-center mb-12 sm:mb-20"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="inline-block bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6"
-            >
-              <span className="text-primary font-medium">⏰ Opening Soon</span>
             </motion.div>
-            
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6">
-              GET READY FOR <span className="gradient-text">SOMETHING AMAZING</span>
-            </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
-              We&apos;re putting the finishing touches on our brand-new facility! Be among the first to experience 
-              premium equipment, modern amenities, and a welcoming community atmosphere.
-            </p>
-          </motion.div>
 
-          {/* Pre-Opening Features */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0 }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-3xl p-6 sm:p-8 glass-effect hover:border-primary/30 transition-all duration-300"
-            >
+            {/* Achievement Stats Grid */}
+            <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 sm:gap-8 lg:grid-cols-4">
               <motion.div
-                className="w-16 h-16 bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-sm border border-emerald-400/60 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg shadow-emerald-500/70 group-hover:shadow-emerald-500/90 transition-all duration-300 relative overflow-hidden"
-                whileHover={{ rotate: 10, scale: 1.1 }}
-                transition={{ duration: 0.3 }}
+                className="rounded-2xl border border-white/10 bg-surface/30 p-6 text-center backdrop-blur-sm transition-all duration-300 hover:bg-surface/40 sm:p-8"
+                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
               >
-                {/* Animated background glow */}
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-emerald-500/35 via-teal-500/35 to-green-500/35 rounded-2xl"
-                  animate={{
-                    background: [
-                      'linear-gradient(45deg, rgba(16, 185, 129, 0.35) 0%, rgba(20, 184, 166, 0.35) 50%, rgba(34, 197, 94, 0.35) 100%)',
-                      'linear-gradient(45deg, rgba(34, 197, 94, 0.35) 0%, rgba(16, 185, 129, 0.35) 50%, rgba(20, 184, 166, 0.35) 100%)',
-                      'linear-gradient(45deg, rgba(20, 184, 166, 0.35) 0%, rgba(34, 197, 94, 0.35) 50%, rgba(16, 185, 129, 0.35) 100%)'
-                    ]
-                  }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <div
-                  className="w-8 h-8 relative z-10"
-                  style={{
-                    background: '#00ff88',
-                    WebkitMask: 'url("/images/icons/premium-icon.svg") no-repeat center',
-                    WebkitMaskSize: 'contain',
-                    mask: 'url("/images/icons/premium-icon.svg") no-repeat center',
-                    maskSize: 'contain',
-                    filter: 'drop-shadow(0 0 18px rgba(0, 255, 136, 0.9))'
-                  }}
-                />
-              </motion.div>
-              <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">500m²</div>
-                <h3 className="text-xl font-semibold text-white mb-3">Premium Space</h3>
-                <p className="text-white/70 text-sm sm:text-base">
-                  Spacious training areas with natural lighting and modern ventilation for optimal comfort
+                <div className="mb-2 font-bold text-4xl text-primary sm:text-5xl lg:text-6xl">
+                  2025
+                </div>
+                <h3 className="mb-2 font-semibold text-sm text-white/90 sm:text-base">
+                  Opening Year
+                </h3>
+                <p className="text-white/60 text-xs sm:text-sm">
+                  Brand new facility
                 </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-3xl p-6 sm:p-8 glass-effect hover:border-purple-400/30 transition-all duration-300"
-            >
-              <motion.div
-                className="w-16 h-16 bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-sm border border-violet-400/60 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg shadow-violet-500/70 group-hover:shadow-violet-500/90 transition-all duration-300 relative overflow-hidden"
-                whileHover={{ rotate: 10, scale: 1.1 }}
-                transition={{ duration: 0.3 }}
-              >
-                {/* Animated background glow */}
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-violet-500/35 via-purple-500/35 to-fuchsia-500/35 rounded-2xl"
-                  animate={{
-                    background: [
-                      'linear-gradient(45deg, rgba(139, 92, 246, 0.35) 0%, rgba(168, 85, 247, 0.35) 50%, rgba(217, 70, 239, 0.35) 100%)',
-                      'linear-gradient(45deg, rgba(217, 70, 239, 0.35) 0%, rgba(139, 92, 246, 0.35) 50%, rgba(168, 85, 247, 0.35) 100%)',
-                      'linear-gradient(45deg, rgba(168, 85, 247, 0.35) 0%, rgba(217, 70, 239, 0.35) 50%, rgba(139, 92, 246, 0.35) 100%)'
-                    ]
-                  }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <div
-                  className="w-8 h-8 relative z-10"
-                  style={{
-                    background: '#bb44ff',
-                    WebkitMask: 'url("/images/icons/new-Equipment.svg") no-repeat center',
-                    WebkitMaskSize: 'contain',
-                    mask: 'url("/images/icons/new-Equipment.svg") no-repeat center',
-                    maskSize: 'contain',
-                    filter: 'drop-shadow(0 0 18px rgba(187, 68, 255, 0.9))'
-                  }}
-                />
               </motion.div>
-              <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-purple-400 mb-2">Latest</div>
-                <h3 className="text-xl font-semibold text-white mb-3">Equipment</h3>
-                <p className="text-white/70 text-sm sm:text-base">
-                  Brand new commercial-grade fitness machines and free weights from top manufacturers
+
+              <motion.div
+                className="rounded-2xl border border-white/10 bg-surface/30 p-6 text-center backdrop-blur-sm transition-all duration-300 hover:bg-surface/40 sm:p-8"
+                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              >
+                <div className="mb-2 font-bold text-3xl text-primary sm:text-4xl lg:text-5xl">
+                  Premium
+                </div>
+                <h3 className="mb-2 font-semibold text-sm text-white/90 sm:text-base">
+                  Equipment
+                </h3>
+                <p className="text-white/60 text-xs sm:text-sm">
+                  Latest fitness technology
                 </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-3xl p-6 sm:p-8 glass-effect hover:border-blue-400/30 transition-all duration-300 sm:col-span-2 lg:col-span-1"
-            >
-              <motion.div
-                className="w-16 h-16 bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-sm border border-sky-400/60 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg shadow-sky-500/70 group-hover:shadow-sky-500/90 transition-all duration-300 relative overflow-hidden"
-                whileHover={{ rotate: 10, scale: 1.1 }}
-                transition={{ duration: 0.3 }}
-              >
-                {/* Animated background glow */}
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-sky-500/35 via-blue-500/35 to-cyan-500/35 rounded-2xl"
-                  animate={{
-                    background: [
-                      'linear-gradient(45deg, rgba(59, 130, 246, 0.35) 0%, rgba(14, 165, 233, 0.35) 50%, rgba(6, 182, 212, 0.35) 100%)',
-                      'linear-gradient(45deg, rgba(6, 182, 212, 0.35) 0%, rgba(59, 130, 246, 0.35) 50%, rgba(14, 165, 233, 0.35) 100%)',
-                      'linear-gradient(45deg, rgba(14, 165, 233, 0.35) 0%, rgba(6, 182, 212, 0.35) 50%, rgba(59, 130, 246, 0.35) 100%)'
-                    ]
-                  }}
-                  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <div
-                  className="w-8 h-8 relative z-10"
-                  style={{
-                    background: '#0099ff',
-                    WebkitMask: 'url("/images/icons/community.svg") no-repeat center',
-                    WebkitMaskSize: 'contain',
-                    mask: 'url("/images/icons/community.svg") no-repeat center',
-                    maskSize: 'contain',
-                    filter: 'drop-shadow(0 0 18px rgba(0, 153, 255, 0.9))'
-                  }}
-                />
               </motion.div>
-              <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-blue-400 mb-2">New</div>
-                <h3 className="text-xl font-semibold text-white mb-3">Community</h3>
-                <p className="text-white/70 text-sm sm:text-base">
-                  Join our growing community of fitness enthusiasts and be part of something special from day one
+
+              <motion.div
+                className="rounded-2xl border border-white/10 bg-surface/30 p-6 text-center backdrop-blur-sm transition-all duration-300 hover:bg-surface/40 sm:p-8"
+                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              >
+                <div className="mb-2 font-bold text-3xl text-primary sm:text-4xl lg:text-5xl">
+                  Coming
+                  <br />
+                  Soon
+                </div>
+                <h3 className="mb-2 font-semibold text-sm text-white/90 sm:text-base">
+                  Expert Trainers
+                </h3>
+                <p className="text-white/60 text-xs sm:text-sm">
+                  Professional guidance
                 </p>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Opening Success Call to Action */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-center"
-          >
-            <div className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-3xl p-8 sm:p-12 lg:p-16 max-w-4xl mx-auto">
-              <motion.div
-                className="w-20 h-20 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center mb-8 mx-auto shadow-lg shadow-primary/30"
-                whileHover={{ scale: 1.1, rotate: 360 }}
-                transition={{ duration: 0.8 }}
-              >
-                <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24">
-                  <defs>
-                    <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#ffffff" />
-                      <stop offset="100%" stopColor="#f0f9ff" />
-                    </linearGradient>
-                  </defs>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} stroke="url(#starGrad)" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                </svg>
               </motion.div>
-              
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-6">
-                Reserve Your <span className="gradient-text">Founding Membership</span>
-              </h3>
-              <p className="text-white/70 mb-8 text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto">
-                Secure your spot as a founding member of MituGym. Get exclusive pre-opening rates, 
-                priority access, and special benefits when we officially open our doors.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <ShinyButton
-                    variant="primary"
-                    size="lg"
-                    className="text-base"
-                  >
-                    Reserve Your Spot
-                  </ShinyButton>
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <ShinyButton
-                    variant="outline"
-                    size="lg"
-                    className="text-base"
-                  >
-                    Get Notified
-                  </ShinyButton>
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
-      {/* Achievements Section */}
-      <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden section-transition">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-purple-500/5 to-blue-500/5" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-30" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl opacity-30" />
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            className="text-center mb-12 sm:mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="text-primary font-semibold text-sm sm:text-base lg:text-lg">OUR ACHIEVEMENTS</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-6 mt-2">
-              BUILT FOR <span className="gradient-text">SUCCESS</span>
-            </h2>
-            <p className="text-base sm:text-lg text-white/70 max-w-3xl mx-auto leading-relaxed">
-              Every number tells a story of excellence. From our state-of-the-art facility to our commitment 
-              to member satisfaction, these achievements reflect our dedication to fitness excellence.
-            </p>
-          </motion.div>
-
-          {/* Achievement Stats Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-6xl mx-auto">
-                         <motion.div
-               initial={{ opacity: 0, y: 50, scale: 0.9 }}
-               whileInView={{ opacity: 1, y: 0, scale: 1 }}
-               viewport={{ once: true }}
-               transition={{ duration: 0.6, delay: 0.1 }}
-               className="text-center bg-surface/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 hover:bg-surface/40 transition-all duration-300"
-             >
-               <div className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-2 text-primary">
-                 2025
-               </div>
-               <h3 className="text-sm sm:text-base font-semibold text-white/90 mb-2">Opening Year</h3>
-               <p className="text-xs sm:text-sm text-white/60">Brand new facility</p>
-             </motion.div>
-
-                         <motion.div
-               initial={{ opacity: 0, y: 50, scale: 0.9 }}
-               whileInView={{ opacity: 1, y: 0, scale: 1 }}
-               viewport={{ once: true }}
-               transition={{ duration: 0.6, delay: 0.2 }}
-               className="text-center bg-surface/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 hover:bg-surface/40 transition-all duration-300"
-             >
-               <div className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 text-primary">
-                 Premium
-               </div>
-               <h3 className="text-sm sm:text-base font-semibold text-white/90 mb-2">Equipment</h3>
-               <p className="text-xs sm:text-sm text-white/60">Latest fitness technology</p>
-             </motion.div>
-
-                         <motion.div
-               initial={{ opacity: 0, y: 50, scale: 0.9 }}
-               whileInView={{ opacity: 1, y: 0, scale: 1 }}
-               viewport={{ once: true }}
-               transition={{ duration: 0.6, delay: 0.3 }}
-               className="text-center bg-surface/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 hover:bg-surface/40 transition-all duration-300"
-             >
-               <div className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 text-primary">
-                 Coming<br/>Soon
-               </div>
-               <h3 className="text-sm sm:text-base font-semibold text-white/90 mb-2">Expert Trainers</h3>
-               <p className="text-xs sm:text-sm text-white/60">Professional guidance</p>
-             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-center bg-surface/30 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 hover:bg-surface/40 transition-all duration-300"
-            >
-              <div className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-2">
-                <Counter
-                  target={99}
-                  suffix="%"
-                  duration={1500}
-                  delay={400}
-                  className="text-4xl sm:text-5xl lg:text-6xl"
-                />
-              </div>
-              <h3 className="text-sm sm:text-base font-semibold text-white/90 mb-2">Satisfaction</h3>
-              <p className="text-xs sm:text-sm text-white/60">Member satisfaction rate</p>
-            </motion.div>
-          </div>
-
-          {/* Additional Stats Row */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="grid grid-cols-2 lg:grid-cols-3 gap-6 mt-8 sm:mt-12 max-w-4xl mx-auto"
-          >
-                         <div className="text-center bg-gradient-to-br from-primary/20 to-primary/5 backdrop-blur-sm border border-primary/20 rounded-xl p-4 sm:p-6">
-               <div className="text-2xl sm:text-3xl font-bold mb-1">
-                 <Counter
-                   target={500}
-                   suffix="m²"
-                   duration={2200}
-                   delay={1300}
-                   className="text-2xl sm:text-3xl"
-                 />
-               </div>
-               <div className="text-white/80 text-sm">Training Space</div>
-             </div>
-
-                         <div className="text-center bg-gradient-to-br from-purple-500/20 to-purple-500/5 backdrop-blur-sm border border-purple-500/20 rounded-xl p-4 sm:p-6">
-               <div className="space-y-1 mb-2">
-                 <div className="text-sm font-semibold text-purple-300">Mon-Fri</div>
-                 <div className="text-lg font-bold text-purple-400">6:00 - 23:00</div>
-               </div>
-               <div className="flex justify-between text-xs text-white/60 mt-3">
-                 <span>Sat: 7-22</span>
-                 <span>Sun: 7-20</span>
-               </div>
-               <div className="text-white/80 text-sm mt-2">Access Hours</div>
-             </div>
-
-                         <div className="text-center bg-gradient-to-br from-blue-500/20 to-blue-500/5 backdrop-blur-sm border border-blue-500/20 rounded-xl p-4 sm:p-6 col-span-2 lg:col-span-1">
-               <div className="text-2xl sm:text-3xl font-bold mb-1 text-blue-400">
-                 Coming<br/>Soon
-               </div>
-               <div className="text-white/80 text-sm">Programs</div>
-             </div>
-          </motion.div>
-        </div>
-      </section>
-
-
-
-      {/* Pricing Section */}
-      <section className="py-12 sm:py-16 lg:py-24 relative">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-12 sm:mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-4 mt-2">
-              Membership
-            </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-white/70 max-w-2xl mx-auto">
-              Gym session walk can help. Physical activity stimulates<br className="hidden sm:block" />
-              many brain chemicals that may leave you.
-            </p>
-          </motion.div>
-
-          {/* Premium Plans - Silver, Gold, Platinum */}
-          {(() => {
-            const plans = [
-              {
-                name: "Silver",
-                price: "$29",
-                originalPrice: "$39",
-                gradient: "from-gray-800/90 to-gray-900/90",
-                isPopular: false,
-                features: [
-                  { text: "Access to gym equipment", enabled: true },
-                  { text: "Locker room access", enabled: true },
-                  { text: "Basic workout plans", enabled: true },
-                  { text: "Group fitness classes", enabled: false },
-                  { text: "Personal trainer sessions", enabled: false },
-                  { text: "Nutrition consultation", enabled: false },
-                  { text: "Premium amenities", enabled: false }
-                ]
-              },
-              {
-                name: "Gold",
-                price: "$49",
-                originalPrice: "$69",
-                gradient: "from-[#1e9b71]/20 to-emerald-900/30",
-                isPopular: true,
-                features: [
-                  { text: "Access to gym equipment", enabled: true },
-                  { text: "Locker room access", enabled: true },
-                  { text: "Basic workout plans", enabled: true },
-                  { text: "Group fitness classes", enabled: true },
-                  { text: "Personal trainer sessions", enabled: true },
-                  { text: "Nutrition consultation", enabled: false },
-                  { text: "Premium amenities", enabled: false }
-                ]
-              },
-              {
-                name: "Platinum",
-                price: "$89",
-                originalPrice: "$119",
-                gradient: "from-slate-800/40 to-slate-900/40",
-                isPopular: false,
-                features: [
-                  { text: "Access to gym equipment", enabled: true },
-                  { text: "Locker room access", enabled: true },
-                  { text: "Basic workout plans", enabled: true },
-                  { text: "Group fitness classes", enabled: true },
-                  { text: "Personal trainer sessions", enabled: true },
-                  { text: "Nutrition consultation", enabled: true },
-                  { text: "Premium amenities", enabled: true }
-                ]
-              }
-            ]
-
-            return (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12 max-w-6xl mx-auto">
-                {plans.map((plan, index) => (
-                  <PlanCard
-                    key={plan.name}
-                    name={plan.name}
-                    price={plan.price}
-                    originalPrice={plan.originalPrice}
-                    features={plan.features}
-                    delay={index * 0.2}
-                    isPopular={plan.isPopular}
-                    gradient={plan.gradient}
+              <motion.div
+                className="rounded-2xl border border-white/10 bg-surface/30 p-6 text-center backdrop-blur-sm transition-all duration-300 hover:bg-surface/40 sm:p-8"
+                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              >
+                <div className="mb-2 font-bold text-4xl sm:text-5xl lg:text-6xl">
+                  <Counter
+                    className="text-4xl sm:text-5xl lg:text-6xl"
+                    delay={400}
+                    duration={1500}
+                    suffix="%"
+                    target={99}
                   />
-                ))}
-              </div>
-            )
-          })()}
-
-          <motion.div
-            className="text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <Link href="/prices">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <ShinyButton
-                  variant="secondary"
-                  size="md"
-                  className="text-sm sm:text-base"
-                >
-                  View All Plans
-                </ShinyButton>
+                </div>
+                <h3 className="mb-2 font-semibold text-sm text-white/90 sm:text-base">
+                  Satisfaction
+                </h3>
+                <p className="text-white/60 text-xs sm:text-sm">
+                  Member satisfaction rate
+                </p>
               </motion.div>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-
-
-
-
-      {/* Quick Answers Section - Alternative FAQ with ExpandableCard */}
-      <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 opacity-60" />
-        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl opacity-30" />
-        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl opacity-30" />
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            className="text-center mb-12 sm:mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="inline-block bg-purple-500/10 border border-purple-500/20 rounded-full px-4 py-2 mb-6"
-            >
-              <span className="text-purple-400 font-medium">❓ Quick Answers</span>
-            </motion.div>
-            
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white mb-6">
-              MEMBERSHIP <AnimatedGradientText 
-                className="inline-block"
-                variant="glow"
-                animationDuration={2.5}
-                gradientFrom="from-[#8b5cf6]"
-                gradientVia="via-[#3b82f6]"
-                gradientTo="to-[#1e9b71]"
-              >
-                ESSENTIALS
-              </AnimatedGradientText>
-            </h2>
-            <p className="text-base sm:text-lg text-white/70 max-w-3xl mx-auto leading-relaxed">
-              Everything you need to know about joining MituGym. Get instant answers to the most 
-              common questions about our facilities, memberships, and policies.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <ExpandableCard
-              title="Membership Options"
-              summary="What membership plans do you offer?"
-              content="We offer three flexible membership tiers: Silver ($29/month), Gold ($49/month), and Platinum ($89/month). Each plan includes different levels of access to equipment, classes, and premium amenities. All plans come with our grand opening discount and no long-term commitments required."
-            />
-            
-            <ExpandableCard
-              title="Operating Hours"
-              summary="When is the gym open?"
-              content="Once opened, MituGym will operate Monday-Friday 6AM-11PM, Saturday 7AM-10PM, and Sunday 7AM-8PM. We're planning to introduce 24/7 access for Gold and Platinum members after our initial launch period."
-            />
-            
-            <ExpandableCard
-              title="Equipment & Facilities"
-              summary="What equipment and amenities are available?"
-              content="Our 500m² facility features the latest cardio machines, complete free weights section, premium resistance equipment, functional training area, luxury locker rooms with showers, climate control, premium sound system, and free parking for all members."
-            />
-            
-            <ExpandableCard
-              title="Personal Training"
-              summary="Do you offer personal training services?"
-              content="Yes! Personal training sessions are included with Gold and Platinum memberships. Our certified trainers create customized workout plans, provide form guidance, and help you achieve your specific fitness goals with one-on-one attention."
-            />
-            
-            <ExpandableCard
-              title="Group Classes"
-              summary="What group fitness classes are available?"
-              content="We'll offer a variety of group classes including HIIT, yoga, spinning, strength training, and functional fitness. Class schedules will be available closer to our opening date, with early access for Gold and Platinum members."
-            />
-            
-            <ExpandableCard
-              title="Grand Opening"
-              summary="When do you officially open?"
-              content="MituGym officially opens Saturday, July 12th, 2025 at 10:00 AM! We're currently accepting founding member registrations with special pre-opening rates and exclusive benefits for early supporters."
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-12 sm:py-16 lg:py-24 relative">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <FaqSection 
-              data={popularFAQs}
-              title={t('faq.titles.general')}
-              subtitle={t('faq.subtitles.general')}
-            />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Community CTA Section */}
-      <section className="py-12 sm:py-16 lg:py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-purple-600/10" />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="bg-gradient-to-br from-primary/30 to-purple-600/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 glass-effect text-center"
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold text-white mb-4 sm:mb-6">
-              JOIN OUR <AnimatedGradientText 
-                className="inline-block"
-                variant="shimmer"
-                animationDuration={4}
-                gradientFrom="from-[#1e9b71]"
-                gradientVia="via-[#3b82f6]"
-                gradientTo="to-[#8b5cf6]"
-              >
-                COMMUNITY
-              </AnimatedGradientText>
-            </h2>
-            <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-white/80 mb-6 sm:mb-8 max-w-3xl mx-auto">
-              Get 15% off your first three months when you sign up for our newsletter. 
-              Receive workout tips, nutrition advice, and exclusive member benefits.
-            </p>
-            
-            <motion.div
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 max-w-md mx-auto mb-6 sm:mb-8"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:outline-none focus:border-primary text-sm sm:text-base"
-              />
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <ShinyButton
-                  variant="primary"
-                  size="md"
-                  className="whitespace-nowrap text-sm sm:text-base"
-                >
-                  Get Started
-                </ShinyButton>
-              </motion.div>
-            </motion.div>
-
-            <div className="text-white/60 text-xs sm:text-sm">
-              No spam. Unsubscribe at any time. By signing up, you agree to our terms.
             </div>
-          </motion.div>
-        </div>
-      </section>
-    </div>
 
-    {/* Floating Dock - Fixed to viewport */}
-    <GymFloatingDock position="bottom-right" />
+            {/* Additional Stats Row */}
+            <motion.div
+              className="mx-auto mt-8 grid max-w-4xl grid-cols-2 gap-6 sm:mt-12 lg:grid-cols-3"
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <div className="rounded-xl border border-primary/20 bg-gradient-to-br from-primary/20 to-primary/5 p-4 text-center backdrop-blur-sm sm:p-6">
+                <div className="mb-1 font-bold text-2xl sm:text-3xl">
+                  <Counter
+                    className="text-2xl sm:text-3xl"
+                    delay={1300}
+                    duration={2200}
+                    suffix="m²"
+                    target={500}
+                  />
+                </div>
+                <div className="text-sm text-white/80">Training Space</div>
+              </div>
+
+              <div className="rounded-xl border border-purple-500/20 bg-gradient-to-br from-purple-500/20 to-purple-500/5 p-4 text-center backdrop-blur-sm sm:p-6">
+                <div className="mb-2 space-y-1">
+                  <div className="font-semibold text-purple-300 text-sm">
+                    Mon-Fri
+                  </div>
+                  <div className="font-bold text-lg text-purple-400">
+                    6:00 - 23:00
+                  </div>
+                </div>
+                <div className="mt-3 flex justify-between text-white/60 text-xs">
+                  <span>Sat: 7-22</span>
+                  <span>Sun: 7-20</span>
+                </div>
+                <div className="mt-2 text-sm text-white/80">Access Hours</div>
+              </div>
+
+              <div className="col-span-2 rounded-xl border border-blue-500/20 bg-gradient-to-br from-blue-500/20 to-blue-500/5 p-4 text-center backdrop-blur-sm sm:p-6 lg:col-span-1">
+                <div className="mb-1 font-bold text-2xl text-blue-400 sm:text-3xl">
+                  Coming
+                  <br />
+                  Soon
+                </div>
+                <div className="text-sm text-white/80">Programs</div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Pricing Section */}
+        <section className="relative py-12 sm:py-16 lg:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              className="mb-12 text-center sm:mb-16"
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <h2 className="mt-2 mb-4 font-bold font-display text-2xl text-white sm:text-3xl md:text-4xl lg:text-5xl">
+                Membership
+              </h2>
+              <p className="mx-auto max-w-2xl text-base text-white/70 sm:text-lg lg:text-xl">
+                Gym session walk can help. Physical activity stimulates
+                <br className="hidden sm:block" />
+                many brain chemicals that may leave you.
+              </p>
+            </motion.div>
+
+            {/* Premium Plans - Silver, Gold, Platinum */}
+            {(() => {
+              const plans = [
+                {
+                  name: 'Silver',
+                  price: '$29',
+                  originalPrice: '$39',
+                  gradient: 'from-gray-800/90 to-gray-900/90',
+                  isPopular: false,
+                  features: [
+                    { text: 'Access to gym equipment', enabled: true },
+                    { text: 'Locker room access', enabled: true },
+                    { text: 'Basic workout plans', enabled: true },
+                    { text: 'Group fitness classes', enabled: false },
+                    { text: 'Personal trainer sessions', enabled: false },
+                    { text: 'Nutrition consultation', enabled: false },
+                    { text: 'Premium amenities', enabled: false },
+                  ],
+                },
+                {
+                  name: 'Gold',
+                  price: '$49',
+                  originalPrice: '$69',
+                  gradient: 'from-[#1e9b71]/20 to-emerald-900/30',
+                  isPopular: true,
+                  features: [
+                    { text: 'Access to gym equipment', enabled: true },
+                    { text: 'Locker room access', enabled: true },
+                    { text: 'Basic workout plans', enabled: true },
+                    { text: 'Group fitness classes', enabled: true },
+                    { text: 'Personal trainer sessions', enabled: true },
+                    { text: 'Nutrition consultation', enabled: false },
+                    { text: 'Premium amenities', enabled: false },
+                  ],
+                },
+                {
+                  name: 'Platinum',
+                  price: '$89',
+                  originalPrice: '$119',
+                  gradient: 'from-slate-800/40 to-slate-900/40',
+                  isPopular: false,
+                  features: [
+                    { text: 'Access to gym equipment', enabled: true },
+                    { text: 'Locker room access', enabled: true },
+                    { text: 'Basic workout plans', enabled: true },
+                    { text: 'Group fitness classes', enabled: true },
+                    { text: 'Personal trainer sessions', enabled: true },
+                    { text: 'Nutrition consultation', enabled: true },
+                    { text: 'Premium amenities', enabled: true },
+                  ],
+                },
+              ];
+
+              return (
+                <div className="mx-auto mb-8 grid max-w-6xl gap-6 sm:mb-12 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
+                  {plans.map((plan, index) => (
+                    <PlanCard
+                      delay={index * 0.2}
+                      features={plan.features}
+                      gradient={plan.gradient}
+                      isPopular={plan.isPopular}
+                      key={plan.name}
+                      name={plan.name}
+                      originalPrice={plan.originalPrice}
+                      price={plan.price}
+                    />
+                  ))}
+                </div>
+              );
+            })()}
+
+            <motion.div
+              className="text-center"
+              initial={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <Link href="/prices">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <ShinyButton
+                    className="text-sm sm:text-base"
+                    size="md"
+                    variant="secondary"
+                  >
+                    View All Plans
+                  </ShinyButton>
+                </motion.div>
+              </Link>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Quick Answers Section - Alternative FAQ with ExpandableCard */}
+        <section className="relative overflow-hidden py-12 sm:py-16 lg:py-24">
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 opacity-60" />
+          <div className="absolute top-1/4 right-1/4 h-64 w-64 rounded-full bg-purple-500/10 opacity-30 blur-3xl" />
+          <div className="absolute bottom-1/4 left-1/4 h-80 w-80 rounded-full bg-blue-500/10 opacity-30 blur-3xl" />
+
+          <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              className="mb-12 text-center sm:mb-16"
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <motion.div
+                className="mb-6 inline-block rounded-full border border-purple-500/20 bg-purple-500/10 px-4 py-2"
+                initial={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, scale: 1 }}
+              >
+                <span className="font-medium text-purple-400">
+                  ❓ Quick Answers
+                </span>
+              </motion.div>
+
+              <h2 className="mb-6 font-bold font-display text-3xl text-white sm:text-4xl md:text-5xl">
+                MEMBERSHIP{' '}
+                <AnimatedGradientText
+                  animationDuration={2.5}
+                  className="inline-block"
+                  gradientFrom="from-[#8b5cf6]"
+                  gradientTo="to-[#1e9b71]"
+                  gradientVia="via-[#3b82f6]"
+                  variant="glow"
+                >
+                  ESSENTIALS
+                </AnimatedGradientText>
+              </h2>
+              <p className="mx-auto max-w-3xl text-base text-white/70 leading-relaxed sm:text-lg">
+                Everything you need to know about joining MituGym. Get instant
+                answers to the most common questions about our facilities,
+                memberships, and policies.
+              </p>
+            </motion.div>
+
+            <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <ExpandableCard
+                content="We offer three flexible membership tiers: Silver ($29/month), Gold ($49/month), and Platinum ($89/month). Each plan includes different levels of access to equipment, classes, and premium amenities. All plans come with our grand opening discount and no long-term commitments required."
+                summary="What membership plans do you offer?"
+                title="Membership Options"
+              />
+
+              <ExpandableCard
+                content="Once opened, MituGym will operate Monday-Friday 6AM-11PM, Saturday 7AM-10PM, and Sunday 7AM-8PM. We're planning to introduce 24/7 access for Gold and Platinum members after our initial launch period."
+                summary="When is the gym open?"
+                title="Operating Hours"
+              />
+
+              <ExpandableCard
+                content="Our 500m² facility features the latest cardio machines, complete free weights section, premium resistance equipment, functional training area, luxury locker rooms with showers, climate control, premium sound system, and free parking for all members."
+                summary="What equipment and amenities are available?"
+                title="Equipment & Facilities"
+              />
+
+              <ExpandableCard
+                content="Yes! Personal training sessions are included with Gold and Platinum memberships. Our certified trainers create customized workout plans, provide form guidance, and help you achieve your specific fitness goals with one-on-one attention."
+                summary="Do you offer personal training services?"
+                title="Personal Training"
+              />
+
+              <ExpandableCard
+                content="We'll offer a variety of group classes including HIIT, yoga, spinning, strength training, and functional fitness. Class schedules will be available closer to our opening date, with early access for Gold and Platinum members."
+                summary="What group fitness classes are available?"
+                title="Group Classes"
+              />
+
+              <ExpandableCard
+                content="MituGym officially opens Saturday, July 12th, 2025 at 10:00 AM! We're currently accepting founding member registrations with special pre-opening rates and exclusive benefits for early supporters."
+                summary="When do you officially open?"
+                title="Grand Opening"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="relative py-12 sm:py-16 lg:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <FaqSection
+                data={popularFAQs}
+                subtitle={t('faq.subtitles.general')}
+                title={t('faq.titles.general')}
+              />
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Community CTA Section */}
+        <section className="relative overflow-hidden py-12 sm:py-16 lg:py-24">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-purple-600/10" />
+          <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              className="glass-effect rounded-2xl bg-gradient-to-br from-primary/30 to-purple-600/20 p-6 text-center sm:rounded-3xl sm:p-8 lg:p-12"
+              initial={{ opacity: 0, y: 50 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <h2 className="mb-4 font-bold font-display text-2xl text-white sm:mb-6 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
+                JOIN OUR{' '}
+                <AnimatedGradientText
+                  animationDuration={4}
+                  className="inline-block"
+                  gradientFrom="from-[#1e9b71]"
+                  gradientTo="to-[#8b5cf6]"
+                  gradientVia="via-[#3b82f6]"
+                  variant="shimmer"
+                >
+                  COMMUNITY
+                </AnimatedGradientText>
+              </h2>
+              <p className="mx-auto mb-6 max-w-3xl text-sm text-white/80 sm:mb-8 sm:text-base lg:text-lg xl:text-xl">
+                Get 15% off your first three months when you sign up for our
+                newsletter. Receive workout tips, nutrition advice, and
+                exclusive member benefits.
+              </p>
+
+              <motion.div
+                className="mx-auto mb-6 flex max-w-md flex-col gap-3 sm:mb-8 sm:flex-row sm:gap-4"
+                initial={{ opacity: 0, y: 30 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0 }}
+              >
+                <input
+                  className="flex-1 rounded-lg border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder-white/60 backdrop-blur-sm focus:border-primary focus:outline-none sm:px-6 sm:py-4 sm:text-base"
+                  placeholder="Enter your email"
+                  type="email"
+                />
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <ShinyButton
+                    className="whitespace-nowrap text-sm sm:text-base"
+                    size="md"
+                    variant="primary"
+                  >
+                    Get Started
+                  </ShinyButton>
+                </motion.div>
+              </motion.div>
+
+              <div className="text-white/60 text-xs sm:text-sm">
+                No spam. Unsubscribe at any time. By signing up, you agree to
+                our terms.
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      </div>
+
+      {/* Floating Dock - Fixed to viewport */}
+      <GymFloatingDock position="bottom-right" />
     </>
-  )
-} 
+  );
+}

@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import type React from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { cn } from '@/libs/utils';
 
 interface TypingTextProps {
@@ -54,18 +55,18 @@ export const TypingText: React.FC<TypingTextProps> = ({
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
-  const [isComplete, setIsComplete] = useState(false);
+  const [_isComplete, setIsComplete] = useState(false);
   const [showCursorChar, setShowCursorChar] = useState(true);
   const [hasStarted, setHasStarted] = useState(!autoStart);
   const [isClient, setIsClient] = useState(false);
 
   const timeoutRef = useRef<NodeJS.Timeout>();
   const cursorIntervalRef = useRef<NodeJS.Timeout>();
-  
+
   // Create stable reference for texts array
   const stableTexts = useMemo(() => texts, [texts]);
   const stableOnComplete = useRef(onComplete);
-  
+
   // Update ref when callback changes
   useEffect(() => {
     stableOnComplete.current = onComplete;
@@ -78,10 +79,12 @@ export const TypingText: React.FC<TypingTextProps> = ({
 
   // Cursor blinking effect
   useEffect(() => {
-    if (!showCursor) return;
+    if (!showCursor) {
+      return;
+    }
 
     cursorIntervalRef.current = setInterval(() => {
-      setShowCursorChar(prev => !prev);
+      setShowCursorChar((prev) => !prev);
     }, cursorBlinkSpeed);
 
     return () => {
@@ -104,7 +107,9 @@ export const TypingText: React.FC<TypingTextProps> = ({
 
   // Main typing effect
   useEffect(() => {
-    if (!isClient || !hasStarted || stableTexts.length === 0) return;
+    if (!(isClient && hasStarted) || stableTexts.length === 0) {
+      return;
+    }
 
     const currentFullText = stableTexts[currentTextIndex];
 
@@ -151,26 +156,26 @@ export const TypingText: React.FC<TypingTextProps> = ({
       }
     };
   }, [
-    currentText, 
-    currentTextIndex, 
-    isTyping, 
-    stableTexts, 
-    typingSpeed, 
-    deletingSpeed, 
-    pauseDuration, 
-    deletePauseDuration, 
-    loop, 
+    currentText,
+    currentTextIndex,
+    isTyping,
+    stableTexts,
+    typingSpeed,
+    deletingSpeed,
+    pauseDuration,
+    deletePauseDuration,
+    loop,
     hasStarted,
-    isClient
+    isClient,
   ]);
 
   // Manual start function
-  const startTyping = () => {
+  const _startTyping = () => {
     setHasStarted(true);
   };
 
   // Reset function
-  const reset = () => {
+  const _reset = () => {
     setCurrentTextIndex(0);
     setCurrentText('');
     setIsTyping(true);
@@ -179,15 +184,15 @@ export const TypingText: React.FC<TypingTextProps> = ({
   };
 
   return (
-    <span className={cn("inline-block", className)}>
+    <span className={cn('inline-block', className)}>
       {prefix}
       <span className="relative">
         {currentText}
         {showCursor && (
           <span
             className={cn(
-              "inline-block ml-1 transition-opacity duration-100",
-              showCursorChar ? "opacity-100" : "opacity-0"
+              'ml-1 inline-block transition-opacity duration-100',
+              showCursorChar ? 'opacity-100' : 'opacity-0'
             )}
           >
             {cursor}
@@ -204,67 +209,67 @@ export const TypingTextPresets = {
   // Fitness goals
   fitnessGoals: (texts: string[]) => (
     <TypingText
-      texts={texts}
-      typingSpeed={80}
-      deletingSpeed={40}
-      pauseDuration={2500}
-      className="text-primary font-bold"
+      className="font-bold text-primary"
       cursor="█"
       cursorBlinkSpeed={600}
+      deletingSpeed={40}
+      pauseDuration={2500}
+      texts={texts}
+      typingSpeed={80}
     />
   ),
 
   // Hero headlines
   heroHeadline: (texts: string[]) => (
     <TypingText
-      texts={texts}
-      typingSpeed={120}
-      deletingSpeed={60}
-      pauseDuration={3000}
-      className="bg-gradient-to-r from-primary via-emerald-500 to-green-600 bg-clip-text text-transparent font-bold"
+      className="bg-gradient-to-r from-primary via-emerald-500 to-green-600 bg-clip-text font-bold text-transparent"
       cursor="|"
       cursorBlinkSpeed={500}
+      deletingSpeed={60}
+      pauseDuration={3000}
+      texts={texts}
+      typingSpeed={120}
     />
   ),
 
   // Service descriptions
   services: (texts: string[]) => (
     <TypingText
-      texts={texts}
-      typingSpeed={60}
-      deletingSpeed={30}
-      pauseDuration={2000}
       className="text-white/90"
       cursor="_"
       cursorBlinkSpeed={400}
+      deletingSpeed={30}
+      pauseDuration={2000}
+      texts={texts}
+      typingSpeed={60}
     />
   ),
 
   // Quick highlights
   highlights: (texts: string[]) => (
     <TypingText
-      texts={texts}
-      typingSpeed={50}
-      deletingSpeed={25}
-      pauseDuration={1500}
-      className="text-emerald-400 font-semibold"
+      className="font-semibold text-emerald-400"
       cursor="▌"
       cursorBlinkSpeed={350}
+      deletingSpeed={25}
+      pauseDuration={1500}
+      texts={texts}
+      typingSpeed={50}
     />
   ),
 
   // Motivational quotes
   quotes: (texts: string[]) => (
     <TypingText
-      texts={texts}
-      typingSpeed={70}
-      deletingSpeed={35}
-      pauseDuration={4000}
       className="text-white/80 italic"
       cursor="|"
       cursorBlinkSpeed={700}
+      deletingSpeed={35}
+      pauseDuration={4000}
+      texts={texts}
+      typingSpeed={70}
     />
   ),
 };
 
-export default TypingText; 
+export default TypingText;

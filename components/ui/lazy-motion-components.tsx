@@ -1,163 +1,218 @@
-import dynamic from 'next/dynamic'
-import { ComponentType, Suspense, useState, useEffect, useRef } from 'react'
-import { motion } from 'motion/react'
+import dynamic from 'next/dynamic';
+import {
+  type ComponentType,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 // Loading fallback component
 const MotionLoadingFallback = ({ className = '' }: { className?: string }) => (
-  <div className={`animate-pulse bg-surface/20 rounded-lg ${className}`}>
-    <div className="flex items-center justify-center h-full">
-      <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+  <div className={`animate-pulse rounded-lg bg-surface/20 ${className}`}>
+    <div className="flex h-full items-center justify-center">
+      <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
     </div>
   </div>
-)
+);
 
 // Lazy load advanced Motion components with proper loading states
 export const LazyScrollLinkedAnimations = dynamic(
-  () => import('./scroll-linked-animations').then(mod => ({ default: mod.default })),
+  () =>
+    import('./scroll-linked-animations').then((mod) => ({
+      default: mod.default,
+    })),
   {
     loading: () => <MotionLoadingFallback className="h-32" />,
-    ssr: false // Disable SSR for complex animations
+    ssr: false, // Disable SSR for complex animations
   }
-)
+);
 
 export const LazyScrollLinkedBackground = dynamic(
-  () => import('./scroll-linked-animations').then(mod => ({ default: mod.ScrollLinkedBackground })),
+  () =>
+    import('./scroll-linked-animations').then((mod) => ({
+      default: mod.ScrollLinkedBackground,
+    })),
   {
     loading: () => null, // Background component doesn't need loading state
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 export const LazyScrollLinkedTextReveal = dynamic(
-  () => import('./scroll-linked-animations').then(mod => ({ default: mod.ScrollLinkedTextReveal })),
+  () =>
+    import('./scroll-linked-animations').then((mod) => ({
+      default: mod.ScrollLinkedTextReveal,
+    })),
   {
     loading: () => <MotionLoadingFallback className="h-16" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 export const LazyScrollLinkedParallaxLayers = dynamic(
-  () => import('./scroll-linked-animations').then(mod => ({ default: mod.ScrollLinkedParallaxLayers })),
+  () =>
+    import('./scroll-linked-animations').then((mod) => ({
+      default: mod.ScrollLinkedParallaxLayers,
+    })),
   {
     loading: () => null,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 export const LazyScrollLinkedCounter = dynamic(
-  () => import('./scroll-linked-animations').then(mod => ({ default: mod.ScrollLinkedCounter })),
+  () =>
+    import('./scroll-linked-animations').then((mod) => ({
+      default: mod.ScrollLinkedCounter,
+    })),
   {
     loading: () => <MotionLoadingFallback className="h-12 w-24" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 // Layout animations
 export const LazyDynamicGrid = dynamic(
-  () => import('./layout-animations').then(mod => ({ default: mod.DynamicGrid })),
+  () =>
+    import('./layout-animations').then((mod) => ({ default: mod.DynamicGrid })),
   {
     loading: () => <MotionLoadingFallback className="h-64" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 export const LazySharedLayoutTransitions = dynamic(
-  () => import('./layout-animations').then(mod => ({ default: mod.SharedLayoutTransitions })),
+  () =>
+    import('./layout-animations').then((mod) => ({
+      default: mod.SharedLayoutTransitions,
+    })),
   {
     loading: () => <MotionLoadingFallback className="h-48" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 export const LazyAnimatedTabs = dynamic(
-  () => import('./layout-animations').then(mod => ({ default: mod.AnimatedTabs })),
+  () =>
+    import('./layout-animations').then((mod) => ({
+      default: mod.AnimatedTabs,
+    })),
   {
     loading: () => <MotionLoadingFallback className="h-32" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 export const LazyReorderableList = dynamic(
-  () => import('./layout-animations').then(mod => ({ default: mod.ReorderableList })),
+  () =>
+    import('./layout-animations').then((mod) => ({
+      default: mod.ReorderableList,
+    })),
   {
     loading: () => <MotionLoadingFallback className="h-64" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 // Advanced physics components
 export const LazyPhysicsSpring = dynamic(
-  () => import('./advanced-physics').then(mod => ({ default: mod.PhysicsSpring })),
+  () =>
+    import('./advanced-physics').then((mod) => ({
+      default: mod.PhysicsSpring,
+    })),
   {
     loading: () => <MotionLoadingFallback className="h-48" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 export const LazyMouseTracker = dynamic(
-  () => import('./advanced-physics').then(mod => ({ default: mod.MouseTracker })),
+  () =>
+    import('./advanced-physics').then((mod) => ({ default: mod.MouseTracker })),
   {
     loading: () => <MotionLoadingFallback className="h-96" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 export const LazyTransformChains = dynamic(
-  () => import('./advanced-physics').then(mod => ({ default: mod.TransformChains })),
+  () =>
+    import('./advanced-physics').then((mod) => ({
+      default: mod.TransformChains,
+    })),
   {
     loading: () => <MotionLoadingFallback className="h-80" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 export const LazyGesturePhysics = dynamic(
-  () => import('./advanced-physics').then(mod => ({ default: mod.GesturePhysics })),
+  () =>
+    import('./advanced-physics').then((mod) => ({
+      default: mod.GesturePhysics,
+    })),
   {
     loading: () => <MotionLoadingFallback className="h-96" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 export const LazyPhysicsSimulation = dynamic(
-  () => import('./advanced-physics').then(mod => ({ default: mod.PhysicsSimulation })),
+  () =>
+    import('./advanced-physics').then((mod) => ({
+      default: mod.PhysicsSimulation,
+    })),
   {
     loading: () => <MotionLoadingFallback className="h-96" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 // Variants and staggered animations
 export const LazyVariantsShowcase = dynamic(
-  () => import('./variants-staggered').then(mod => ({ default: mod.VariantsShowcase })),
+  () =>
+    import('./variants-staggered').then((mod) => ({
+      default: mod.VariantsShowcase,
+    })),
   {
     loading: () => <MotionLoadingFallback className="h-64" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 export const LazyStaggeredPatterns = dynamic(
-  () => import('./variants-staggered').then(mod => ({ default: mod.StaggeredPatterns })),
+  () =>
+    import('./variants-staggered').then((mod) => ({
+      default: mod.StaggeredPatterns,
+    })),
   {
     loading: () => <MotionLoadingFallback className="h-48" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 export const LazyOrchestratedAnimations = dynamic(
-  () => import('./variants-staggered').then(mod => ({ default: mod.OrchestratedAnimations })),
+  () =>
+    import('./variants-staggered').then((mod) => ({
+      default: mod.OrchestratedAnimations,
+    })),
   {
     loading: () => <MotionLoadingFallback className="h-32" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 export const LazyCoordinatedSequence = dynamic(
-  () => import('./variants-staggered').then(mod => ({ default: mod.CoordinatedSequence })),
+  () =>
+    import('./variants-staggered').then((mod) => ({
+      default: mod.CoordinatedSequence,
+    })),
   {
     loading: () => <MotionLoadingFallback className="h-64" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 // Higher-order component for lazy loading with intersection observer
 export function withLazyLoading<T extends object>(
@@ -167,11 +222,19 @@ export function withLazyLoading<T extends object>(
   return function LazyComponent(props: T) {
     const FallbackComponent = fallback;
     return (
-      <Suspense fallback={FallbackComponent ? <FallbackComponent {...props} /> : <MotionLoadingFallback />}>
+      <Suspense
+        fallback={
+          FallbackComponent ? (
+            <FallbackComponent {...props} />
+          ) : (
+            <MotionLoadingFallback />
+          )
+        }
+      >
         <Component {...props} />
       </Suspense>
-    )
-  }
+    );
+  };
 }
 
 // Intersection observer based lazy loading
@@ -180,32 +243,32 @@ export function withIntersectionLoading<T extends object>(
   options: IntersectionObserverInit = {}
 ) {
   return function IntersectionLazyComponent(props: T) {
-    const [isVisible, setIsVisible] = useState(false)
-    const [hasLoaded, setHasLoaded] = useState(false)
-    const ref = useRef<HTMLDivElement>(null)
+    const [isVisible, setIsVisible] = useState(false);
+    const [hasLoaded, setHasLoaded] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting && !hasLoaded) {
-            setIsVisible(true)
-            setHasLoaded(true)
-            observer.disconnect()
+            setIsVisible(true);
+            setHasLoaded(true);
+            observer.disconnect();
           }
         },
         {
           threshold: 0.1,
           rootMargin: '50px',
-          ...options
+          ...options,
         }
-      )
+      );
 
       if (ref.current) {
-        observer.observe(ref.current)
+        observer.observe(ref.current);
       }
 
-      return () => observer.disconnect()
-    }, [hasLoaded])
+      return () => observer.disconnect();
+    }, [hasLoaded]);
 
     return (
       <div ref={ref}>
@@ -215,31 +278,31 @@ export function withIntersectionLoading<T extends object>(
           <MotionLoadingFallback className="h-32" />
         )}
       </div>
-    )
-  }
+    );
+  };
 }
 
 // Bundle size analyzer helper
 export const getBundleInfo = () => {
   if (typeof window !== 'undefined') {
-    const scripts = Array.from(document.querySelectorAll('script[src]'))
+    const scripts = Array.from(document.querySelectorAll('script[src]'));
     const totalSize = scripts.reduce((acc, script) => {
-      const src = script.getAttribute('src')
-      if (src && src.includes('_next/static')) {
+      const src = script.getAttribute('src');
+      if (src?.includes('_next/static')) {
         // Estimate size based on script presence
-        return acc + 1
+        return acc + 1;
       }
-      return acc
-    }, 0)
-    
+      return acc;
+    }, 0);
+
     return {
       totalScripts: scripts.length,
       nextScripts: totalSize,
-      timestamp: Date.now()
-    }
+      timestamp: Date.now(),
+    };
   }
-  return null
-}
+  return null;
+};
 
 // Preload critical components
 export const preloadCriticalComponents = () => {
@@ -248,40 +311,32 @@ export const preloadCriticalComponents = () => {
     const criticalComponents = [
       () => import('./scroll-linked-animations'),
       () => import('./layout-animations'),
-    ]
-    
-    criticalComponents.forEach(importFn => {
-      importFn().catch(err => {
-        console.warn('Failed to preload component:', err)
-      })
-    })
+    ];
+
+    criticalComponents.forEach((importFn) => {
+      importFn().catch((_err) => {});
+    });
   }
-}
+};
 
 // Gallery components
-export const LazyGalleryModal = dynamic(
-  () => import('./gallery-modal'),
-  {
-    loading: () => <MotionLoadingFallback className="h-screen w-screen" />,
-    ssr: false
-  }
-)
+export const LazyGalleryModal = dynamic(() => import('./gallery-modal'), {
+  loading: () => <MotionLoadingFallback className="h-screen w-screen" />,
+  ssr: false,
+});
 
-export const LazyFocusCards = dynamic(
-  () => import('./focus-cards'),
-  {
-    loading: () => <MotionLoadingFallback className="h-96" />,
-    ssr: false
-  }
-)
+export const LazyFocusCards = dynamic(() => import('./focus-cards'), {
+  loading: () => <MotionLoadingFallback className="h-96" />,
+  ssr: false,
+});
 
 export const LazyGalleryTestimonials = dynamic(
   () => import('./gallery-testimonials'),
   {
     loading: () => <MotionLoadingFallback className="h-64" />,
-    ssr: false
+    ssr: false,
   }
-)
+);
 
 // Component registry for dynamic imports
 export const MOTION_COMPONENTS = {
@@ -306,6 +361,6 @@ export const MOTION_COMPONENTS = {
   'gallery-modal': LazyGalleryModal,
   'focus-cards': LazyFocusCards,
   'gallery-testimonials': LazyGalleryTestimonials,
-} as const
+} as const;
 
-export type MotionComponentKey = keyof typeof MOTION_COMPONENTS 
+export type MotionComponentKey = keyof typeof MOTION_COMPONENTS;
