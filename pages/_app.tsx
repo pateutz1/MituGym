@@ -25,7 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </main>
         <Footer />
 
-        {/* Performance Monitor - Disabled */}
+        {/* Performance Monitors - Disabled */}
         {/* {process.env.NODE_ENV === 'development' && (
           <PerformanceMonitor 
             showDebugInfo={true}
