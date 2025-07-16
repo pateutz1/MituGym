@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import type { MotionVariants, MotionVariant } from './useMotionConfig';
+import { Variants, type Variant } from 'motion/react';
+import type { MotionVariant } from './useMotionConfig';
 
 // Core hook for detecting reduced motion preference
 export function useReducedMotion(): boolean {
@@ -98,9 +99,9 @@ const createReducedMotionVariant = (variant: MotionVariant): MotionVariant => {
 
 // Safe animation variants that respect reduced motion (custom hook)
 export function useAccessibleVariants(
-  normalVariants: MotionVariants,
-  reducedVariants?: MotionVariants
-): MotionVariants {
+  normalVariants: Variants,
+  reducedVariants?: Variants
+): Variants {
   const prefersReducedMotion = useReducedMotion();
 
   if (prefersReducedMotion && reducedVariants) {
@@ -109,7 +110,7 @@ export function useAccessibleVariants(
 
   if (prefersReducedMotion) {
     // Create reduced motion versions of normal variants
-    const reducedMotionVariants: MotionVariants = {};
+    const reducedMotionVariants: Variants = {};
 
     // Use for...of instead of forEach for better performance
     for (const key of Object.keys(normalVariants)) {
@@ -117,7 +118,7 @@ export function useAccessibleVariants(
       if (typeof variant === 'object' && variant !== null) {
         reducedMotionVariants[key] = createReducedMotionVariant(
           variant as MotionVariant
-        );
+        ) as Variant;
       } else {
         reducedMotionVariants[key] = variant;
       }
@@ -129,15 +130,7 @@ export function useAccessibleVariants(
   return normalVariants;
 }
 
-// Helper function for creating accessible variants without using hooks
-export function createAccessibleVariants(
-  normalVariants: MotionVariants,
-  _reducedVariants?: MotionVariants
-): MotionVariants {
-  // This is a helper function that can be used outside React components
-  // It doesn't use hooks and just returns the variants as-is
-  return normalVariants;
-}
+// Note: createAccessibleVariants is now exported from useMotionConfig.ts
 
 // Component wrapper interface for accessible motion (implementation moved to separate component file)
 export interface AccessibleMotionOptions<T> {

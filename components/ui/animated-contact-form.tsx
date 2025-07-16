@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import type React from 'react';
 import { useState } from 'react';
+import { Variants } from 'motion/react';
 import { createAccessibleVariants } from '@/hooks/useMotionConfig';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
@@ -110,7 +111,7 @@ interface FormFieldsProps {
   formData: FormData;
   errors: FormErrors;
   handleChange: (field: keyof FormData, value: string) => void;
-  fieldVariants: Record<string, Record<string, number | string>>;
+  fieldVariants: Variants;
   prefersReducedMotion: boolean;
   services: string[];
 }

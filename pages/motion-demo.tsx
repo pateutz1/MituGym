@@ -30,7 +30,8 @@ import MagneticButton from '@/components/ui/magnetic-button';
 import ScrollProgress from '@/components/ui/scroll-progress';
 import StaggeredList from '@/components/ui/staggered-list';
 // Import accessibility and performance monitoring
-import { useMotionConfig, useReducedMotion } from '@/hooks/useReducedMotion';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { useMotionConfig } from '@/hooks/useMotionConfig';
 
 export default function MotionDemo() {
   const constraintsRef = useRef<HTMLDivElement>(null);

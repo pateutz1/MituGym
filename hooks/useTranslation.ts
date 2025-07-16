@@ -207,11 +207,11 @@ export const useTranslation = (_namespace?: string) => {
 
   const t = (key: string) => {
     const keys = key.split('.');
-    let value = translations[locale];
+    let value: TranslationValue = translations[locale];
 
     for (const k of keys) {
       if (value && typeof value === 'object') {
-        value = value[k];
+        value = (value as TranslationObject)[k];
       } else {
         return key; // fallback to key if translation not found
       }
