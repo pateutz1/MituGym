@@ -23,11 +23,11 @@ const LocationMap: React.FC = () => {
   });
 
   const locationInfo = {
-    name: 'MituGym Premium Fitness',
+    name: 'FitPro Center Premium Fitness',
     address: '123 Fitness Boulevard',
     city: 'Bucharest, Romania',
     phone: '+40 21 123 4567',
-    email: 'info@mitugym.com',
+    email: 'info@fitprocenter.com',
     hours: {
       weekdays: '6:00 AM - 11:00 PM',
       saturday: '7:00 AM - 10:00 PM',
@@ -75,6 +75,7 @@ const LocationMap: React.FC = () => {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
+                <title>Location</title>
                 <path
                   d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
                   strokeLinecap="round"
@@ -108,6 +109,7 @@ const LocationMap: React.FC = () => {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
+                <title>Phone</title>
                 <path
                   d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   strokeLinecap="round"
@@ -136,6 +138,7 @@ const LocationMap: React.FC = () => {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
+                <title>Email</title>
                 <path
                   d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   strokeLinecap="round"
@@ -165,6 +168,7 @@ const LocationMap: React.FC = () => {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
+              <title>Clock</title>
               <path
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                 strokeLinecap="round"
@@ -235,6 +239,7 @@ const LocationMap: React.FC = () => {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
+                <title>Map</title>
                 <path
                   d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m0 0L9 7"
                   strokeLinecap="round"
@@ -263,6 +268,7 @@ const LocationMap: React.FC = () => {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
+                <title>External link</title>
                 <path
                   d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                   strokeLinecap="round"

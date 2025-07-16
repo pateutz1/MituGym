@@ -1,6 +1,6 @@
 # Motion.dev Technical Optimizations
 
-This document outlines the comprehensive technical optimizations implemented for Motion.dev components in the MituGym project.
+This document outlines the comprehensive technical optimizations implemented for Motion.dev components in the FitPro Center project.
 
 ## Overview
 

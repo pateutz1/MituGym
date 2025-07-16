@@ -66,7 +66,7 @@ export default function About() {
       title: 'Excellence First',
       summary: 'Premium quality in everything we do',
       content:
-        "We believe that excellence isn't just a goal—it's our standard. From state-of-the-art equipment to certified trainers, every aspect of MituGym is designed to exceed your expectations and help you achieve results that last.",
+        "We believe that excellence isn't just a goal—it's our standard. From state-of-the-art equipment to certified trainers, every aspect of FitPro Center is designed to exceed your expectations and help you achieve results that last.",
       icon: '⭐',
       gradient: 'from-yellow-500/20 to-orange-500/20',
     },
@@ -74,7 +74,7 @@ export default function About() {
       title: 'Community Driven',
       summary: 'Building connections through fitness',
       content:
-        "At MituGym, we're more than just a gym—we're a family. Our supportive community encourages each member to push their limits, celebrate victories, and overcome challenges together. Your success is our success.",
+        "At FitPro Center, we're more than just a gym—we're a family. Our supportive community encourages each member to push their limits, celebrate victories, and overcome challenges together. Your success is our success.",
       icon: '🤝',
       gradient: 'from-blue-500/20 to-purple-500/20',
     },
@@ -168,7 +168,7 @@ export default function About() {
                   gradientVia="via-[#3b82f6]"
                   variant="shimmer"
                 >
-                  MITUGYM
+                  FITPRO CENTER
                 </AnimatedGradientText>
               </h1>
 
@@ -326,7 +326,7 @@ export default function About() {
               </h2>
               <p className="mx-auto max-w-3xl text-white/70 text-xl">
                 From vision to reality - discover the journey that created
-                MituGym&apos;s premium fitness experience
+                FitPro Center&apos;s premium fitness experience
               </p>
             </motion.div>
 
@@ -342,7 +342,7 @@ export default function About() {
                     </h3>
                   </div>
                   <p className="mb-6 text-white/80 leading-relaxed">
-                    MituGym was born from a simple belief: everyone deserves
+                    FitPro Center was born from a simple belief: everyone deserves
                     access to premium fitness facilities and expert guidance.
                     Our state-of-the-art equipment and certified trainers create
                     an environment where your fitness goals become reality.
@@ -373,7 +373,7 @@ export default function About() {
                   </p>
                   <p className="text-white/80 leading-relaxed">
                     Whether you&apos;re a beginner or a seasoned athlete,
-                    MituGym provides the tools, support, and motivation you need
+                    FitPro Center provides the tools, support, and motivation you need
                     to exceed your expectations and achieve extraordinary
                     results.
                   </p>
@@ -399,7 +399,7 @@ export default function About() {
                 OUR <span className="text-primary">VALUES</span>
               </h2>
               <p className="mx-auto max-w-2xl text-white/70 text-xl">
-                The core principles that drive everything we do at MituGym
+                The core principles that drive everything we do at FitPro Center
               </p>
             </motion.div>
 
@@ -530,7 +530,7 @@ export default function About() {
                   <span className="text-primary">Transformation</span>?
                 </h2>
                 <p className="mx-auto mb-10 max-w-3xl text-white/80 text-xl">
-                  Join MituGym today and experience the difference of training
+                  Join FitPro Center today and experience the difference of training
                   with premium equipment, expert guidance, and a supportive
                   community that celebrates your success.
                 </p>

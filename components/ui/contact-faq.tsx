@@ -102,7 +102,7 @@ const ContactFAQ: React.FC = () => {
         {faqs.map((faq, index) => (
           <motion.div
             className="glass-effect overflow-hidden rounded-xl"
-            key={index}
+            key={`faq-${faq.category}-${faq.question.slice(0, 20).replace(/\s+/g, '-').toLowerCase()}`}
             transition={
               prefersReducedMotion
                 ? { duration: 0.01 }
@@ -140,6 +140,7 @@ const ContactFAQ: React.FC = () => {
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
+                    <title>Expand FAQ answer</title>
                     <path
                       d="M19 9l-7 7-7-7"
                       strokeLinecap="round"
@@ -204,6 +205,7 @@ const ContactFAQ: React.FC = () => {
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
+            <title>Right arrow icon</title>
             <path
               d="M13 7l5 5m0 0l-5 5m5-5H6"
               strokeLinecap="round"

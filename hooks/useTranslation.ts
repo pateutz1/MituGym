@@ -1,7 +1,14 @@
 import { useRouter } from 'next/router';
 
+// Define proper types for nested translations
+type TranslationValue = string | TranslationObject;
+
+interface TranslationObject {
+  [key: string]: TranslationValue;
+}
+
 interface Translations {
-  [key: string]: any;
+  [key: string]: TranslationValue;
 }
 
 const translations: { [locale: string]: Translations } = {
@@ -23,7 +30,7 @@ const translations: { [locale: string]: Translations } = {
     footer: {
       quickLinks: 'Quick Links',
       followUs: 'Follow Us',
-      copyright: '© 2024 MituGym. All rights reserved.',
+      copyright: '© 2024 FitPro Center. All rights reserved.',
     },
     language: {
       english: 'English',
@@ -42,7 +49,7 @@ const translations: { [locale: string]: Translations } = {
       },
     },
     features: {
-      title: 'Why Choose MituGym?',
+      title: 'Why Choose FitPro Center?',
       equipment: {
         title: 'State-of-the-Art Equipment',
         description:
@@ -92,8 +99,8 @@ const translations: { [locale: string]: Translations } = {
         membership:
           'Everything you need to know about our membership plans and policies',
         facility:
-          'Learn more about our facilities, equipment, and what makes MituGym special',
-        general: 'Get quick answers to the most common questions about MituGym',
+          'Learn more about our facilities, equipment, and what makes FitPro Center special',
+        general: 'Get quick answers to the most common questions about FitPro Center',
       },
     },
   },
@@ -115,7 +122,7 @@ const translations: { [locale: string]: Translations } = {
     footer: {
       quickLinks: 'Link-uri Rapide',
       followUs: 'Urmărește-ne',
-      copyright: '© 2024 MituGym. Toate drepturile rezervate.',
+      copyright: '© 2024 FitPro Center. Toate drepturile rezervate.',
     },
     language: {
       english: 'Engleză',
@@ -134,7 +141,7 @@ const translations: { [locale: string]: Translations } = {
       },
     },
     features: {
-      title: 'De Ce Să Alegi MituGym?',
+      title: 'De Ce Să Alegi FitPro Center?',
       equipment: {
         title: 'Echipamente de Ultimă Generație',
         description:
@@ -186,9 +193,9 @@ const translations: { [locale: string]: Translations } = {
         membership:
           'Tot ce trebuie să știi despre planurile și politicile noastre de abonament',
         facility:
-          'Află mai multe despre facilitățile, echipamentele și ce face MituGym special',
+          'Află mai multe despre facilitățile, echipamentele și ce face FitPro Center special',
         general:
-          'Obține răspunsuri rapide la cele mai frecvente întrebări despre MituGym',
+          'Obține răspunsuri rapide la cele mai frecvente întrebări despre FitPro Center',
       },
     },
   },

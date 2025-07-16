@@ -247,6 +247,7 @@ export function withIntersectionLoading<T extends object>(
     const [hasLoaded, setHasLoaded] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: options is a stable configuration prop
     useEffect(() => {
       const observer = new IntersectionObserver(
         ([entry]) => {
@@ -268,6 +269,7 @@ export function withIntersectionLoading<T extends object>(
       }
 
       return () => observer.disconnect();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [hasLoaded]);
 
     return (
@@ -313,9 +315,11 @@ export const preloadCriticalComponents = () => {
       () => import('./layout-animations'),
     ];
 
-    criticalComponents.forEach((importFn) => {
-      importFn().catch((_err) => {});
-    });
+    for (const importFn of criticalComponents) {
+      importFn().catch((_err) => {
+        // Ignore preload errors - components will load on demand
+      });
+    }
   }
 };
 

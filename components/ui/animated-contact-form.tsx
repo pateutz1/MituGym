@@ -4,6 +4,55 @@ import { useState } from 'react';
 import { createAccessibleVariants } from '@/hooks/useMotionConfig';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
+// Regex patterns for validation
+const EMAIL_REGEX = /\S+@\S+\.\S+/;
+const PHONE_REGEX = /^\+?[\d\s\-()]{10,}$/;
+
+// Validation helper functions
+const validateName = (name: string): string | null => {
+  if (!name.trim()) {
+    return 'Name is required';
+  }
+  return null;
+};
+
+const validateEmail = (email: string): string | null => {
+  if (!email.trim()) {
+    return 'Email is required';
+  }
+  if (!EMAIL_REGEX.test(email)) {
+    return 'Please enter a valid email address';
+  }
+  return null;
+};
+
+const validatePhone = (phone: string): string | null => {
+  if (!phone.trim()) {
+    return 'Phone number is required';
+  }
+  if (!PHONE_REGEX.test(phone)) {
+    return 'Please enter a valid phone number';
+  }
+  return null;
+};
+
+const validateService = (service: string): string | null => {
+  if (!service) {
+    return 'Please select a service';
+  }
+  return null;
+};
+
+const validateMessage = (message: string): string | null => {
+  if (!message.trim()) {
+    return 'Message is required';
+  }
+  if (message.trim().length < 10) {
+    return 'Message must be at least 10 characters long';
+  }
+  return null;
+};
+
 interface FormData {
   name: string;
   email: string;
@@ -20,8 +69,263 @@ interface FormErrors {
   message?: string;
 }
 
-const AnimatedContactForm: React.FC = () => {
-  const prefersReducedMotion = useReducedMotion();
+// Success component
+const SuccessMessage: React.FC = () => (
+  <motion.div
+    animate={{ opacity: 1, scale: 1 }}
+    className="glass-effect rounded-2xl p-8 text-center"
+    initial={{ opacity: 0, scale: 0.8 }}
+  >
+    <motion.div
+      animate={{ scale: 1 }}
+      className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-green-400 to-emerald-500"
+      initial={{ scale: 0 }}
+      transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+    >
+      <svg
+        className="h-8 w-8 text-white"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <title>Success checkmark</title>
+        <path
+          d="M5 13l4 4L19 7"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+        />
+      </svg>
+    </motion.div>
+    <h3 className="mb-4 font-bold text-2xl text-white">Message Sent!</h3>
+    <p className="text-white/70">
+                  Thank you for your interest in FitPro Center. We&apos;ll get back to you within
+      24 hours.
+    </p>
+  </motion.div>
+);
+
+// Form fields component
+interface FormFieldsProps {
+  formData: FormData;
+  errors: FormErrors;
+  handleChange: (field: keyof FormData, value: string) => void;
+  fieldVariants: Record<string, Record<string, number | string>>;
+  prefersReducedMotion: boolean;
+  services: string[];
+}
+
+const FormFields: React.FC<FormFieldsProps> = ({
+  formData,
+  errors,
+  handleChange,
+  fieldVariants,
+  prefersReducedMotion,
+  services,
+}) => (
+  <>
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      {/* Name Field */}
+      <motion.div
+        transition={
+          prefersReducedMotion
+            ? { duration: 0.01 }
+            : { duration: 0.4, delay: 0.1 }
+        }
+        variants={fieldVariants}
+      >
+        <label
+          className="mb-2 block font-medium text-sm text-white"
+          htmlFor="name"
+        >
+          Full Name *
+        </label>
+        <input
+          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/50 transition-all duration-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+          id="name"
+          onChange={(e) => handleChange('name', e.target.value)}
+          placeholder="Enter your full name"
+          type="text"
+          value={formData.name}
+        />
+        <AnimatePresence>
+          {errors.name && (
+            <motion.p
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-2 text-red-400 text-sm"
+              exit={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -10 }}
+            >
+              {errors.name}
+            </motion.p>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
+      {/* Email Field */}
+      <motion.div
+        transition={
+          prefersReducedMotion
+            ? { duration: 0.01 }
+            : { duration: 0.4, delay: 0.2 }
+        }
+        variants={fieldVariants}
+      >
+        <label
+          className="mb-2 block font-medium text-sm text-white"
+          htmlFor="email"
+        >
+          Email Address *
+        </label>
+        <input
+          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/50 transition-all duration-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+          id="email"
+          onChange={(e) => handleChange('email', e.target.value)}
+          placeholder="Enter your email address"
+          type="email"
+          value={formData.email}
+        />
+        <AnimatePresence>
+          {errors.email && (
+            <motion.p
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-2 text-red-400 text-sm"
+              exit={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -10 }}
+            >
+              {errors.email}
+            </motion.p>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
+      {/* Phone Field */}
+      <motion.div
+        transition={
+          prefersReducedMotion
+            ? { duration: 0.01 }
+            : { duration: 0.4, delay: 0.3 }
+        }
+        variants={fieldVariants}
+      >
+        <label
+          className="mb-2 block font-medium text-sm text-white"
+          htmlFor="phone"
+        >
+          Phone Number *
+        </label>
+        <input
+          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/50 transition-all duration-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+          id="phone"
+          onChange={(e) => handleChange('phone', e.target.value)}
+          placeholder="Enter your phone number"
+          type="tel"
+          value={formData.phone}
+        />
+        <AnimatePresence>
+          {errors.phone && (
+            <motion.p
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-2 text-red-400 text-sm"
+              exit={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -10 }}
+            >
+              {errors.phone}
+            </motion.p>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
+      {/* Service Field */}
+      <motion.div
+        transition={
+          prefersReducedMotion
+            ? { duration: 0.01 }
+            : { duration: 0.4, delay: 0.4 }
+        }
+        variants={fieldVariants}
+      >
+        <label
+          className="mb-2 block font-medium text-sm text-white"
+          htmlFor="service"
+        >
+          Service Interest *
+        </label>
+        <select
+          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition-all duration-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+          id="service"
+          onChange={(e) => handleChange('service', e.target.value)}
+          value={formData.service}
+        >
+          <option className="bg-surface text-white" value="">
+            Select a service
+          </option>
+          {services.map((service) => (
+            <option
+              className="bg-surface text-white"
+              key={service}
+              value={service}
+            >
+              {service}
+            </option>
+          ))}
+        </select>
+        <AnimatePresence>
+          {errors.service && (
+            <motion.p
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-2 text-red-400 text-sm"
+              exit={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -10 }}
+            >
+              {errors.service}
+            </motion.p>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </div>
+
+    {/* Message Field */}
+    <motion.div
+      transition={
+        prefersReducedMotion
+          ? { duration: 0.01 }
+          : { duration: 0.4, delay: 0.5 }
+      }
+      variants={fieldVariants}
+    >
+      <label
+        className="mb-2 block font-medium text-sm text-white"
+        htmlFor="message"
+      >
+        Message *
+      </label>
+      <textarea
+        className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/50 transition-all duration-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+        id="message"
+        onChange={(e) => handleChange('message', e.target.value)}
+        placeholder="Tell us about your fitness goals and how we can help you..."
+        rows={4}
+        value={formData.message}
+      />
+      <AnimatePresence>
+        {errors.message && (
+          <motion.p
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-2 text-red-400 text-sm"
+            exit={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -10 }}
+          >
+            {errors.message}
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  </>
+);
+
+// Custom hook for form logic
+const useContactForm = () => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -33,59 +337,32 @@ const AnimatedContactForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const formVariants = createAccessibleVariants({
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  });
-
-  const fieldVariants = createAccessibleVariants({
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0 },
-  });
-
-  const buttonVariants = createAccessibleVariants({
-    idle: { scale: 1 },
-    hover: { scale: 1.02 },
-    tap: { scale: 0.98 },
-  });
-
-  const services = [
-    'General Inquiry',
-    'Membership Information',
-    'Personal Training',
-    'Group Classes',
-    'Nutrition Consulting',
-    'Corporate Wellness',
-    'Facility Tour',
-  ];
-
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+    const nameError = validateName(formData.name);
+    if (nameError) {
+      newErrors.name = nameError;
     }
 
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+    const emailError = validateEmail(formData.email);
+    if (emailError) {
+      newErrors.email = emailError;
     }
 
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required';
-    } else if (!/^\+?[\d\s\-()]{10,}$/.test(formData.phone)) {
-      newErrors.phone = 'Please enter a valid phone number';
+    const phoneError = validatePhone(formData.phone);
+    if (phoneError) {
+      newErrors.phone = phoneError;
     }
 
-    if (!formData.service) {
-      newErrors.service = 'Please select a service';
+    const serviceError = validateService(formData.service);
+    if (serviceError) {
+      newErrors.service = serviceError;
     }
 
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters long';
+    const messageError = validateMessage(formData.message);
+    if (messageError) {
+      newErrors.message = messageError;
     }
 
     setErrors(newErrors);
@@ -127,40 +404,55 @@ const AnimatedContactForm: React.FC = () => {
     }
   };
 
+  return {
+    formData,
+    errors,
+    isSubmitting,
+    isSubmitted,
+    handleSubmit,
+    handleChange,
+  };
+};
+
+const AnimatedContactForm: React.FC = () => {
+  const prefersReducedMotion = useReducedMotion();
+  const {
+    formData,
+    errors,
+    isSubmitting,
+    isSubmitted,
+    handleSubmit,
+    handleChange,
+  } = useContactForm();
+
+  const formVariants = createAccessibleVariants({
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  });
+
+  const fieldVariants = createAccessibleVariants({
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0 },
+  });
+
+  const buttonVariants = createAccessibleVariants({
+    idle: { scale: 1 },
+    hover: { scale: 1.02 },
+    tap: { scale: 0.98 },
+  });
+
+  const services = [
+    'General Inquiry',
+    'Membership Information',
+    'Personal Training',
+    'Group Classes',
+    'Nutrition Consulting',
+    'Corporate Wellness',
+    'Facility Tour',
+  ];
+
   if (isSubmitted) {
-    return (
-      <motion.div
-        animate={{ opacity: 1, scale: 1 }}
-        className="glass-effect rounded-2xl p-8 text-center"
-        initial={{ opacity: 0, scale: 0.8 }}
-      >
-        <motion.div
-          animate={{ scale: 1 }}
-          className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-green-400 to-emerald-500"
-          initial={{ scale: 0 }}
-          transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-        >
-          <svg
-            className="h-8 w-8 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M5 13l4 4L19 7"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-            />
-          </svg>
-        </motion.div>
-        <h3 className="mb-4 font-bold text-2xl text-white">Message Sent!</h3>
-        <p className="text-white/70">
-          Thank you for your interest in MituGym. We&apos;ll get back to you
-          within 24 hours.
-        </p>
-      </motion.div>
-    );
+    return <SuccessMessage />;
   }
 
   return (
@@ -179,183 +471,14 @@ const AnimatedContactForm: React.FC = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        {/* Name Field */}
-        <motion.div
-          transition={
-            prefersReducedMotion
-              ? { duration: 0.01 }
-              : { duration: 0.4, delay: 0.1 }
-          }
-          variants={fieldVariants}
-        >
-          <label className="mb-2 block font-medium text-sm text-white">
-            Full Name *
-          </label>
-          <input
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/50 transition-all duration-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-            onChange={(e) => handleChange('name', e.target.value)}
-            placeholder="Enter your full name"
-            type="text"
-            value={formData.name}
-          />
-          <AnimatePresence>
-            {errors.name && (
-              <motion.p
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-2 text-red-400 text-sm"
-                exit={{ opacity: 0, y: -10 }}
-                initial={{ opacity: 0, y: -10 }}
-              >
-                {errors.name}
-              </motion.p>
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Email Field */}
-        <motion.div
-          transition={
-            prefersReducedMotion
-              ? { duration: 0.01 }
-              : { duration: 0.4, delay: 0.2 }
-          }
-          variants={fieldVariants}
-        >
-          <label className="mb-2 block font-medium text-sm text-white">
-            Email Address *
-          </label>
-          <input
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/50 transition-all duration-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-            onChange={(e) => handleChange('email', e.target.value)}
-            placeholder="Enter your email address"
-            type="email"
-            value={formData.email}
-          />
-          <AnimatePresence>
-            {errors.email && (
-              <motion.p
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-2 text-red-400 text-sm"
-                exit={{ opacity: 0, y: -10 }}
-                initial={{ opacity: 0, y: -10 }}
-              >
-                {errors.email}
-              </motion.p>
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Phone Field */}
-        <motion.div
-          transition={
-            prefersReducedMotion
-              ? { duration: 0.01 }
-              : { duration: 0.4, delay: 0.3 }
-          }
-          variants={fieldVariants}
-        >
-          <label className="mb-2 block font-medium text-sm text-white">
-            Phone Number *
-          </label>
-          <input
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/50 transition-all duration-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-            onChange={(e) => handleChange('phone', e.target.value)}
-            placeholder="Enter your phone number"
-            type="tel"
-            value={formData.phone}
-          />
-          <AnimatePresence>
-            {errors.phone && (
-              <motion.p
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-2 text-red-400 text-sm"
-                exit={{ opacity: 0, y: -10 }}
-                initial={{ opacity: 0, y: -10 }}
-              >
-                {errors.phone}
-              </motion.p>
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Service Field */}
-        <motion.div
-          transition={
-            prefersReducedMotion
-              ? { duration: 0.01 }
-              : { duration: 0.4, delay: 0.4 }
-          }
-          variants={fieldVariants}
-        >
-          <label className="mb-2 block font-medium text-sm text-white">
-            Service Interest *
-          </label>
-          <select
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition-all duration-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-            onChange={(e) => handleChange('service', e.target.value)}
-            value={formData.service}
-          >
-            <option className="bg-surface text-white" value="">
-              Select a service
-            </option>
-            {services.map((service) => (
-              <option
-                className="bg-surface text-white"
-                key={service}
-                value={service}
-              >
-                {service}
-              </option>
-            ))}
-          </select>
-          <AnimatePresence>
-            {errors.service && (
-              <motion.p
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-2 text-red-400 text-sm"
-                exit={{ opacity: 0, y: -10 }}
-                initial={{ opacity: 0, y: -10 }}
-              >
-                {errors.service}
-              </motion.p>
-            )}
-          </AnimatePresence>
-        </motion.div>
-      </div>
-
-      {/* Message Field */}
-      <motion.div
-        transition={
-          prefersReducedMotion
-            ? { duration: 0.01 }
-            : { duration: 0.4, delay: 0.5 }
-        }
-        variants={fieldVariants}
-      >
-        <label className="mb-2 block font-medium text-sm text-white">
-          Message *
-        </label>
-        <textarea
-          className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/50 transition-all duration-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-          onChange={(e) => handleChange('message', e.target.value)}
-          placeholder="Tell us about your fitness goals and how we can help you..."
-          rows={4}
-          value={formData.message}
-        />
-        <AnimatePresence>
-          {errors.message && (
-            <motion.p
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-2 text-red-400 text-sm"
-              exit={{ opacity: 0, y: -10 }}
-              initial={{ opacity: 0, y: -10 }}
-            >
-              {errors.message}
-            </motion.p>
-          )}
-        </AnimatePresence>
-      </motion.div>
+      <FormFields
+        errors={errors}
+        fieldVariants={fieldVariants}
+        formData={formData}
+        handleChange={handleChange}
+        prefersReducedMotion={prefersReducedMotion}
+        services={services}
+      />
 
       {/* Submit Button */}
       <motion.div
@@ -381,6 +504,7 @@ const AnimatedContactForm: React.FC = () => {
                 fill="none"
                 viewBox="0 0 24 24"
               >
+                <title>Loading spinner</title>
                 <circle
                   className="opacity-25"
                   cx="12"

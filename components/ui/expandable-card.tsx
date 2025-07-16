@@ -59,6 +59,7 @@ export default function ExpandableCard({
         layout="position"
       >
         <svg className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24">
+          <title>Expand or collapse card</title>
           <path
             d="M19 9l-7 7-7-7"
             stroke="currentColor"

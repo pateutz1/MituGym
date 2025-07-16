@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import PlanCard from '../components/PlanCard';
+import PlanCard from '../components/plan-card';
 import AnimatedGradientText from '../components/ui/animated-gradient-text';
 import { Counter } from '../components/ui/counter';
 // import { usePerformanceMonitoring } from '../hooks/usePerformanceMonitoring'
@@ -102,6 +102,7 @@ export default function Prices() {
           strokeWidth="2"
           viewBox="0 0 24 24"
         >
+          <title>Premium Equipment</title>
           <path d="M6.5 6.5h11v11h-11z" />
           <path d="M6.5 6.5L12 12l5.5-5.5" />
           <path d="M12 12l5.5 5.5" />
@@ -124,6 +125,7 @@ export default function Prices() {
           strokeWidth="2"
           viewBox="0 0 24 24"
         >
+          <title>Personal Trainers</title>
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
           <circle cx="12" cy="7" r="4" />
         </svg>
@@ -144,6 +146,7 @@ export default function Prices() {
           strokeWidth="2"
           viewBox="0 0 24 24"
         >
+          <title>Flexible Schedule</title>
           <circle cx="12" cy="12" r="10" />
           <polyline points="12,6 12,12 16,14" />
         </svg>
@@ -160,7 +163,7 @@ export default function Prices() {
       name: 'Sarah Johnson',
       role: 'Member since 2022',
       content:
-        'MituGym transformed my fitness journey. The trainers are amazing and the facilities are top-notch!',
+        'FitPro Center transformed my fitness journey. The trainers are amazing and the facilities are top-notch!',
       rating: 5,
     },
     {
@@ -254,7 +257,7 @@ export default function Prices() {
               <h2 className="mb-4 font-bold text-2xl text-white md:text-3xl">
                 Why Choose{' '}
                 <AnimatedGradientText variant="shimmer">
-                  MituGym
+                  FitPro Center
                 </AnimatedGradientText>
                 ?
               </h2>
@@ -317,7 +320,7 @@ export default function Prices() {
               </h2>
               <p className="mx-auto max-w-2xl text-white/70">
                 Real stories from real people who&apos;ve transformed their
-                lives at MituGym
+                lives at FitPro Center
               </p>
             </div>
             <TestimonialsMarquee
@@ -350,7 +353,7 @@ export default function Prices() {
                 <h2 className="mb-6 font-bold text-2xl text-white sm:text-3xl md:text-4xl">
                   Join the{' '}
                   <AnimatedGradientText variant="glow">
-                    MituGym Family
+                    FitPro Center Family
                   </AnimatedGradientText>
                 </h2>
                 <p className="mx-auto mb-12 max-w-2xl text-white/70">

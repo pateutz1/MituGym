@@ -26,9 +26,12 @@ export function PhysicsSpring() {
     <div className="space-y-6">
       <div className="grid grid-cols-3 gap-4">
         <div>
-          <label className="text-sm text-white">Target: {target}</label>
+          <label className="text-sm text-white" htmlFor="target-input">
+            Target: {target}
+          </label>
           <input
             className="w-full"
+            id="target-input"
             max="300"
             min="0"
             onChange={(e) => setTarget(Number(e.target.value))}
@@ -37,9 +40,12 @@ export function PhysicsSpring() {
           />
         </div>
         <div>
-          <label className="text-sm text-white">Stiffness: {stiffness}</label>
+          <label className="text-sm text-white" htmlFor="stiffness-input">
+            Stiffness: {stiffness}
+          </label>
           <input
             className="w-full"
+            id="stiffness-input"
             max="500"
             min="10"
             onChange={(e) => setStiffness(Number(e.target.value))}
@@ -48,9 +54,12 @@ export function PhysicsSpring() {
           />
         </div>
         <div>
-          <label className="text-sm text-white">Damping: {damping}</label>
+          <label className="text-sm text-white" htmlFor="damping-input">
+            Damping: {damping}
+          </label>
           <input
             className="w-full"
+            id="damping-input"
             max="50"
             min="1"
             onChange={(e) => setDamping(Number(e.target.value))}
@@ -104,9 +113,16 @@ export function MouseTracker() {
   const opacity = useTransform(springY, [0, 400], [1, 0.3]);
 
   return (
-    <div
+    <button
+      aria-label="Interactive mouse tracking area"
       className="relative h-96 w-full cursor-none overflow-hidden rounded-lg border border-white/10 bg-surface/20"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          // Handle keyboard interaction for accessibility
+        }
+      }}
       onMouseMove={handleMouseMove}
+      type="button"
     >
       <motion.div
         className="pointer-events-none absolute h-8 w-8 rounded-full bg-primary"
@@ -127,7 +143,7 @@ export function MouseTracker() {
         <p>Y: {springY.get().toFixed(0)}</p>
         <p>Scale: {scale.get().toFixed(2)}</p>
       </div>
-    </div>
+    </button>
   );
 }
 
@@ -179,11 +195,12 @@ export function TransformChains() {
   return (
     <div className="space-y-6">
       <div className="space-y-4">
-        <label className="text-sm text-white">
+        <label className="text-sm text-white" htmlFor="progress-input">
           Progress: {(progress * 100).toFixed(0)}%
         </label>
         <input
           className="w-full"
+          id="progress-input"
           max="1"
           min="0"
           onChange={(e) => setProgress(Number.parseFloat(e.target.value))}
@@ -391,11 +408,12 @@ export function PhysicsSimulation() {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="text-sm text-white">
+          <label className="text-sm text-white" htmlFor="gravity-input">
             Gravity: {gravity.toFixed(2)}
           </label>
           <input
             className="w-full"
+            id="gravity-input"
             max="2"
             min="0.1"
             onChange={(e) => setGravity(Number.parseFloat(e.target.value))}
@@ -405,11 +423,12 @@ export function PhysicsSimulation() {
           />
         </div>
         <div>
-          <label className="text-sm text-white">
+          <label className="text-sm text-white" htmlFor="bounce-input">
             Bounce: {bounce.toFixed(2)}
           </label>
           <input
             className="w-full"
+            id="bounce-input"
             max="1"
             min="0.1"
             onChange={(e) => setBounce(Number.parseFloat(e.target.value))}

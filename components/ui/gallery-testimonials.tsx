@@ -83,6 +83,9 @@ export default function GalleryTestimonials({
                     key={i}
                     viewBox="0 0 20 20"
                   >
+                    <title>
+                      {i < testimonial.rating ? 'Filled star' : 'Empty star'}
+                    </title>
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
                 ))}
@@ -120,7 +123,7 @@ export const gymTestimonials: Testimonial[] = [
     name: 'Sarah Johnson',
     role: 'Fitness Enthusiast',
     content:
-      "The facilities at MituGym are absolutely incredible! The equipment is top-notch and the environment is so motivating. I've achieved my fitness goals faster than I ever imagined.",
+      "The facilities at FitPro Center are absolutely incredible! The equipment is top-notch and the environment is so motivating. I've achieved my fitness goals faster than I ever imagined.",
     avatar:
       'https://images.unsplash.com/photo-1494790108755-2616b612b77c?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80',
     rating: 5,
@@ -132,7 +135,7 @@ export const gymTestimonials: Testimonial[] = [
     name: 'Mike Chen',
     role: 'Professional Athlete',
     content:
-      'As a professional athlete, I need access to the best equipment and training facilities. MituGym delivers exactly that. The trainers are knowledgeable and the atmosphere is perfect for serious training.',
+      'As a professional athlete, I need access to the best equipment and training facilities. FitPro Center delivers exactly that. The trainers are knowledgeable and the atmosphere is perfect for serious training.',
     avatar:
       'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80',
     rating: 5,
@@ -168,7 +171,7 @@ export const gymTestimonials: Testimonial[] = [
     name: 'Lisa Park',
     role: 'Fitness Blogger',
     content:
-      "I've visited hundreds of gyms for my blog, and MituGym stands out for its attention to detail and member experience. Every corner is thoughtfully designed.",
+      "I've visited hundreds of gyms for my blog, and FitPro Center stands out for its attention to detail and member experience. Every corner is thoughtfully designed.",
     avatar:
       'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80',
     rating: 5,

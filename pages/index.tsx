@@ -1,11 +1,11 @@
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Countdown from '@/components/Countdown';
-import ParallaxCard from '@/components/ParallaxCard';
-import PlanCard from '@/components/PlanCard';
-import SimpleTooltip from '@/components/SimpleTooltip';
-import Tooltip from '@/components/Tooltip';
+import Countdown from '@/components/countdown';
+import ParallaxCard from '@/components/parallax-card';
+import PlanCard from '@/components/plan-card';
+import SimpleTooltip from '@/components/simple-tooltip';
+import Tooltip from '@/components/tooltip';
 import AnimatedGradientText from '@/components/ui/animated-gradient-text';
 import Counter from '@/components/ui/counter';
 import ExpandableCard from '@/components/ui/expandable-card';
@@ -458,7 +458,7 @@ export default function Home() {
                   <Countdown
                     targetDate={(() => {
                       // Grand Opening: Saturday 12 July 2025 at 10:00 AM
-                      const grandOpeningDate = new Date('2025-07-12T10:00:00');
+                      const grandOpeningDate = new Date('2026-07-12T10:00:00');
                       return grandOpeningDate;
                     })()}
                   />
@@ -660,7 +660,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, scale: 1 }}
               >
                 <span className="font-medium text-primary">
-                  ✨ Why Choose MituGym
+                  ✨ Why Choose FitPro Center
                 </span>
               </motion.div>
 
@@ -953,7 +953,7 @@ export default function Home() {
                     whileHover={{ scale: 1.02 }}
                   >
                     <Image
-                      alt="Professional fitness training at MituGym"
+                      alt="Professional fitness training at FitPro Center"
                       className="object-cover"
                       fill
                       priority
@@ -1090,7 +1090,7 @@ export default function Home() {
               >
                 <div className="relative h-[400px] overflow-hidden rounded-3xl sm:h-[500px] lg:h-[600px]">
                   <Image
-                    alt="Premium gym facilities at MituGym"
+                    alt="Premium gym facilities at FitPro Center"
                     className="object-cover"
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
@@ -1959,7 +1959,7 @@ export default function Home() {
                   <span className="gradient-text">Founding Membership</span>
                 </h3>
                 <p className="mx-auto mb-8 max-w-2xl text-base text-white/70 leading-relaxed sm:text-lg lg:text-xl">
-                  Secure your spot as a founding member of MituGym. Get
+                  Secure your spot as a founding member of FitPro Center. Get
                   exclusive pre-opening rates, priority access, and special
                   benefits when we officially open our doors.
                 </p>
@@ -2311,7 +2311,7 @@ export default function Home() {
                 </AnimatedGradientText>
               </h2>
               <p className="mx-auto max-w-3xl text-base text-white/70 leading-relaxed sm:text-lg">
-                Everything you need to know about joining MituGym. Get instant
+                Everything you need to know about joining FitPro Center. Get instant
                 answers to the most common questions about our facilities,
                 memberships, and policies.
               </p>
@@ -2325,7 +2325,7 @@ export default function Home() {
               />
 
               <ExpandableCard
-                content="Once opened, MituGym will operate Monday-Friday 6AM-11PM, Saturday 7AM-10PM, and Sunday 7AM-8PM. We're planning to introduce 24/7 access for Gold and Platinum members after our initial launch period."
+                content="Once opened, FitPro Center will operate Monday-Friday 6AM-11PM, Saturday 7AM-10PM, and Sunday 7AM-8PM. We're planning to introduce 24/7 access for Gold and Platinum members after our initial launch period."
                 summary="When is the gym open?"
                 title="Operating Hours"
               />
@@ -2349,7 +2349,7 @@ export default function Home() {
               />
 
               <ExpandableCard
-                content="MituGym officially opens Saturday, July 12th, 2025 at 10:00 AM! We're currently accepting founding member registrations with special pre-opening rates and exclusive benefits for early supporters."
+                content="FitPro Center officially opens Saturday, July 12th, 2025 at 10:00 AM! We're currently accepting founding member registrations with special pre-opening rates and exclusive benefits for early supporters."
                 summary="When do you officially open?"
                 title="Grand Opening"
               />

@@ -105,6 +105,16 @@ const AnimatedBorderTrail = ({
 
   const animationProps = getAnimationVariants();
 
+  const getBackgroundStyle = () => {
+    if (variant === 'continuous') {
+      return `linear-gradient(45deg, transparent 0%, ${trailColor}20 25%, ${trailColor}40 50%, ${trailColor}20 75%, transparent 100%)`;
+    }
+    if (variant === 'chase') {
+      return `conic-gradient(from 0deg, transparent 0deg, ${trailColor}60 90deg, transparent 180deg, transparent 360deg)`;
+    }
+    return `linear-gradient(135deg, ${trailColor}20, ${trailColor}40, ${trailColor}20)`;
+  };
+
   return (
     <div className={`relative ${className}`}>
       {/* Animated Border Trail */}
@@ -112,12 +122,7 @@ const AnimatedBorderTrail = ({
         className="pointer-events-none absolute inset-0"
         style={{
           borderRadius,
-          background:
-            variant === 'continuous'
-              ? `linear-gradient(45deg, transparent 0%, ${trailColor}20 25%, ${trailColor}40 50%, ${trailColor}20 75%, transparent 100%)`
-              : variant === 'chase'
-                ? `conic-gradient(from 0deg, transparent 0deg, ${trailColor}60 90deg, transparent 180deg, transparent 360deg)`
-                : `linear-gradient(135deg, ${trailColor}20, ${trailColor}40, ${trailColor}20)`,
+          background: getBackgroundStyle(),
           padding: `${borderWidth}px`,
           opacity: trailOpacity * 0.7,
         }}

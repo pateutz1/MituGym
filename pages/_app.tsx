@@ -1,17 +1,17 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import '@/styles/globals.css';
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
+import Footer from '@/components/footer';
+import Header from '@/components/header';
 // import { PerformanceMonitor } from '@/components/ui/performance-monitor'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>MituGym - Premium Fitness Experience</title>
+        <title>FitPro Center - Premium Fitness Experience</title>
         <meta
-          content="Transform your body with premium fitness equipment, expert trainers, and a supportive community at MituGym."
+          content="Transform your body with premium fitness equipment, expert trainers, and a supportive community at FitPro Center."
           name="description"
         />
         <meta content="width=device-width, initial-scale=1" name="viewport" />

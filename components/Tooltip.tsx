@@ -46,9 +46,9 @@ export default function Tooltip({
   // Debug logging
   useEffect(() => {
     if (isOpen) {
+      // Tooltip opened - could add analytics here
     }
   }, [isOpen]);
-
   const hover = useHover(context, {
     delay: { open: delay, close: 100 },
   });

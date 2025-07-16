@@ -23,7 +23,6 @@ export default function OrbitingCircles({
   className = '',
   children,
   radius = 50,
-  duration = 20,
   delay = 0,
   reverse = false,
   path = false,

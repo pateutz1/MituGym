@@ -214,7 +214,7 @@ export default function Contact() {
               whileInView="visible"
             >
               <h2 className="mb-8 font-bold text-3xl text-white md:text-4xl">
-                Join the MituGym Community
+                Join the FitPro Center Community
               </h2>
 
               <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-3">

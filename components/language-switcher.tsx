@@ -10,6 +10,17 @@ interface LanguageSwitcherProps {
   position?: 'top' | 'bottom' | 'auto';
 }
 
+// Helper function to calculate chevron rotation
+const getChevronRotation = (
+  isOpen: boolean,
+  position: 'top' | 'bottom' | 'auto'
+): number => {
+  if (position === 'bottom') {
+    return isOpen ? 0 : 180;
+  }
+  return isOpen ? 180 : 0;
+};
+
 const LanguageSwitcher = ({ position = 'auto' }: LanguageSwitcherProps) => {
   const { t, lang } = useTranslation('common');
   const router = useRouter();
@@ -67,13 +78,7 @@ const LanguageSwitcher = ({ position = 'auto' }: LanguageSwitcherProps) => {
         </span>
         <motion.svg
           animate={{
-            rotate: isOpen
-              ? position === 'bottom'
-                ? 0
-                : 180
-              : position === 'bottom'
-                ? 180
-                : 0,
+            rotate: getChevronRotation(isOpen, position),
           }}
           className="relative z-10 h-4 w-4 text-white/70 transition-colors duration-300 group-hover:text-primary"
           fill="none"
@@ -81,6 +86,7 @@ const LanguageSwitcher = ({ position = 'auto' }: LanguageSwitcherProps) => {
           transition={{ duration: 0.4, ease: 'easeInOut' }}
           viewBox="0 0 24 24"
         >
+          <title>Language selector arrow</title>
           <path
             d="M19 9l-7 7-7-7"
             strokeLinecap="round"

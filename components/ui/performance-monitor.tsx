@@ -55,6 +55,7 @@ export function PerformanceMonitor({
         <button
           className="text-white/60 hover:text-white"
           onClick={() => setShowDetails(!showDetails)}
+          type="button"
         >
           {showDetails ? '−' : '+'}
         </button>
@@ -126,6 +127,7 @@ export function PerformanceMonitor({
                   : 'bg-green-600 hover:bg-green-700'
               }`}
               onClick={isMonitoring ? stopMonitoring : startMonitoring}
+              type="button"
             >
               {isMonitoring ? 'Stop' : 'Start'}
             </button>
@@ -133,6 +135,7 @@ export function PerformanceMonitor({
             <button
               className="rounded bg-blue-600 px-2 py-1 text-xs hover:bg-blue-700"
               onClick={exportPerformanceData}
+              type="button"
             >
               Export
             </button>
@@ -140,6 +143,7 @@ export function PerformanceMonitor({
             <button
               className="rounded bg-gray-600 px-2 py-1 text-xs hover:bg-gray-700"
               onClick={clearPerformanceLog}
+              type="button"
             >
               Clear
             </button>

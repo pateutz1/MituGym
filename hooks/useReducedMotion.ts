@@ -1,28 +1,22 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
+import type { MotionVariants, MotionVariant } from './useMotionConfig';
 
-// Hook to detect reduced motion preference
+// Core hook for detecting reduced motion preference
 export function useReducedMotion(): boolean {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
-    // Check if we're in the browser
-    if (typeof window === 'undefined') {
-      return;
-    }
-
-    // Create media query to check for reduced motion preference
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      setPrefersReducedMotion(event.matches);
+    };
 
     // Set initial value
     setPrefersReducedMotion(mediaQuery.matches);
 
     // Listen for changes
-    const handleChange = (event: MediaQueryListEvent) => {
-      setPrefersReducedMotion(event.matches);
-    };
-
-    // Add listener
     mediaQuery.addEventListener('change', handleChange);
 
     // Cleanup
@@ -34,115 +28,79 @@ export function useReducedMotion(): boolean {
   return prefersReducedMotion;
 }
 
-// Enhanced hook with additional accessibility options
-export function useAccessibilityPreferences() {
-  const [preferences, setPreferences] = useState({
+// Enhanced accessibility preferences
+export interface AccessibilityPreferences {
+  prefersReducedMotion: boolean;
+  prefersHighContrast: boolean;
+  prefersReducedData: boolean;
+}
+
+export function useAccessibilityPreferences(): AccessibilityPreferences {
+  const [preferences, setPreferences] = useState<AccessibilityPreferences>({
     prefersReducedMotion: false,
-    prefersReducedTransparency: false,
     prefersHighContrast: false,
     prefersReducedData: false,
   });
 
   useEffect(() => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-
     const queries = {
       prefersReducedMotion: window.matchMedia(
         '(prefers-reduced-motion: reduce)'
-      ),
-      prefersReducedTransparency: window.matchMedia(
-        '(prefers-reduced-transparency: reduce)'
       ),
       prefersHighContrast: window.matchMedia('(prefers-contrast: high)'),
       prefersReducedData: window.matchMedia('(prefers-reduced-data: reduce)'),
     };
 
-    // Set initial values
-    setPreferences({
-      prefersReducedMotion: queries.prefersReducedMotion.matches,
-      prefersReducedTransparency: queries.prefersReducedTransparency.matches,
-      prefersHighContrast: queries.prefersHighContrast.matches,
-      prefersReducedData: queries.prefersReducedData.matches,
-    });
-
-    // Listen for changes
     const handleChange = () => {
       setPreferences({
         prefersReducedMotion: queries.prefersReducedMotion.matches,
-        prefersReducedTransparency: queries.prefersReducedTransparency.matches,
         prefersHighContrast: queries.prefersHighContrast.matches,
         prefersReducedData: queries.prefersReducedData.matches,
       });
     };
 
-    // Add listeners
-    Object.values(queries).forEach((query) => {
+    // Set initial values
+    handleChange();
+
+    // Add listeners using for...of for better performance
+    for (const query of Object.values(queries)) {
       query.addEventListener('change', handleChange);
-    });
+    }
 
     // Cleanup
     return () => {
-      Object.values(queries).forEach((query) => {
+      for (const query of Object.values(queries)) {
         query.removeEventListener('change', handleChange);
-      });
+      }
     };
   }, []);
 
   return preferences;
 }
 
-// Animation configuration based on motion preferences
-export function useMotionConfig() {
-  const prefersReducedMotion = useReducedMotion();
-
+// Helper function to create reduced motion variant
+const createReducedMotionVariant = (variant: MotionVariant): MotionVariant => {
   return {
-    // Transition configurations
-    spring: prefersReducedMotion
-      ? { type: 'tween' as const, duration: 0.01 }
-      : { type: 'spring' as const, stiffness: 300, damping: 30 },
-
-    fade: prefersReducedMotion ? { duration: 0.01 } : { duration: 0.3 },
-
-    slide: prefersReducedMotion
-      ? { duration: 0.01 }
-      : { type: 'spring' as const, stiffness: 400, damping: 25 },
-
-    scale: prefersReducedMotion
-      ? { duration: 0.01 }
-      : { type: 'spring' as const, stiffness: 500, damping: 30 },
-
-    // Stagger configurations
-    stagger: prefersReducedMotion
-      ? { staggerChildren: 0.01, delayChildren: 0 }
-      : { staggerChildren: 0.1, delayChildren: 0.2 },
-
-    // Complex animations
-    complex: prefersReducedMotion
-      ? { duration: 0.01 }
-      : { type: 'spring' as const, stiffness: 200, damping: 20, duration: 0.6 },
-
-    // Hover effects
-    hover: prefersReducedMotion
-      ? { scale: 1, transition: { duration: 0.01 } }
-      : {
-          scale: 1.05,
-          transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
-        },
-
-    // Tap effects
-    tap: prefersReducedMotion
-      ? { scale: 1, transition: { duration: 0.01 } }
-      : { scale: 0.95, transition: { duration: 0.1 } },
+    ...variant,
+    transition: { duration: 0.01 },
+    // Remove complex transforms that might cause motion sickness
+    rotate: undefined,
+    rotateX: undefined,
+    rotateY: undefined,
+    rotateZ: undefined,
+    // Keep position and opacity changes but make them instant
+    scale: variant.scale,
+    x: variant.x,
+    y: variant.y,
+    opacity: variant.opacity,
   };
-}
+};
 
 // Safe animation variants that respect reduced motion (custom hook)
 export function useAccessibleVariants(
-  normalVariants: any,
-  reducedVariants?: any
-) {
+  normalVariants: MotionVariants,
+  reducedVariants?: MotionVariants
+): MotionVariants {
   const prefersReducedMotion = useReducedMotion();
 
   if (prefersReducedMotion && reducedVariants) {
@@ -151,29 +109,19 @@ export function useAccessibleVariants(
 
   if (prefersReducedMotion) {
     // Create reduced motion versions of normal variants
-    const reducedMotionVariants: any = {};
+    const reducedMotionVariants: MotionVariants = {};
 
-    Object.keys(normalVariants).forEach((key) => {
+    // Use for...of instead of forEach for better performance
+    for (const key of Object.keys(normalVariants)) {
       const variant = normalVariants[key];
-      if (typeof variant === 'object') {
-        reducedMotionVariants[key] = {
-          ...variant,
-          transition: { duration: 0.01 },
-          // Remove complex transforms that might cause motion sickness
-          rotate: undefined,
-          rotateX: undefined,
-          rotateY: undefined,
-          rotateZ: undefined,
-          // Keep position and opacity changes but make them instant
-          scale: variant.scale,
-          x: variant.x,
-          y: variant.y,
-          opacity: variant.opacity,
-        };
+      if (typeof variant === 'object' && variant !== null) {
+        reducedMotionVariants[key] = createReducedMotionVariant(
+          variant as MotionVariant
+        );
       } else {
         reducedMotionVariants[key] = variant;
       }
-    });
+    }
 
     return reducedMotionVariants;
   }
@@ -183,9 +131,9 @@ export function useAccessibleVariants(
 
 // Helper function for creating accessible variants without using hooks
 export function createAccessibleVariants(
-  normalVariants: any,
-  _reducedVariants?: any
-) {
+  normalVariants: MotionVariants,
+  _reducedVariants?: MotionVariants
+): MotionVariants {
   // This is a helper function that can be used outside React components
   // It doesn't use hooks and just returns the variants as-is
   return normalVariants;
@@ -197,11 +145,28 @@ export interface AccessibleMotionOptions<T> {
   disableOnReducedMotion?: boolean;
 }
 
+// Define proper types for animation props
+interface AnimationProps {
+  rotate?: number;
+  rotateX?: number;
+  rotateY?: number;
+  rotateZ?: number;
+  transition?: {
+    duration?: number;
+    type?: string;
+    [key: string]: unknown;
+  };
+  animate?: {
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
+}
+
 // Utility to get safe animation properties
 export function getSafeAnimationProps(
   prefersReducedMotion: boolean,
-  animationProps: any
-) {
+  animationProps: AnimationProps
+): AnimationProps {
   if (!prefersReducedMotion) {
     return animationProps;
   }
@@ -227,11 +192,12 @@ export function getSafeAnimationProps(
 
   // Keep position and opacity but make them instant
   if (safeProps.animate) {
-    Object.keys(safeProps.animate).forEach((key) => {
+    // Use for...of instead of forEach for better performance
+    for (const key of Object.keys(safeProps.animate)) {
       if (key === 'transition') {
         safeProps.animate[key] = { duration: 0.01 };
       }
-    });
+    }
   }
 
   return safeProps;

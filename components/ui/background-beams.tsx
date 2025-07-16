@@ -18,6 +18,21 @@ export default function BackgroundBeams({
 }: BackgroundBeamsProps) {
   const beamRef = useRef<HTMLDivElement>(null);
 
+  // Generate stable beam and particle data with unique IDs
+  const beamData = Array.from({ length: beamCount }, (_, i) => ({
+    id: `beam-${Date.now()}-${Math.random().toString(36).slice(2)}-${i}`,
+    position: 20 + i * 30,
+    delay: delay + i * 0.5,
+  }));
+
+  const particleData = Array.from({ length: 5 }, (_, i) => ({
+    id: `particle-${Date.now()}-${Math.random().toString(36).slice(2)}-${i}`,
+    left: Math.random() * 100,
+    top: Math.random() * 100,
+    duration: 3 + Math.random() * 2,
+    delay: Math.random() * 2,
+  }));
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!beamRef.current) {
@@ -42,7 +57,7 @@ export default function BackgroundBeams({
       ref={beamRef}
     >
       {/* Animated Beams */}
-      {Array.from({ length: beamCount }).map((_, i) => (
+      {beamData.map((beam) => (
         <motion.div
           animate={{
             opacity: [0, 1, 0],
@@ -51,16 +66,16 @@ export default function BackgroundBeams({
           }}
           className="absolute top-0 left-0 h-full w-px bg-gradient-to-b from-transparent via-primary/50 to-transparent"
           initial={{ opacity: 0, scaleY: 0 }}
-          key={i}
+          key={beam.id}
           style={{
-            left: `${20 + i * 30}%`,
+            left: `${beam.position}%`,
             background:
               'linear-gradient(180deg, transparent 0%, rgba(30, 155, 113, 0.6) 50%, transparent 100%)',
           }}
           transition={{
             duration,
             repeat: Number.POSITIVE_INFINITY,
-            delay: delay + i * 0.5,
+            delay: beam.delay,
             ease: 'easeInOut',
           }}
         />
@@ -79,7 +94,7 @@ export default function BackgroundBeams({
       <div className="absolute inset-0 bg-grid-pattern opacity-10" />
 
       {/* Floating Particles */}
-      {Array.from({ length: 5 }).map((_, i) => (
+      {particleData.map((particle) => (
         <motion.div
           animate={{
             y: [0, -20, 0],
@@ -87,15 +102,15 @@ export default function BackgroundBeams({
             scale: [0.5, 1.2, 0.5],
           }}
           className="absolute h-1 w-1 rounded-full bg-primary/60"
-          key={`particle-${i}`}
+          key={particle.id}
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
+            left: `${particle.left}%`,
+            top: `${particle.top}%`,
           }}
           transition={{
-            duration: 3 + Math.random() * 2,
+            duration: particle.duration,
             repeat: Number.POSITIVE_INFINITY,
-            delay: Math.random() * 2,
+            delay: particle.delay,
             ease: 'easeInOut',
           }}
         />

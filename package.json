@@ -1,12 +1,14 @@
 {
-  "name": "mitugym",
+  "name": "fitpro-center",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "ultracite lint",
+    "format": "ultracite format",
+    "format:check": "ultracite lint"
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.13",
@@ -32,13 +34,13 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.0.6",
-    "eslint": "^8",
-    "eslint-config-next": "^15.3.5",
     "lint-staged": "^16.1.2",
     "ultracite": "5.0.32"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": [
+      "npx ultracite format",
+      "npx ultracite format",
       "npx ultracite format"
     ]
   }

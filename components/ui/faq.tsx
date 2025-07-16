@@ -1,8 +1,15 @@
 'use client';
 
-import * as Accordion from '@radix-ui/react-accordion';
+import {
+  Content,
+  Header,
+  Item,
+  Root,
+  Trigger,
+} from '@radix-ui/react-accordion';
 import { motion } from 'motion/react';
 import { useState } from 'react';
+
 import { cn } from '@/libs/utils';
 
 interface FAQItem {
@@ -54,7 +61,7 @@ export default function FaqSection({
 
       {/* FAQ Container */}
       <div className="rounded-3xl border border-white/10 bg-surface/30 p-6 backdrop-blur-sm sm:p-8">
-        <Accordion.Root
+        <Root
           className="space-y-4"
           collapsible
           onValueChange={(value) => setOpenItem(value)}
@@ -69,12 +76,12 @@ export default function FaqSection({
               viewport={{ once: true }}
               whileInView={{ opacity: 1, y: 0 }}
             >
-              <Accordion.Item
+              <Item
                 className="overflow-hidden rounded-2xl border border-white/10 bg-surface/20 transition-all duration-300 hover:bg-surface/40"
                 value={item.id.toString()}
               >
-                <Accordion.Header>
-                  <Accordion.Trigger className="group flex w-full items-center justify-between p-6 text-left transition-all duration-300 hover:bg-white/5">
+                <Header>
+                  <Trigger className="group flex w-full items-center justify-between p-6 text-left transition-all duration-300 hover:bg-white/5">
                     <div className="flex flex-1 items-center gap-4">
                       {item.icon && (
                         <div className="flex-shrink-0">
@@ -104,6 +111,7 @@ export default function FaqSection({
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
                         >
+                          <title>Expand FAQ answer</title>
                           <path
                             d="m19.5 8.25-7.5 7.5-7.5-7.5"
                             strokeLinecap="round"
@@ -112,10 +120,10 @@ export default function FaqSection({
                         </svg>
                       </motion.div>
                     </div>
-                  </Accordion.Trigger>
-                </Accordion.Header>
+                  </Trigger>
+                </Header>
 
-                <Accordion.Content asChild forceMount>
+                <Content asChild forceMount>
                   <motion.div
                     animate={
                       openItem === item.id.toString() ? 'open' : 'collapsed'
@@ -149,11 +157,11 @@ export default function FaqSection({
                       </div>
                     </div>
                   </motion.div>
-                </Accordion.Content>
-              </Accordion.Item>
+                </Content>
+              </Item>
             </motion.div>
           ))}
-        </Accordion.Root>
+        </Root>
       </div>
     </div>
   );

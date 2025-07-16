@@ -48,25 +48,29 @@ export function usePerformanceMonitoring() {
   // Get memory usage if available
   const getMemoryUsage = useCallback(() => {
     if ('memory' in performance) {
-      const memory = (performance as any).memory;
+      const memory = (
+        performance as unknown as { memory: { usedJSHeapSize: number } }
+      ).memory;
       return memory.usedJSHeapSize / 1_048_576; // Convert to MB
     }
     return;
   }, []);
 
-  // FPS calculation
-  const calculateFPS = useCallback(() => {
-    const now = performance.now();
-    const delta = now - lastTimeRef.current;
+  // Helper function to calculate average frame time
+  const calculateAverageFrameTime = useCallback(() => {
+    if (frameTimesRef.current.length === 0) {
+      return 0;
+    }
+    return (
+      frameTimesRef.current.reduce((a, b) => a + b, 0) /
+      frameTimesRef.current.length
+    );
+  }, []);
 
-    if (delta >= 1000) {
-      // Update every second
-      const fps = Math.round((frameCountRef.current * 1000) / delta);
-      const averageFrameTime =
-        frameTimesRef.current.length > 0
-          ? frameTimesRef.current.reduce((a, b) => a + b, 0) /
-            frameTimesRef.current.length
-          : 0;
+  // Helper function to update frame metrics
+  const updateFrameMetrics = useCallback(
+    (fps: number, delta: number, now: number) => {
+      const averageFrameTime = calculateAverageFrameTime();
 
       setMetrics((prev) => ({
         ...prev,
@@ -81,21 +85,37 @@ export function usePerformanceMonitoring() {
       frameCountRef.current = 0;
       lastTimeRef.current = now;
       frameTimesRef.current = [];
-    }
+    },
+    [calculateAverageFrameTime, getMemoryUsage]
+  );
 
-    frameCountRef.current++;
-
+  // Helper function to track frame time
+  const trackFrameTime = useCallback((now: number) => {
     if (frameTimesRef.current.length > 0) {
       const lastFrameTime = frameTimesRef.current.at(-1);
       frameTimesRef.current.push(now - (lastFrameTime ?? now));
     } else {
       frameTimesRef.current.push(16.67); // Default 60fps frame time
     }
+  }, []);
+
+  // FPS calculation
+  const calculateFPS = useCallback(() => {
+    const now = performance.now();
+    const delta = now - lastTimeRef.current;
+
+    if (delta >= 1000) {
+      const fps = Math.round((frameCountRef.current * 1000) / delta);
+      updateFrameMetrics(fps, delta, now);
+    }
+
+    frameCountRef.current++;
+    trackFrameTime(now);
 
     if (isMonitoring) {
       animationFrameRef.current = requestAnimationFrame(calculateFPS);
     }
-  }, [isMonitoring, getMemoryUsage]);
+  }, [isMonitoring, updateFrameMetrics, trackFrameTime]);
 
   // Start monitoring
   const startMonitoring = useCallback(() => {
@@ -156,40 +176,70 @@ export function usePerformanceMonitoring() {
     }
   }, []);
 
+  // Helper function to calculate FPS penalty
+  const calculateFpsPenalty = useCallback((fps: number) => {
+    if (fps < 30) {
+      return 40;
+    }
+    if (fps < 45) {
+      return 20;
+    }
+    if (fps < 55) {
+      return 10;
+    }
+    return 0;
+  }, []);
+
+  // Helper function to calculate frame time penalty
+  const calculateFrameTimePenalty = useCallback((averageFrameTime: number) => {
+    if (averageFrameTime > 33) {
+      return 20;
+    }
+    if (averageFrameTime > 20) {
+      return 10;
+    }
+    return 0;
+  }, []);
+
+  // Helper function to calculate animation count penalty
+  const calculateAnimationCountPenalty = useCallback(
+    (animationCount: number) => {
+      if (animationCount > 10) {
+        return 15;
+      }
+      if (animationCount > 5) {
+        return 5;
+      }
+      return 0;
+    },
+    []
+  );
+
+  // Helper function to calculate memory usage penalty
+  const calculateMemoryPenalty = useCallback((memoryUsage?: number) => {
+    if (memoryUsage && memoryUsage > 100) {
+      return 10;
+    }
+    return 0;
+  }, []);
+
   // Calculate performance score (0-100)
   const calculatePerformanceScore = useCallback(() => {
     let score = 100;
 
-    // Penalize low FPS
-    if (metrics.fps < 30) {
-      score -= 40;
-    } else if (metrics.fps < 45) {
-      score -= 20;
-    } else if (metrics.fps < 55) {
-      score -= 10;
-    }
-
-    // Penalize high frame times
-    if (metrics.averageFrameTime > 33) {
-      score -= 20; // Above 30fps
-    } else if (metrics.averageFrameTime > 20) {
-      score -= 10;
-    }
-
-    // Penalize many active animations
-    if (metrics.animationCount > 10) {
-      score -= 15;
-    } else if (metrics.animationCount > 5) {
-      score -= 5;
-    }
-
-    // Penalize high memory usage
-    if (metrics.memoryUsage && metrics.memoryUsage > 100) {
-      score -= 10;
-    }
+    score -= calculateFpsPenalty(metrics.fps);
+    score -= calculateFrameTimePenalty(metrics.averageFrameTime);
+    score -= calculateAnimationCountPenalty(metrics.animationCount);
+    score -= calculateMemoryPenalty(metrics.memoryUsage);
 
     return Math.max(0, score);
-  }, [metrics]);
+  }, [
+    metrics,
+    calculateFpsPenalty,
+    calculateFrameTimePenalty,
+    calculateAnimationCountPenalty,
+    calculateMemoryPenalty,
+  ]);
 
   // Get performance recommendations
   const getPerformanceRecommendations = useCallback(() => {
@@ -231,25 +281,42 @@ export function usePerformanceMonitoring() {
     return recommendations;
   }, [metrics, performanceLog]);
 
+  // Helper function to calculate average animation duration
+  const calculateAverageAnimationDuration = useCallback(
+    (animations: AnimationTracker[]) => {
+      if (animations.length === 0) {
+        return 0;
+      }
+      return (
+        animations.reduce((sum, anim) => sum + anim.duration, 0) /
+        animations.length
+      );
+    },
+    []
+  );
+
+  // Helper function to get component usage statistics
+  const getComponentUsageStats = useCallback(
+    (animations: AnimationTracker[]) => {
+      return animations.reduce(
+        (stats, anim) => {
+          stats[anim.component] = (stats[anim.component] || 0) + 1;
+          return stats;
+        },
+        {} as Record<string, number>
+      );
+    },
+    []
+  );
+
   // Performance analysis
   const getPerformanceAnalysis = useCallback(() => {
     const recentAnimations = performanceLog.slice(-50); // Last 50 animations
-    const averageDuration =
-      recentAnimations.length > 0
-        ? recentAnimations.reduce((sum, anim) => sum + anim.duration, 0) /
-          recentAnimations.length
-        : 0;
-
+    const averageDuration = calculateAverageAnimationDuration(recentAnimations);
     const slowAnimations = recentAnimations.filter(
       (anim) => anim.duration > 100
     );
-    const componentStats = recentAnimations.reduce(
-      (stats, anim) => {
-        stats[anim.component] = (stats[anim.component] || 0) + 1;
-        return stats;
-      },
-      {} as Record<string, number>
-    );
+    const componentStats = getComponentUsageStats(recentAnimations);
 
     return {
       averageAnimationDuration: averageDuration,
@@ -261,6 +328,8 @@ export function usePerformanceMonitoring() {
     };
   }, [
     performanceLog,
+    calculateAverageAnimationDuration,
+    getComponentUsageStats,
     calculatePerformanceScore,
     getPerformanceRecommendations,
   ]);

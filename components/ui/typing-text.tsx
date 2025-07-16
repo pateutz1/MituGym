@@ -130,24 +130,22 @@ export const TypingText: React.FC<TypingTextProps> = ({
           }
         }, pauseDuration);
       }
+    } else if (currentText.length > 0) {
+      // Deleting phase - still has characters to delete
+      timeoutRef.current = setTimeout(() => {
+        setCurrentText(currentText.slice(0, -1));
+      }, deletingSpeed);
     } else {
-      // Deleting phase
-      if (currentText.length > 0) {
-        timeoutRef.current = setTimeout(() => {
-          setCurrentText(currentText.slice(0, -1));
-        }, deletingSpeed);
-      } else {
-        // Finished deleting, move to next text
-        timeoutRef.current = setTimeout(() => {
-          setCurrentTextIndex((prev) => {
-            if (loop) {
-              return (prev + 1) % stableTexts.length;
-            }
-            return Math.min(prev + 1, stableTexts.length - 1);
-          });
-          setIsTyping(true);
-        }, deletePauseDuration);
-      }
+      // Finished deleting, move to next text
+      timeoutRef.current = setTimeout(() => {
+        setCurrentTextIndex((prev) => {
+          if (loop) {
+            return (prev + 1) % stableTexts.length;
+          }
+          return Math.min(prev + 1, stableTexts.length - 1);
+        });
+        setIsTyping(true);
+      }, deletePauseDuration);
     }
 
     return () => {

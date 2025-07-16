@@ -119,7 +119,7 @@ export const trainingFAQs: FAQItem[] = [
     id: 15,
     question: 'Can I bring a guest?',
     answer:
-      'Gold and Platinum members can bring guests for a small daily fee. We also offer guest passes and trial memberships for friends and family who want to experience MituGym before joining.',
+      'Gold and Platinum members can bring guests for a small daily fee. We also offer guest passes and trial memberships for friends and family who want to experience FitPro Center before joining.',
     icon: '👫',
   },
 ];
@@ -128,14 +128,14 @@ export const trainingFAQs: FAQItem[] = [
 export const popularFAQs: FAQItem[] = [
   {
     id: 16,
-    question: 'When does MituGym open?',
+    question: 'When does FitPro Center open?',
     answer:
       'Grand opening is Saturday, July 12th, 2025 at 10:00 AM! Join us for special opening day events and founding member discounts.',
     icon: '🎉',
   },
   {
     id: 17,
-    question: 'What makes MituGym different?',
+    question: 'What makes FitPro Center different?',
     answer:
       'Premium equipment, expert trainers, 1000m² of modern facilities, flexible membership options, and a supportive community focused on helping you achieve extraordinary results.',
     icon: '⭐',

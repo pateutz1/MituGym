@@ -106,6 +106,11 @@ const PlanCard: FC<PlanCardProps> = ({
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
+                    <title>
+                      {feature.enabled
+                        ? 'Feature included'
+                        : 'Feature not included'}
+                    </title>
                     <path
                       d="M5 13l4 4L19 7"
                       strokeLinecap="round"
@@ -159,6 +164,7 @@ const PlanCard: FC<PlanCardProps> = ({
                     viewBox="0 0 24 24"
                     whileHover={{ x: 5 }}
                   >
+                    <title>Arrow right</title>
                     <path
                       d="M17 8l4 4m0 0l-4 4m4-4H3"
                       strokeLinecap="round"
