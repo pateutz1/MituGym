@@ -6,7 +6,7 @@ import {
   useMotionValue,
   useSpring,
   useTransform,
-} from 'framer-motion';
+} from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
 // Physics-based spring animations
@@ -91,7 +91,8 @@ export function MouseTracker() {
 
   useEffect(() => {
     const unsubscribe = springX.on('change', (latest: number) => {
-      const vel = Math.abs(latest - springX.getPrevious());
+      const previous = springX.getPrevious();
+      const vel = Math.abs(latest - (previous ?? 0));
       setVelocity(vel);
     });
     return unsubscribe;

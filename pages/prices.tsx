@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import PlanCard from '../components/plan-card';
 import AnimatedGradientText from '../components/ui/animated-gradient-text';
 import { Counter } from '../components/ui/counter';
