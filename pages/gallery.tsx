@@ -257,8 +257,8 @@ export default function Gallery() {
         </section>
 
         {/* Category Filter */}
-        <section className="py-12">
-          <div className="container mx-auto px-4">
+        <section className="pt-1 pb-1">
+          <div className="container mx-auto px-1">
             <motion.div
               animate={{ opacity: 1, y: 0 }}
               className="mb-16 flex flex-wrap justify-center gap-4"

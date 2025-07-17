@@ -136,7 +136,7 @@ export default function About() {
         />
 
         {/* Stats Section - Premium Design */}
-        <section className="relative overflow-hidden py-32">
+        <section className="relative overflow-hidden pt-5 pb-5">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-blue-500/5 to-purple-500/5" />
           <div className="absolute top-1/4 left-1/4 h-96 w-96 rounded-full bg-primary/10 opacity-30 blur-3xl" />
           <div className="absolute right-1/4 bottom-1/4 h-80 w-80 rounded-full bg-blue-500/10 opacity-30 blur-3xl" />
@@ -236,7 +236,7 @@ export default function About() {
         </section>
 
         {/* Story Section with 3D Cards */}
-        <section className="relative py-20">
+        <section className="relative pt-5 pb-5">
           <div className="container mx-auto px-4">
             <motion.div
               className="mb-16 text-center"
@@ -308,7 +308,7 @@ export default function About() {
         </section>
 
         {/* Values Bento Grid */}
-        <section className="relative overflow-hidden py-20">
+        <section className="relative overflow-hidden pt-5 pb-5">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5" />
 
           <div className="container relative z-10 mx-auto px-4">
@@ -365,7 +365,7 @@ export default function About() {
         </section>
 
         {/* Achievements Section */}
-        <section className="relative py-20">
+        <section className="relative pt-10 pb-10">
           <div className="container mx-auto px-4">
             <motion.div
               className="mb-16 text-center"
@@ -415,7 +415,7 @@ export default function About() {
         </section>
 
         {/* FAQ Section */}
-        <section className="relative py-20">
+        <section className="relative pt-10 pb-10">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -432,14 +432,21 @@ export default function About() {
           </div>
         </section>
 
-        {/* Call to Action with Meteors */}
-        <section className="relative overflow-hidden py-20">
-          <Meteors className="opacity-60" number={25} />
+        {/* Call to Action with Floating Orbs */}
+        <section className="relative overflow-hidden pb-10 pt-0">
+          {/* Floating Animated Orbs Background */}
+          <div className="absolute inset-0">
+            <div className="absolute top-1/4 left-1/4 h-32 w-32 animate-pulse rounded-full bg-primary/20 blur-2xl" />
+            <div className="absolute top-1/3 right-1/3 h-24 w-24 animate-bounce rounded-full bg-emerald-400/20 blur-xl" style={{ animationDelay: '1s', animationDuration: '3s' }} />
+            <div className="absolute bottom-1/4 left-1/3 h-40 w-40 animate-ping rounded-full bg-blue-500/15 blur-3xl" style={{ animationDelay: '2s', animationDuration: '4s' }} />
+            <div className="absolute top-1/2 right-1/4 h-28 w-28 animate-pulse rounded-full bg-purple-500/20 blur-2xl" style={{ animationDelay: '0.5s' }} />
+            <div className="absolute bottom-1/3 right-1/2 h-20 w-20 animate-bounce rounded-full bg-cyan-400/25 blur-xl" style={{ animationDelay: '1.5s', animationDuration: '3.5s' }} />
+          </div>
           <BackgroundBeams beamCount={3} className="opacity-30" />
 
           <div className="container relative z-10 mx-auto px-4">
             <motion.div
-              className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-primary/20 to-blue-500/10 p-12 text-center backdrop-blur-sm lg:p-16"
+              className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-primary/20 to-blue-500/10 p-8 text-center backdrop-blur-sm lg:p-12"
               initial={{ opacity: 0, y: 30 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
