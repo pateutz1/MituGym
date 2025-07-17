@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'motion/react';
 import PlanCard from '../components/plan-card';
 import AnimatedGradientText from '../components/ui/animated-gradient-text';
@@ -7,6 +8,7 @@ import FaqSection from '../components/ui/faq';
 import FloatingCards from '../components/ui/floating-cards';
 import Meteors from '../components/ui/meteors';
 import ScrollProgress from '../components/ui/scroll-progress';
+import { HeroGeometric } from '../components/ui/shape-landing-hero';
 import TestimonialsMarquee from '../components/ui/testimonials-marquee';
 import { TypingText } from '../components/ui/typing-text';
 import { membershipFAQs } from '../data/faqData';
@@ -195,58 +197,17 @@ export default function Prices() {
   return (
     <>
       <ScrollProgress />
-      <div className="relative min-h-screen overflow-hidden pt-24 pb-16">
-        {/* Background meteors effect */}
-        <Meteors className="opacity-30" number={15} />
+      <div className="relative min-h-screen overflow-hidden">
+        {/* Hero Section with Geometric Shapes */}
+        <HeroGeometric 
+          badge="💰 Membership Plans"
+          title1="CHOOSE YOUR"
+          title2="FITNESS JOURNEY"
+          description="Discover our flexible membership plans designed to fit every fitness goal, lifestyle, and budget. Find the perfect plan for your unique needs and long-term success."
+        />
 
-        <div className="container mx-auto px-4">
-          <motion.div
-            animate="visible"
-            className="mb-16 text-center"
-            initial="hidden"
-            transition={
-              prefersReducedMotion ? { duration: 0.01 } : { duration: 0.6 }
-            }
-            variants={headerVariants}
-          >
-            <motion.h1
-              animate={{ opacity: 1, scale: 1 }}
-              className="mb-8 font-bold font-display text-4xl text-white md:text-5xl"
-              initial={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <AnimatedGradientText
-                animationDuration={2}
-                className="text-4xl md:text-5xl"
-                variant="glow"
-              >
-                {t('navigation.prices')}
-              </AnimatedGradientText>
-            </motion.h1>
-            <div className="mx-auto max-w-2xl text-white/70 text-xl">
-              <p className="mb-4">
-                Discover our flexible membership plans designed to fit
-              </p>
-              <TypingText
-                className="font-semibold text-emerald-400"
-                cursor="_"
-                deletingSpeed={25}
-                pauseDuration={2000}
-                startDelay={1500}
-                texts={[
-                  'every fitness goal.',
-                  'your busy lifestyle.',
-                  'any budget range.',
-                  'personal preferences.',
-                  'long-term success.',
-                  'your unique needs.',
-                ]}
-                typingSpeed={50}
-              />
-            </div>
-          </motion.div>
-
-          {/* Premium Features Section */}
+        {/* Premium Features Section */}
+        <div className="container mx-auto px-4 py-16">
           <motion.section
             animate={{ opacity: 1, y: 0 }}
             className="mb-20"

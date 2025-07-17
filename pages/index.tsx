@@ -964,14 +964,14 @@ export default function Home() {
 
                     {/* Floating Stats Cards */}
                     <motion.div
-                      className="absolute top-6 right-6 rounded-2xl border border-white/20 bg-white/10 p-4 text-center backdrop-blur-sm"
+                      className="absolute top-6 right-6 rounded-2xl border border-white/15 bg-black/40 p-4 text-center backdrop-blur-sm"
                       initial={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.6, delay: 0.8 }}
                       viewport={{ once: true }}
                       whileHover={{ scale: 1.05 }}
                       whileInView={{ opacity: 1, y: 0 }}
                     >
-                      <div className="font-bold text-2xl sm:text-3xl">
+                      <div className="font-bold text-2xl sm:text-3xl text-white">
                         <Counter
                           className="text-2xl sm:text-3xl"
                           delay={1200}
@@ -980,13 +980,13 @@ export default function Home() {
                           target={500}
                         />
                       </div>
-                      <div className="text-sm text-white/80">
+                      <div className="text-sm text-white">
                         Training Space
                       </div>
                     </motion.div>
 
                     <motion.div
-                      className="absolute bottom-6 left-6 rounded-2xl border border-white/20 bg-white/10 p-4 text-center backdrop-blur-sm"
+                      className="absolute bottom-6 left-6 rounded-2xl border border-white/15 bg-black/40 p-4 text-center backdrop-blur-sm"
                       initial={{ opacity: 0, y: 20 }}
                       transition={{ duration: 0.6, delay: 1 }}
                       viewport={{ once: true }}
@@ -1098,41 +1098,158 @@ export default function Home() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
-                  {/* Floating amenity indicators */}
+                  {/* Enhanced Floating amenity indicators */}
                   <motion.div
-                    className="absolute top-6 left-6 rounded-2xl border border-white/20 bg-white/10 p-3 text-center backdrop-blur-sm"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.6, delay: 0.8 }}
+                    className="group absolute top-6 left-6 overflow-hidden rounded-2xl border border-white/20 bg-gradient-to-br from-black/60 to-black/40 p-3 text-center shadow-xl shadow-black/30 backdrop-blur-md"
+                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                    transition={{ duration: 0.6, delay: 0.8, type: 'spring', stiffness: 100 }}
                     viewport={{ once: true }}
-                    whileHover={{ scale: 1.05 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
+                    whileHover={{ scale: 1.05, rotateX: 5, rotateY: 2 }}
+                    whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                    whileTap={{ scale: 0.95 }}
+                    style={{ transformStyle: 'preserve-3d' }}
                   >
-                    <div className="font-bold text-lg text-primary">24/7</div>
-                    <div className="text-white/80 text-xs">Access</div>
+                    {/* Animated glow effect */}
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl bg-cyan-400/20 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                    />
+                    
+                    {/* Content with icon */}
+                    <div className="relative z-10 flex items-center justify-center space-x-2">
+                      <motion.div
+                        className="text-cyan-400 opacity-90"
+                        whileHover={{ rotate: [0, 10, -10, 0] }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <title>24/7 Access</title>
+                          <path d="M12 6v6l4 2" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} />
+                          <circle cx="12" cy="12" r="9" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} />
+                        </svg>
+                      </motion.div>
+                      <div>
+                        <motion.div 
+                          className="font-bold text-lg leading-none text-cyan-400"
+                          whileHover={{ scale: 1.1 }}
+                        >
+                          24/7
+                        </motion.div>
+                        <motion.div 
+                          className="text-xs leading-none text-white/90"
+                          whileHover={{ y: -1 }}
+                        >
+                          Access
+                        </motion.div>
+                      </div>
+                    </div>
+                    
+                    {/* Shine effect */}
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                      initial={{ x: '-100%' }}
+                      whileHover={{ x: '100%' }}
+                      transition={{ duration: 0.8 }}
+                    />
                   </motion.div>
 
                   <motion.div
-                    className="absolute top-6 right-6 rounded-2xl border border-white/20 bg-white/10 p-3 text-center backdrop-blur-sm"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.6, delay: 1 }}
+                    className="group absolute top-6 right-6 overflow-hidden rounded-2xl border border-white/20 bg-gradient-to-br from-black/60 to-black/40 p-3 text-center shadow-xl shadow-black/30 backdrop-blur-md"
+                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                    transition={{ duration: 0.6, delay: 1.0, type: 'spring', stiffness: 100 }}
                     viewport={{ once: true }}
-                    whileHover={{ scale: 1.05 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
+                    whileHover={{ scale: 1.05, rotateX: 5, rotateY: -2 }}
+                    whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                    whileTap={{ scale: 0.95 }}
+                    style={{ transformStyle: 'preserve-3d' }}
                   >
-                    <div className="font-bold text-lg text-primary">A/C</div>
-                    <div className="text-white/80 text-xs">Climate</div>
+                    {/* Animated glow effect */}
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl bg-blue-400/20 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+                    />
+                    
+                    {/* Content without icon */}
+                    <div className="relative z-10">
+                      <motion.div 
+                        className="font-bold text-lg leading-none text-blue-400"
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        A/C
+                      </motion.div>
+                      <motion.div 
+                        className="text-xs leading-none text-white/90"
+                        whileHover={{ y: -1 }}
+                      >
+                        Climate
+                      </motion.div>
+                    </div>
+                    
+                    {/* Shine effect */}
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                      initial={{ x: '-100%' }}
+                      whileHover={{ x: '100%' }}
+                      transition={{ duration: 0.8 }}
+                    />
                   </motion.div>
 
                   <motion.div
-                    className="absolute bottom-6 left-6 rounded-2xl border border-white/20 bg-white/10 p-3 text-center backdrop-blur-sm"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.6, delay: 1.2 }}
+                    className="group absolute bottom-6 left-6 overflow-hidden rounded-2xl border border-white/25 bg-gradient-to-br from-black/70 to-black/50 p-3 text-center shadow-xl shadow-black/30 backdrop-blur-md"
+                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                    transition={{ duration: 0.6, delay: 1.2, type: 'spring', stiffness: 100 }}
                     viewport={{ once: true }}
-                    whileHover={{ scale: 1.05 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
+                    whileHover={{ scale: 1.05, rotateX: -5, rotateY: 2 }}
+                    whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                    whileTap={{ scale: 0.95 }}
+                    style={{ transformStyle: 'preserve-3d' }}
                   >
-                    <div className="font-bold text-lg text-primary">FREE</div>
-                    <div className="text-white/80 text-xs">Parking</div>
+                    {/* Animated glow effect */}
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl bg-emerald-400/20 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+                    />
+                    
+                    {/* Content with icon */}
+                    <div className="relative z-10 flex items-center justify-center space-x-2">
+                      <motion.div
+                        className="text-emerald-400 opacity-90"
+                        whileHover={{ rotate: [0, 15, -15, 0] }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <title>Free Parking</title>
+                          <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9L18.4 10c-.4-.6-1-1-1.7-1h-8.6c-.7 0-1.3.4-1.7 1L4.3 11.1C3.7 11.3 3 12.1 3 13v3c0 .6.4 1 1 1h2" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} />
+                          <circle cx="7" cy="17" r="2" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} />
+                          <circle cx="17" cy="17" r="2" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} />
+                        </svg>
+                      </motion.div>
+                      <div>
+                        <motion.div 
+                          className="font-bold text-lg leading-none text-emerald-400"
+                          whileHover={{ scale: 1.1 }}
+                        >
+                          FREE
+                        </motion.div>
+                        <motion.div 
+                          className="text-xs leading-none text-white/90"
+                          whileHover={{ y: -1 }}
+                        >
+                          Parking
+                        </motion.div>
+                      </div>
+                    </div>
+                    
+                    {/* Shine effect */}
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                      initial={{ x: '-100%' }}
+                      whileHover={{ x: '100%' }}
+                      transition={{ duration: 0.8 }}
+                    />
                   </motion.div>
                 </div>
 

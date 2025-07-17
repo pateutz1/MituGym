@@ -6,6 +6,7 @@ import AnimatedGradientText from '@/components/ui/animated-gradient-text';
 import BackgroundBeams from '@/components/ui/background-beams';
 import Card3D from '@/components/ui/card-3d';
 import FaqSection from '@/components/ui/faq';
+import { HeroGeometric } from '@/components/ui/shape-landing-hero';
 import MagneticButton from '@/components/ui/magnetic-button';
 import Meteors from '@/components/ui/meteors';
 import NumberTicker from '@/components/ui/number-ticker';
@@ -18,15 +19,7 @@ import { createAccessibleVariants } from '@/hooks/useMotionConfig';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useTranslation } from '@/hooks/useTranslation';
 
-// Define stable arrays outside component to prevent recreation
-const TYPING_TEXTS = [
-  'every member becomes family.',
-  'dreams transform into reality.',
-  'strength is built every day.',
-  'wellness becomes lifestyle.',
-  'champions are forged.',
-  'excellence is our standard.',
-];
+
 
 export default function About() {
   const { t } = useTranslation();
@@ -134,82 +127,13 @@ export default function About() {
     <>
       <ScrollProgress />
       <div className="relative min-h-screen" ref={containerRef}>
-        {/* Hero Section with Background Beams */}
-        <section className="relative flex min-h-screen items-center justify-center overflow-hidden pt-20">
-          <BackgroundBeams beamCount={5} className="opacity-60" />
-          <Meteors className="opacity-40" number={15} />
-
-          <div className="container relative z-10 mx-auto px-4">
-            <motion.div
-              animate="visible"
-              className="text-center"
-              initial="hidden"
-              transition={
-                prefersReducedMotion ? { duration: 0.01 } : { duration: 0.8 }
-              }
-              variants={headerVariants}
-            >
-              <motion.div
-                animate={{ opacity: 1, scale: 1 }}
-                className="mb-8 inline-block rounded-full border border-primary/30 bg-primary/10 px-6 py-3"
-                initial={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                <span className="font-semibold text-primary">💪 Our Story</span>
-              </motion.div>
-
-              <h1 className="mb-8 font-bold font-display text-5xl text-white md:text-7xl lg:text-8xl">
-                ABOUT{' '}
-                <AnimatedGradientText
-                  animationDuration={3}
-                  className="inline-block"
-                  gradientFrom="from-[#1e9b71]"
-                  gradientTo="to-[#8b5cf6]"
-                  gradientVia="via-[#3b82f6]"
-                  variant="shimmer"
-                >
-                  FITPRO CENTER
-                </AnimatedGradientText>
-              </h1>
-
-              <div className="mx-auto mb-12 max-w-4xl text-white/80 text-xl md:text-2xl">
-                <p className="mb-4">
-                  Where fitness excellence meets premium experience and
-                </p>
-                <TypingText
-                  className="font-bold text-primary"
-                  cursor="▌"
-                  deletingSpeed={30}
-                  pauseDuration={3000}
-                  startDelay={2000}
-                  texts={TYPING_TEXTS}
-                  typingSpeed={60}
-                />
-              </div>
-
-              <motion.div
-                animate={{ opacity: 1, y: 0 }}
-                className="flex flex-col items-center justify-center gap-6 sm:flex-row"
-                initial={{ opacity: 0, y: 30 }}
-                transition={{ duration: 0.6, delay: 1 }}
-              >
-                <Link href="/contact">
-                  <ShinyButton className="px-8 py-4 text-lg" size="lg">
-                    Start Your Journey
-                  </ShinyButton>
-                </Link>
-                <Link href="/prices">
-                  <MagneticButton
-                    className="border-2 border-white/30 bg-transparent text-white transition-all duration-300 hover:bg-white hover:text-black"
-                    strength={0.3}
-                  >
-                    View Membership Plans
-                  </MagneticButton>
-                </Link>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
+        {/* Hero Section with Geometric Shapes */}
+        <HeroGeometric 
+          badge="💪 Our Story"
+          title1="ABOUT"
+          title2="FITPRO CENTER"
+          description="Where fitness excellence meets premium experience and every member becomes family. We transform dreams into reality through strength, wellness, and championship mindset."
+        />
 
         {/* Stats Section - Premium Design */}
         <section className="relative overflow-hidden py-32">
