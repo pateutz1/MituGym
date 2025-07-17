@@ -215,7 +215,7 @@ export default function Prices() {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <div className="mb-12 text-center">
-              <h2 className="mb-4 font-bold text-2xl text-white md:text-3xl">
+              <h2 className="mb-4 font-bold text-lg text-white sm:text-xl md:text-2xl lg:text-3xl">
                 Why Choose{' '}
                 <AnimatedGradientText variant="shimmer">
                   FitPro Center
@@ -238,7 +238,7 @@ export default function Prices() {
               initial={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              <h2 className="mb-4 font-bold text-3xl text-white md:text-4xl">
+              <h2 className="mb-4 font-bold text-xl text-white sm:text-2xl md:text-3xl lg:text-4xl">
                 Choose Your{' '}
                 <AnimatedGradientText variant="wave">
                   Perfect Plan
@@ -249,7 +249,7 @@ export default function Prices() {
                 journey
               </p>
             </motion.div>
-            <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3">
+            <div className="mx-auto grid max-w-6xl gap-6 sm:gap-8 lg:grid-cols-3">
               {pricingPlans.map((plan, index) => (
                 <PlanCard
                   delay={index * 0.1}
@@ -273,7 +273,7 @@ export default function Prices() {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <div className="mb-12 text-center">
-              <h2 className="mb-4 font-bold text-3xl text-white md:text-4xl">
+              <h2 className="mb-4 font-bold text-xl text-white sm:text-2xl md:text-3xl lg:text-4xl">
                 What Our{' '}
                 <AnimatedGradientText variant="pulse">
                   Members Say

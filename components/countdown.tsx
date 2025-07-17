@@ -205,7 +205,21 @@ const FlipCard: React.FC<FlipCardProps> = ({ value, label, shouldFlip }) => {
           }
         }
 
-        @media (min-width: 1024px) {
+        @media (min-width: 1024px) and (max-width: 1279px) {
+          .flip-clock {
+            width: 110px;
+            height: 130px;
+          }
+          
+          .static-top span,
+          .static-bottom span,
+          .flip-top span,
+          .flip-bottom span {
+            font-size: 3.25rem;
+          }
+        }
+
+        @media (min-width: 1280px) {
           .flip-clock {
             width: 120px;
             height: 140px;

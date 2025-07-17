@@ -30,7 +30,7 @@ export default function Contact() {
       <ScrollProgress />
       <div className="min-h-screen">
         {/* Hero Section */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-surface via-background to-surface pt-24 pb-16">
+        <section className="relative overflow-hidden bg-gradient-to-br from-surface via-background to-surface pt-32 pb-16 sm:pt-36 lg:pt-40">
           {/* Background Elements */}
           <div className="absolute inset-0 opacity-30">
             <div className="absolute top-20 left-10 h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
@@ -72,14 +72,14 @@ export default function Contact() {
                 </svg>
               </motion.div>
 
-              <h1 className="mb-6 font-bold font-display text-4xl text-white md:text-6xl">
+              <h1 className="mb-6 font-bold font-display text-2xl text-white sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
                 Let&apos;s Start Your
                 <span className="block bg-gradient-to-r from-primary to-emerald-400 bg-clip-text text-transparent">
                   Fitness Journey
                 </span>
               </h1>
 
-              <p className="mb-8 text-white/70 text-xl leading-relaxed md:text-2xl">
+              <p className="mb-8 text-white/70 text-base leading-relaxed sm:text-lg md:text-xl lg:text-2xl">
                 Ready to transform your life? Our expert team is here to guide
                 you every step of the way. Get personalized support, premium
                 facilities, and proven results.
@@ -96,7 +96,7 @@ export default function Contact() {
                 }
               >
                 <motion.a
-                  className="rounded-xl bg-gradient-to-r from-primary to-emerald-500 px-8 py-4 font-semibold text-white transition-all duration-300 hover:shadow-2xl hover:shadow-primary/25"
+                  className="rounded-xl bg-gradient-to-r from-primary to-emerald-500 px-6 py-3 font-semibold text-sm text-white transition-all duration-300 hover:shadow-2xl hover:shadow-primary/25 sm:px-8 sm:py-4 sm:text-base"
                   href="#contact-form"
                   whileHover={
                     prefersReducedMotion ? undefined : { scale: 1.05 }
@@ -106,7 +106,7 @@ export default function Contact() {
                   Start Your Journey
                 </motion.a>
                 <motion.a
-                  className="rounded-xl border border-primary px-8 py-4 font-semibold text-primary transition-all duration-300 hover:bg-primary hover:text-white"
+                  className="rounded-xl border border-primary px-6 py-3 font-semibold text-primary text-sm transition-all duration-300 hover:bg-primary hover:text-white sm:px-8 sm:py-4 sm:text-base"
                   href="tel:+40211234567"
                   whileHover={
                     prefersReducedMotion ? undefined : { scale: 1.05 }
@@ -136,10 +136,10 @@ export default function Contact() {
               viewport={{ once: true, amount: 0.3 }}
               whileInView="visible"
             >
-              <h2 className="mb-4 font-bold text-3xl text-white md:text-4xl">
+              <h2 className="mb-4 font-bold text-xl text-white sm:text-2xl md:text-3xl lg:text-4xl">
                 How to Reach Us
               </h2>
-              <p className="mx-auto max-w-2xl text-lg text-white/70">
+              <p className="mx-auto max-w-2xl text-sm text-white/70 sm:text-base md:text-lg">
                 Choose the best way to connect with our team. We&apos;re here to
                 answer your questions and help you achieve your fitness goals.
               </p>
@@ -213,11 +213,11 @@ export default function Contact() {
               viewport={{ once: true, amount: 0.3 }}
               whileInView="visible"
             >
-              <h2 className="mb-8 font-bold text-3xl text-white md:text-4xl">
+              <h2 className="mb-8 font-bold text-xl text-white sm:text-2xl md:text-3xl lg:text-4xl">
                 Join the FitPro Center Community
               </h2>
 
-              <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-3">
+              <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8">
                 <motion.div
                   className="text-center"
                   transition={{ duration: 0.3 }}
@@ -225,10 +225,10 @@ export default function Contact() {
                     prefersReducedMotion ? undefined : { scale: 1.05 }
                   }
                 >
-                  <div className="mb-2 font-bold text-4xl text-primary">
+                  <div className="mb-2 font-bold text-3xl text-primary sm:text-4xl">
                     500+
                   </div>
-                  <p className="text-white/70">Happy Members</p>
+                  <p className="text-sm text-white/70 sm:text-base">Happy Members</p>
                 </motion.div>
                 <motion.div
                   className="text-center"
@@ -237,10 +237,10 @@ export default function Contact() {
                     prefersReducedMotion ? undefined : { scale: 1.05 }
                   }
                 >
-                  <div className="mb-2 font-bold text-4xl text-emerald-400">
+                  <div className="mb-2 font-bold text-3xl text-emerald-400 sm:text-4xl">
                     50+
                   </div>
-                  <p className="text-white/70">Expert Trainers</p>
+                  <p className="text-sm text-white/70 sm:text-base">Expert Trainers</p>
                 </motion.div>
                 <motion.div
                   className="text-center"
@@ -249,10 +249,10 @@ export default function Contact() {
                     prefersReducedMotion ? undefined : { scale: 1.05 }
                   }
                 >
-                  <div className="mb-2 font-bold text-4xl text-blue-400">
+                  <div className="mb-2 font-bold text-3xl text-blue-400 sm:text-4xl">
                     24/7
                   </div>
-                  <p className="text-white/70">Premium Access</p>
+                  <p className="text-sm text-white/70 sm:text-base">Premium Access</p>
                 </motion.div>
               </div>
 
@@ -300,10 +300,10 @@ export default function Contact() {
               viewport={{ once: true, amount: 0.3 }}
               whileInView="visible"
             >
-              <h2 className="mb-6 font-bold text-3xl text-white md:text-5xl">
+              <h2 className="mb-6 font-bold text-xl text-white sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
                 Ready to Transform Your Life?
               </h2>
-              <p className="mb-8 text-white/70 text-xl">
+              <p className="mb-8 text-white/70 text-base sm:text-lg md:text-xl">
                 Don&apos;t wait another day to start your fitness journey. Our
                 team is ready to help you achieve incredible results.
               </p>
@@ -320,7 +320,7 @@ export default function Contact() {
                 whileInView={{ opacity: 1, y: 0 }}
               >
                 <motion.a
-                  className="rounded-xl bg-gradient-to-r from-primary to-emerald-500 px-8 py-4 font-semibold text-white transition-all duration-300 hover:shadow-2xl hover:shadow-primary/25"
+                  className="rounded-xl bg-gradient-to-r from-primary to-emerald-500 px-6 py-3 font-semibold text-sm text-white transition-all duration-300 hover:shadow-2xl hover:shadow-primary/25 sm:px-8 sm:py-4 sm:text-base"
                   href="#contact-form"
                   whileHover={
                     prefersReducedMotion ? undefined : { scale: 1.05 }
@@ -330,7 +330,7 @@ export default function Contact() {
                   Get Started Today
                 </motion.a>
                 <motion.a
-                  className="rounded-xl border border-white/20 px-8 py-4 font-semibold text-white transition-all duration-300 hover:bg-white/10"
+                  className="rounded-xl border border-white/20 px-6 py-3 font-semibold text-sm text-white transition-all duration-300 hover:bg-white/10 sm:px-8 sm:py-4 sm:text-base"
                   href="#location"
                   whileHover={
                     prefersReducedMotion ? undefined : { scale: 1.05 }

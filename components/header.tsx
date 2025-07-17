@@ -72,13 +72,13 @@ const Header = () => {
       {/* Desktop Navigation */}
       <motion.header
         animate={{ y: 0, opacity: 1 }}
-        className="fixed top-3 right-0 left-0 z-50 hidden md:block"
+        className="fixed top-3 right-0 left-0 z-50 hidden lg:block"
         initial={{ y: -100, opacity: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
-        <div className="container mx-auto max-w-[65%] px-4">
+        <div className="container mx-auto max-w-[90%] px-4 md:max-w-[85%] lg:max-w-[75%] xl:max-w-[65%]">
           <motion.div
-            className="nav-glass-effect relative w-full rounded-full px-8 py-2 shadow-2xl shadow-black/40 ring-1 ring-white/5"
+            className="nav-glass-effect relative w-full rounded-full px-4 py-2 shadow-2xl shadow-black/40 ring-1 ring-white/5 md:px-6 lg:px-8"
             transition={{ duration: 0.3 }}
             whileHover={{ scale: 1.01 }}
           >
@@ -105,14 +105,14 @@ const Header = () => {
                     <path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z" />
                   </svg>
                 </motion.div>
-                <span className="gradient-text font-bold font-display text-lg transition-transform duration-300 group-hover:scale-105">
+                <span className="gradient-text font-bold font-display text-sm transition-transform duration-300 group-hover:scale-105 md:text-base lg:text-lg">
                   FITPRO CENTER
                 </span>
               </Link>
 
               {/* Navigation Links + Language Switcher */}
-              <div className="flex items-center space-x-8">
-                <nav className="flex items-center space-x-8">
+              <div className="flex items-center space-x-3 md:space-x-4 lg:space-x-6 xl:space-x-8">
+                <nav className="flex items-center space-x-3 md:space-x-4 lg:space-x-6 xl:space-x-8">
                   {navItems.map((item, index) => (
                     <motion.div
                       animate={{ opacity: 1, y: 0 }}
@@ -121,7 +121,7 @@ const Header = () => {
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                     >
                       <Link
-                        className="group relative rounded-lg px-3 py-2 font-display font-medium text-gray-200 text-sm tracking-wide transition-all duration-300 hover:bg-white/10 hover:text-primary"
+                        className="group relative rounded-lg px-2 py-2 font-display font-medium text-gray-200 text-xs tracking-wide transition-all duration-300 hover:bg-white/10 hover:text-primary md:px-3 md:text-sm lg:text-sm"
                         href={item.href}
                       >
                         {item.label}
@@ -146,7 +146,7 @@ const Header = () => {
 
       <motion.header
         animate={{ y: 0, opacity: 1 }}
-        className="mobile-header fixed top-4 right-0 left-0 z-50 px-4 md:hidden"
+        className="mobile-header fixed top-4 right-0 left-0 z-50 px-4 lg:hidden"
         initial={{ y: -100, opacity: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
@@ -162,12 +162,12 @@ const Header = () => {
             {/* Logo */}
             <Link className="group flex items-center space-x-2.5" href="/">
               <motion.div
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-primary to-emerald-600 shadow-lg shadow-primary/30"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-primary to-emerald-600 shadow-lg shadow-primary/30 md:h-9 md:w-9"
                 transition={{ duration: 0.3 }}
                 whileHover={{ scale: 1.1, rotate: 5 }}
               >
                 <svg
-                  className="h-4 w-4 text-white drop-shadow-sm"
+                  className="h-4 w-4 text-white drop-shadow-sm md:h-5 md:w-5"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -175,7 +175,7 @@ const Header = () => {
                   <path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z" />
                 </svg>
               </motion.div>
-              <span className="gradient-text font-bold font-display text-base transition-transform duration-300 group-hover:scale-105">
+              <span className="gradient-text font-bold font-display text-base transition-transform duration-300 group-hover:scale-105 md:text-lg">
                 FITPRO CENTER
               </span>
             </Link>
@@ -183,7 +183,7 @@ const Header = () => {
             {/* Mobile menu button */}
             <motion.button
               aria-label="Toggle mobile menu"
-              className="touch-manipulation rounded-lg p-2 text-white transition-all duration-300 hover:bg-white/10 hover:text-primary"
+              className="touch-manipulation rounded-lg p-2 text-white transition-all duration-300 hover:bg-white/10 hover:text-primary md:p-3"
               onClick={(e) => {
                 e.stopPropagation();
                 setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -192,7 +192,7 @@ const Header = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <div className="flex h-5 w-5 flex-col items-center justify-center">
+              <div className="flex h-5 w-5 flex-col items-center justify-center md:h-6 md:w-6">
                 <motion.span
                   animate={{
                     rotate: isMobileMenuOpen ? 45 : 0,
@@ -240,7 +240,7 @@ const Header = () => {
                       transition={{ duration: 0.3, delay: index * 0.1 }}
                     >
                       <Link
-                        className="group relative block touch-manipulation rounded-lg px-3 py-2.5 font-display font-medium text-gray-200 text-sm tracking-wide transition-all duration-300 hover:bg-primary/10 hover:text-primary"
+                        className="group relative block touch-manipulation rounded-lg px-3 py-2.5 font-display font-medium text-gray-200 text-sm tracking-wide transition-all duration-300 hover:bg-primary/10 hover:text-primary md:px-4 md:py-3 md:text-base"
                         href={item.href}
                         onClick={(e) => {
                           // Ensure the click is properly handled
@@ -254,9 +254,11 @@ const Header = () => {
                       </Link>
                     </motion.div>
                   ))}
+                  
+                  {/* Centered Language Switcher */}
                   <motion.div
                     animate={{ opacity: 1 }}
-                    className="mt-2 border-white/10 border-t pt-2"
+                    className="mt-4 flex justify-center border-white/10 border-t pt-4"
                     initial={{ opacity: 0 }}
                     transition={{ duration: 0.3, delay: 0.6 }}
                   >
@@ -274,7 +276,7 @@ const Header = () => {
         {isMobileMenuOpen && (
           <motion.div
             animate={{ opacity: 1 }}
-            className="fixed inset-0 z-[45] bg-black/30 backdrop-blur-sm md:hidden"
+            className="fixed inset-0 z-[45] bg-black/30 backdrop-blur-sm lg:hidden"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
             onClick={() => setIsMobileMenuOpen(false)}

@@ -15,7 +15,7 @@ const translations: { [locale: string]: Translations } = {
   en: {
     navigation: {
       home: 'Home',
-      about: 'About Us',
+      about: 'About',
       prices: 'Prices',
       gallery: 'Gallery',
       contact: 'Contact',
@@ -107,7 +107,7 @@ const translations: { [locale: string]: Translations } = {
   ro: {
     navigation: {
       home: 'Acasă',
-      about: 'Despre Noi',
+      about: 'Despre',
       prices: 'Prețuri',
       gallery: 'Galerie',
       contact: 'Contact',

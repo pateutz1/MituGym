@@ -245,16 +245,16 @@ export default function About() {
               viewport={{ once: true }}
               whileInView={{ opacity: 1, y: 0 }}
             >
-              <h2 className="mb-6 font-bold font-display text-4xl text-white md:text-5xl">
+              <h2 className="mb-6 font-bold font-display text-xl text-white sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
                 OUR <span className="text-primary">STORY</span>
               </h2>
-              <p className="mx-auto max-w-3xl text-white/70 text-xl">
+              <p className="mx-auto max-w-3xl text-white/70 text-sm sm:text-base md:text-lg lg:text-xl">
                 From vision to reality - discover the journey that created
                 FitPro Center&apos;s premium fitness experience
               </p>
             </motion.div>
 
-            <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
+            <div className="mx-auto grid max-w-6xl gap-6 sm:gap-8 lg:grid-cols-2">
               <Card3D className="h-full">
                 <div className="h-full rounded-2xl border border-white/10 bg-gradient-to-br from-primary/20 to-blue-500/10 p-8 backdrop-blur-sm">
                   <div className="mb-6 flex items-center">

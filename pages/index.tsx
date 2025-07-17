@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Countdown from '@/components/countdown';
 import ParallaxCard from '@/components/parallax-card';
 import PlanCard from '@/components/plan-card';
-import SimpleTooltip from '@/components/simple-tooltip';
 import Tooltip from '@/components/tooltip';
 import AnimatedGradientText from '@/components/ui/animated-gradient-text';
 import Counter from '@/components/ui/counter';
@@ -312,11 +311,11 @@ export default function Home() {
           />
 
           <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
+            <div className="hero-grid grid items-center gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
               {/* Left Content */}
               <motion.div
                 animate="visible"
-                className="text-center lg:text-left"
+                className="hero-content text-center lg:text-left"
                 initial="hidden"
                 transition={
                   prefersReducedMotion
@@ -336,7 +335,7 @@ export default function Home() {
                   </span>
                 </motion.div>
 
-                <h1 className="mb-4 font-bold font-display text-3xl leading-tight sm:mb-6 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
+                <h1 className="hero-heading mb-4 font-bold font-display text-2xl leading-tight sm:mb-6 sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl 2xl:text-5xl">
                   <span className="text-white">FITNESS IS NOT A</span>
                   <br />
                   <span className="text-white">DESTINATION IT</span>
@@ -356,7 +355,7 @@ export default function Home() {
 
                 <motion.div
                   animate={{ opacity: 1, y: 0 }}
-                  className="mx-auto mb-6 max-w-xl text-base text-white/70 leading-relaxed sm:mb-8 sm:text-lg lg:mx-0 lg:text-xl"
+                  className="mx-auto mb-6 max-w-xl text-sm text-white/70 leading-relaxed sm:mb-8 sm:text-base md:text-lg lg:mx-0 lg:text-base xl:text-lg"
                   initial={{ opacity: 0, y: 30 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
                 >
@@ -385,21 +384,22 @@ export default function Home() {
                 {/* Stats Row */}
                 <motion.div
                   animate={{ opacity: 1, y: 0 }}
-                  className="mb-6 grid grid-cols-2 gap-4 sm:mb-8 sm:gap-6 md:grid-cols-4"
+                  className="hero-stats mb-6 grid grid-cols-2 gap-3 sm:mb-8 sm:gap-4 md:gap-6 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4"
                   initial={{ opacity: 0, y: 30 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
                 >
                   {stats.map((stat, index) => (
-                    <SimpleTooltip
+                    <Tooltip
                       className="cursor-help"
                       content={stat.tooltip}
                       key={index}
+                      placement="top"
                     >
                       <div className="text-center transition-transform duration-200 hover:scale-105 lg:text-left">
-                        <div className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl">
+                        <div className="font-bold text-base sm:text-lg md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl">
                           {stat.isCounter ? (
                             <Counter
-                              className="text-lg sm:text-xl md:text-2xl lg:text-3xl"
+                              className="text-base sm:text-lg md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl"
                               delay={500 + index * 100}
                               duration={2000 + index * 200}
                               suffix={stat.suffix || ''}
@@ -417,19 +417,19 @@ export default function Home() {
                           {stat.label}
                         </div>
                       </div>
-                    </SimpleTooltip>
+                    </Tooltip>
                   ))}
                 </motion.div>
 
                 <motion.div
                   animate={{ opacity: 1, y: 0 }}
-                  className="mb-8 flex flex-col gap-3 sm:mb-12 sm:flex-row sm:gap-4"
+                  className="hero-buttons mb-8 flex flex-col gap-3 sm:mb-12 sm:flex-row sm:gap-4 lg:flex-col lg:gap-3 xl:flex-row xl:gap-4"
                   initial={{ opacity: 0, y: 30 }}
                   transition={{ duration: 0.8, delay: 0.5 }}
                 >
                   <Link href="/contact">
                     <MagneticButton
-                      className="w-full px-8 py-4 text-base sm:w-auto sm:text-lg"
+                      className="w-full px-6 py-3 text-sm sm:w-auto sm:px-8 sm:py-4 sm:text-base md:text-lg lg:w-full lg:px-6 lg:py-3 lg:text-base xl:w-auto xl:px-8 xl:py-4 xl:text-lg"
                       strength={0.4}
                     >
                       Get Started Today
@@ -437,7 +437,7 @@ export default function Home() {
                   </Link>
                   <Link href="/about">
                     <MagneticButton
-                      className="w-full border-2 border-primary bg-transparent px-8 py-4 text-base text-primary hover:bg-primary hover:text-white sm:w-auto sm:text-lg"
+                      className="w-full border-2 border-primary bg-transparent px-6 py-3 text-sm text-primary hover:bg-primary hover:text-white sm:w-auto sm:px-8 sm:py-4 sm:text-base md:text-lg lg:w-full lg:px-6 lg:py-3 lg:text-base xl:w-auto xl:px-8 xl:py-4 xl:text-lg"
                       strength={0.3}
                     >
                       Watch Demo
@@ -451,7 +451,7 @@ export default function Home() {
                   transition={{ duration: 0.8, delay: 0.6 }}
                 >
                   <div className="mb-6 text-center sm:mb-8">
-                    <h3 className="mb-4 font-bold text-lg text-white uppercase tracking-[0.15em] sm:text-xl md:text-2xl">
+                    <h3 className="mb-4 font-bold text-base text-white uppercase tracking-[0.15em] sm:text-lg md:text-xl lg:text-lg xl:text-xl 2xl:text-2xl">
                       {t('hero.countdown.title')}
                     </h3>
                   </div>
@@ -468,13 +468,13 @@ export default function Home() {
               {/* Right Content - Hero Image */}
               <motion.div
                 animate={{ opacity: 1, x: 0 }}
-                className="relative order-first lg:order-last"
+                className="hero-image-container relative order-first lg:order-last"
                 initial={{ opacity: 0, x: 50 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
                 <div className="relative text-center">
                   <div
-                    className="parallax-element relative mx-auto h-96 w-96 sm:h-[800px] sm:w-[800px] lg:h-[1000px] lg:w-[1000px]"
+                    className="parallax-element relative mx-auto h-80 w-80 sm:h-96 sm:w-96 md:h-[500px] md:w-[500px] lg:h-[450px] lg:w-[450px] xl:h-[750px] xl:w-[750px] 2xl:h-[1000px] 2xl:w-[1000px]"
                     ref={imageParallax.ref}
                     style={{ transform: imageParallax.transform }}
                   >
@@ -482,7 +482,7 @@ export default function Home() {
                       alt="Strength Training"
                       className="object-contain opacity-95 drop-shadow-2xl transition-opacity duration-300 hover:opacity-100"
                       fill
-                      sizes="(max-width: 768px) 384px, (max-width: 1024px) 800px, 1000px"
+                      sizes="(max-width: 640px) 320px, (max-width: 768px) 384px, (max-width: 1024px) 450px, (max-width: 1280px) 750px, 1000px"
                       src="/images/fitness-activity.png"
                     />
                   </div>
@@ -502,10 +502,10 @@ export default function Home() {
               viewport={{ once: true }}
               whileInView={{ opacity: 1, y: 0 }}
             >
-              <span className="font-semibold text-primary text-sm sm:text-base lg:text-lg">
+              <span className="font-semibold text-primary text-xs sm:text-sm md:text-base lg:text-lg">
                 OUR PROGRAMS
               </span>
-              <h2 className="mt-2 mb-6 font-bold font-display text-2xl text-white sm:text-3xl md:text-4xl lg:text-5xl">
+              <h2 className="mt-2 mb-6 font-bold font-display text-xl text-white sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
                 BUILD YOUR{' '}
                 <AnimatedGradientText
                   animationDuration={3}
@@ -518,7 +518,7 @@ export default function Home() {
                   BEST BODY
                 </AnimatedGradientText>
               </h2>
-              <div className="mx-auto max-w-2xl text-base text-white/70 sm:text-lg">
+              <div className="mx-auto max-w-2xl text-sm text-white/70 sm:text-base md:text-lg">
                 <p className="mb-2">
                   Comprehensive fitness programs designed to help you
                 </p>
@@ -562,7 +562,7 @@ export default function Home() {
               </motion.div>
 
               {/* Parallax Cards Grid - Positioned to work with rope man */}
-              <div className="relative z-10 grid max-w-5xl gap-6 sm:gap-8 md:grid-cols-2 lg:ml-64 lg:grid-cols-3 xl:ml-80">
+              <div className="relative z-10 grid max-w-5xl gap-4 sm:gap-6 md:gap-8 md:grid-cols-2 lg:ml-64 lg:grid-cols-3 xl:ml-80">
                 <ParallaxCard
                   delay={0}
                   description="Professional strength training designed to build lean muscle mass and increase power through progressive overload."
@@ -664,7 +664,7 @@ export default function Home() {
                 </span>
               </motion.div>
 
-              <h2 className="mb-6 font-bold font-display text-3xl text-white sm:text-4xl md:text-5xl lg:text-6xl">
+              <h2 className="mb-6 font-bold font-display text-xl text-white sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl">
                 EXPERIENCE THE{' '}
                 <AnimatedGradientText
                   animationDuration={4}
@@ -677,7 +677,7 @@ export default function Home() {
                   DIFFERENCE
                 </AnimatedGradientText>
               </h2>
-              <p className="mx-auto max-w-3xl text-base text-white/70 leading-relaxed sm:text-lg lg:text-xl">
+              <p className="mx-auto max-w-3xl text-sm text-white/70 leading-relaxed sm:text-base md:text-lg lg:text-xl">
                 Discover what sets us apart with premium facilities, expert
                 guidance, and a community dedicated to helping you achieve
                 extraordinary results.
@@ -685,10 +685,10 @@ export default function Home() {
             </motion.div>
 
             {/* Main Content Grid */}
-            <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            <div className="grid items-center gap-8 sm:gap-10 md:gap-12 lg:grid-cols-2 lg:gap-16">
               {/* Features Grid */}
               <motion.div
-                className="grid gap-6"
+                className="grid gap-4 sm:gap-5 md:gap-6"
                 initial={{ opacity: 0, x: -50 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
@@ -742,10 +742,10 @@ export default function Home() {
                       </div>
                     </motion.div>
                     <div className="flex-1">
-                      <h3 className="mb-2 font-bold text-white text-xl transition-colors duration-300 group-hover:text-emerald-400">
+                      <h3 className="mb-2 font-bold text-white text-lg sm:text-xl transition-colors duration-300 group-hover:text-emerald-400">
                         Elite Training Programs
                       </h3>
-                      <p className="text-white/70 leading-relaxed">
+                      <p className="text-sm text-white/70 leading-relaxed sm:text-base">
                         Scientifically designed workouts that adapt to your
                         fitness level, ensuring optimal progress and sustainable
                         results with our certified elite trainers.
@@ -802,10 +802,10 @@ export default function Home() {
                       </div>
                     </motion.div>
                     <div className="flex-1">
-                      <h3 className="mb-2 font-bold text-white text-xl transition-colors duration-300 group-hover:text-blue-400">
+                      <h3 className="mb-2 font-bold text-white text-lg sm:text-xl transition-colors duration-300 group-hover:text-blue-400">
                         Modern Facilities
                       </h3>
-                      <p className="text-white/70 leading-relaxed">
+                      <p className="text-sm text-white/70 leading-relaxed sm:text-base">
                         Brand new, spacious facilities with premium amenities
                         including luxurious locker rooms, private changing
                         areas, and refreshing shower facilities for your
@@ -863,10 +863,10 @@ export default function Home() {
                       </div>
                     </motion.div>
                     <div className="flex-1">
-                      <h3 className="mb-2 font-bold text-white text-xl transition-colors duration-300 group-hover:text-purple-400">
+                      <h3 className="mb-2 font-bold text-white text-lg sm:text-xl transition-colors duration-300 group-hover:text-purple-400">
                         Premium Equipment
                       </h3>
-                      <p className="text-white/70 leading-relaxed">
+                      <p className="text-sm text-white/70 leading-relaxed sm:text-base">
                         Latest generation fitness technology and
                         commercial-grade equipment from top brands, meticulously
                         maintained for optimal performance and safety.
@@ -923,10 +923,10 @@ export default function Home() {
                       </div>
                     </motion.div>
                     <div className="flex-1">
-                      <h3 className="mb-2 font-bold text-white text-xl transition-colors duration-300 group-hover:text-orange-400">
+                      <h3 className="mb-2 font-bold text-white text-lg sm:text-xl transition-colors duration-300 group-hover:text-orange-400">
                         Flexible Membership Plans
                       </h3>
-                      <p className="text-white/70 leading-relaxed">
+                      <p className="text-sm text-white/70 leading-relaxed sm:text-base">
                         Choose from affordable membership options designed to
                         fit your lifestyle and budget, with no long-term
                         commitments and special grand opening discounts
@@ -1035,7 +1035,7 @@ export default function Home() {
                 </span>
               </motion.div>
 
-              <h2 className="mb-6 font-bold font-display text-3xl text-white sm:text-4xl md:text-5xl">
+              <h2 className="mb-6 font-bold font-display text-xl text-white sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
                 WORLD-CLASS{' '}
                 <AnimatedGradientText
                   animationDuration={2}
@@ -1048,14 +1048,14 @@ export default function Home() {
                   FACILITIES
                 </AnimatedGradientText>
               </h2>
-              <p className="mx-auto max-w-3xl text-base text-white/70 leading-relaxed sm:text-lg">
+              <p className="mx-auto max-w-3xl text-sm text-white/70 leading-relaxed sm:text-base md:text-lg">
                 Experience luxury and functionality combined. Our premium
                 amenities are designed to enhance your fitness journey and
                 provide unmatched comfort and convenience.
               </p>
             </motion.div>
 
-            <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            <div className="grid items-center gap-8 sm:gap-10 md:gap-12 lg:grid-cols-2 lg:gap-16">
               {/* Staggered List */}
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
@@ -1676,7 +1676,7 @@ export default function Home() {
                 </span>
               </div>
 
-              <h2 className="mb-6 font-bold font-display text-3xl text-white sm:text-4xl md:text-5xl lg:text-6xl">
+              <h2 className="mb-6 font-bold font-display text-xl text-white sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl">
                 FACILITY{' '}
                 <AnimatedGradientText
                   animationDuration={3}
@@ -1689,7 +1689,7 @@ export default function Home() {
                   COMPLETION
                 </AnimatedGradientText>
               </h2>
-              <p className="mx-auto max-w-3xl text-base text-white/70 leading-relaxed sm:text-lg lg:text-xl">
+              <p className="mx-auto max-w-3xl text-sm text-white/70 leading-relaxed sm:text-base md:text-lg lg:text-xl">
                 Track our progress as we put the finishing touches on our
                 state-of-the-art facility. Each milestone brings us closer to
                 opening day!
@@ -1697,7 +1697,7 @@ export default function Home() {
             </motion.div>
 
             {/* Facility Progress Grid - Optimized */}
-            <div className="mb-16 grid gap-8 sm:mb-20 sm:grid-cols-2 sm:gap-12 lg:grid-cols-4">
+            <div className="mb-16 grid gap-6 sm:mb-20 sm:grid-cols-2 sm:gap-8 md:gap-10 lg:grid-cols-4 lg:gap-12">
               <motion.div
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}
@@ -1713,10 +1713,10 @@ export default function Home() {
                   delay={100}
                   label="Equipment"
                 />
-                <h3 className="mb-2 font-semibold text-lg text-white">
+                <h3 className="mb-2 font-semibold text-base text-white sm:text-lg">
                   Equipment Setup
                 </h3>
-                <p className="text-sm text-white/70">
+                <p className="text-xs text-white/70 sm:text-sm">
                   All premium equipment installed and calibrated
                 </p>
               </motion.div>
@@ -1736,10 +1736,10 @@ export default function Home() {
                   delay={150}
                   label="Interior"
                 />
-                <h3 className="mb-2 font-semibold text-lg text-white">
+                <h3 className="mb-2 font-semibold text-base text-white sm:text-lg">
                   Interior Design
                 </h3>
-                <p className="text-sm text-white/70">
+                <p className="text-xs text-white/70 sm:text-sm">
                   Modern design and lighting nearly complete
                 </p>
               </motion.div>
@@ -1759,10 +1759,10 @@ export default function Home() {
                   delay={200}
                   label="Systems"
                 />
-                <h3 className="mb-2 font-semibold text-lg text-white">
+                <h3 className="mb-2 font-semibold text-base text-white sm:text-lg">
                   Tech Systems
                 </h3>
-                <p className="text-sm text-white/70">
+                <p className="text-xs text-white/70 sm:text-sm">
                   Access control and audio systems installation
                 </p>
               </motion.div>
@@ -1782,10 +1782,10 @@ export default function Home() {
                   delay={250}
                   label="Final Touches"
                 />
-                <h3 className="mb-2 font-semibold text-lg text-white">
+                <h3 className="mb-2 font-semibold text-base text-white sm:text-lg">
                   Final Details
                 </h3>
-                <p className="text-sm text-white/70">
+                <p className="text-xs text-white/70 sm:text-sm">
                   Signage, cleaning, and finishing touches
                 </p>
               </motion.div>
@@ -1812,10 +1812,10 @@ export default function Home() {
                   strokeWidth={12}
                   value={90}
                 />
-                <h3 className="mb-4 font-bold text-2xl text-white sm:text-3xl">
+                <h3 className="mb-4 font-bold text-lg text-white sm:text-xl md:text-2xl lg:text-3xl">
                   Almost Ready to Open!
                 </h3>
-                <p className="text-base text-white/70 leading-relaxed sm:text-lg">
+                <p className="text-sm text-white/70 leading-relaxed sm:text-base md:text-lg">
                   Our facility is 90% complete and on track for our grand
                   opening. The final 10% includes staff training, safety
                   inspections, and member onboarding preparations.
@@ -1852,11 +1852,11 @@ export default function Home() {
                 </span>
               </motion.div>
 
-              <h2 className="mb-6 font-bold font-display text-3xl text-white sm:text-4xl md:text-5xl lg:text-6xl">
+              <h2 className="mb-6 font-bold font-display text-xl text-white sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl">
                 GET READY FOR{' '}
                 <span className="gradient-text">SOMETHING AMAZING</span>
               </h2>
-              <p className="mx-auto max-w-3xl text-base text-white/70 leading-relaxed sm:text-lg lg:text-xl">
+              <p className="mx-auto max-w-3xl text-sm text-white/70 leading-relaxed sm:text-base md:text-lg lg:text-xl">
                 We&apos;re putting the finishing touches on our brand-new
                 facility! Be among the first to experience premium equipment,
                 modern amenities, and a welcoming community atmosphere.
@@ -1864,7 +1864,7 @@ export default function Home() {
             </motion.div>
 
             {/* Pre-Opening Features */}
-            <div className="mb-12 grid gap-6 sm:mb-16 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
+            <div className="mb-12 grid gap-4 sm:mb-16 sm:gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
               <motion.div
                 className="group glass-effect rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-6 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 sm:p-8"
                 initial={{ opacity: 0, y: 30 }}
@@ -1908,13 +1908,13 @@ export default function Home() {
                   />
                 </motion.div>
                 <div className="text-center">
-                  <div className="mb-2 font-bold text-3xl text-primary sm:text-4xl">
+                  <div className="mb-2 font-bold text-2xl text-primary sm:text-3xl md:text-4xl">
                     500m²
                   </div>
-                  <h3 className="mb-3 font-semibold text-white text-xl">
+                  <h3 className="mb-3 font-semibold text-white text-lg sm:text-xl">
                     Premium Space
                   </h3>
-                  <p className="text-sm text-white/70 sm:text-base">
+                  <p className="text-xs text-white/70 sm:text-sm md:text-base">
                     Spacious training areas with natural lighting and modern
                     ventilation for optimal comfort
                   </p>
@@ -1964,13 +1964,13 @@ export default function Home() {
                   />
                 </motion.div>
                 <div className="text-center">
-                  <div className="mb-2 font-bold text-3xl text-purple-400 sm:text-4xl">
+                  <div className="mb-2 font-bold text-2xl text-purple-400 sm:text-3xl md:text-4xl">
                     Latest
                   </div>
-                  <h3 className="mb-3 font-semibold text-white text-xl">
+                  <h3 className="mb-3 font-semibold text-white text-lg sm:text-xl">
                     Equipment
                   </h3>
-                  <p className="text-sm text-white/70 sm:text-base">
+                  <p className="text-xs text-white/70 sm:text-sm md:text-base">
                     Brand new commercial-grade fitness machines and free weights
                     from top manufacturers
                   </p>
@@ -2020,13 +2020,13 @@ export default function Home() {
                   />
                 </motion.div>
                 <div className="text-center">
-                  <div className="mb-2 font-bold text-3xl text-blue-400 sm:text-4xl">
+                  <div className="mb-2 font-bold text-2xl text-blue-400 sm:text-3xl md:text-4xl">
                     New
                   </div>
-                  <h3 className="mb-3 font-semibold text-white text-xl">
+                  <h3 className="mb-3 font-semibold text-white text-lg sm:text-xl">
                     Community
                   </h3>
-                  <p className="text-sm text-white/70 sm:text-base">
+                  <p className="text-xs text-white/70 sm:text-sm md:text-base">
                     Join our growing community of fitness enthusiasts and be
                     part of something special from day one
                   </p>
@@ -2071,11 +2071,11 @@ export default function Home() {
                   </svg>
                 </motion.div>
 
-                <h3 className="mb-6 font-bold text-2xl text-white sm:text-3xl lg:text-4xl">
+                <h3 className="mb-6 font-bold text-lg text-white sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
                   Reserve Your{' '}
                   <span className="gradient-text">Founding Membership</span>
                 </h3>
-                <p className="mx-auto mb-8 max-w-2xl text-base text-white/70 leading-relaxed sm:text-lg lg:text-xl">
+                <p className="mx-auto mb-8 max-w-2xl text-sm text-white/70 leading-relaxed sm:text-base md:text-lg lg:text-xl">
                   Secure your spot as a founding member of FitPro Center. Get
                   exclusive pre-opening rates, priority access, and special
                   benefits when we officially open our doors.
@@ -2129,10 +2129,10 @@ export default function Home() {
               <span className="font-semibold text-primary text-sm sm:text-base lg:text-lg">
                 OUR ACHIEVEMENTS
               </span>
-              <h2 className="mt-2 mb-6 font-bold font-display text-2xl text-white sm:text-3xl md:text-4xl lg:text-5xl">
+              <h2 className="mt-2 mb-6 font-bold font-display text-xl text-white sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
                 BUILT FOR <span className="gradient-text">SUCCESS</span>
               </h2>
-              <p className="mx-auto max-w-3xl text-base text-white/70 leading-relaxed sm:text-lg">
+              <p className="mx-auto max-w-3xl text-sm text-white/70 leading-relaxed sm:text-base md:text-lg">
                 Every number tells a story of excellence. From our
                 state-of-the-art facility to our commitment to member
                 satisfaction, these achievements reflect our dedication to
@@ -2141,7 +2141,7 @@ export default function Home() {
             </motion.div>
 
             {/* Achievement Stats Grid */}
-            <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 sm:gap-8 lg:grid-cols-4">
+            <div className="mx-auto grid max-w-6xl grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:grid-cols-4">
               <motion.div
                 className="rounded-2xl border border-white/10 bg-surface/30 p-6 text-center backdrop-blur-sm transition-all duration-300 hover:bg-surface/40 sm:p-8"
                 initial={{ opacity: 0, y: 50, scale: 0.9 }}
@@ -2149,10 +2149,10 @@ export default function Home() {
                 viewport={{ once: true }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
               >
-                <div className="mb-2 font-bold text-4xl text-primary sm:text-5xl lg:text-6xl">
+                <div className="mb-2 font-bold text-3xl text-primary sm:text-4xl md:text-5xl lg:text-6xl">
                   2025
                 </div>
-                <h3 className="mb-2 font-semibold text-sm text-white/90 sm:text-base">
+                <h3 className="mb-2 font-semibold text-xs text-white/90 sm:text-sm md:text-base">
                   Opening Year
                 </h3>
                 <p className="text-white/60 text-xs sm:text-sm">

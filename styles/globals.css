@@ -56,6 +56,186 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Mobile centering fixes */
+@media (max-width: 639px) {
+  .hero-grid {
+    text-align: center;
+    justify-items: center;
+  }
+
+  .hero-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    order: -1; /* Ensure image comes first on mobile */
+  }
+
+  .hero-image-container .relative {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-image-container .parallax-element {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .hero-content {
+    text-align: center !important;
+  }
+
+  /* Mobile tooltip width constraint only */
+  .hero-stats .absolute > div {
+    max-width: calc(100vw - 2rem) !important;
+  }
+}
+
+/* Tablet-specific responsive fixes for iPad Pro 1024px */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .container {
+    max-width: 95%;
+  }
+
+  /* Adjust hero section spacing for tablets */
+  .hero-bg {
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+  }
+
+  /* Better text scaling for tablets */
+  .hero-heading {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+
+  /* Ensure proper grid spacing on tablets */
+  .hero-grid {
+    gap: 2rem;
+  }
+}
+
+/* Specific fixes for iPad Pro portrait mode (1024x1366) */
+@media screen and (width: 1024px) and (height: 1366px) {
+  /* Force single column layout for portrait iPad Pro */
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    text-align: center;
+  }
+
+  /* Adjust hero section for portrait iPad */
+  .hero-bg {
+    min-height: 100vh;
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+  }
+
+  /* Optimize text sizes for portrait tablet */
+  .hero-heading {
+    font-size: 2.75rem !important;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Ensure proper image sizing for portrait */
+  .hero-image-container {
+    max-width: 450px;
+    margin: 0 auto;
+  }
+
+  /* Center align content for portrait mode */
+  .hero-content {
+    text-align: center !important;
+  }
+
+  /* Adjust stats grid for portrait tablet */
+  .hero-stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+    max-width: 350px;
+    margin: 0 auto;
+    gap: 1rem !important;
+  }
+
+  /* Adjust button layout for portrait tablet */
+  .hero-buttons {
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+}
+
+/* Fallback for similar portrait tablet layouts */
+@media (min-width: 1020px) and (max-width: 1030px) and (min-height: 1300px) {
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  .hero-content {
+    text-align: center !important;
+  }
+
+  .hero-stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
+  .hero-buttons {
+    flex-direction: column !important;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+}
+
+/* General iPad Pro responsive fixes */
+@media (min-width: 1024px) and (max-width: 1024px) {
+  /* Container adjustments */
+  .container {
+    max-width: 90%;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  /* Navigation adjustments */
+  .nav-glass-effect {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  /* Better spacing for sections */
+  .section-transition {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+/* Additional responsive fix for tablets in the 1024px range */
+@media (min-width: 1020px) and (max-width: 1030px) {
+  /* Ensure proper container sizing */
+  .container {
+    max-width: 92%;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  /* Adjust hero image for better fit on tablets only */
+  .hero-image-container .parallax-element {
+    height: 400px !important;
+    width: 400px !important;
+    max-width: 400px;
+  }
+
+  /* Better text spacing */
+  .hero-heading {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+}
+
 /* Custom utility classes */
 @layer components {
   .glass-effect {
@@ -173,8 +353,7 @@ html {
   }
 
   .shadow-3xl {
-    box-shadow:
-      0 35px 60px -12px rgba(0, 0, 0, 0.25),
+    box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25),
       0 0 0 1px rgba(255, 255, 255, 0.05);
   }
 
@@ -184,7 +363,7 @@ html {
   }
 
   /* Mobile navigation improvements */
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .mobile-header {
       -webkit-tap-highlight-color: transparent;
     }
@@ -202,6 +381,27 @@ html {
     .mobile-header .nav-glass-effect {
       backdrop-filter: blur(20px) saturate(200%);
       -webkit-backdrop-filter: blur(20px) saturate(200%);
+    }
+  }
+
+  /* Tablet-specific improvements */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .mobile-header {
+      padding: 0 1.5rem;
+    }
+
+    .mobile-header .nav-glass-effect {
+      padding: 1rem 1.5rem;
+    }
+
+    /* Improved tablet navigation menu */
+    .mobile-header nav {
+      padding: 1rem 1.5rem;
+    }
+
+    /* Better spacing for tablet mobile menu */
+    .mobile-header nav > div {
+      margin-bottom: 0.5rem;
     }
   }
 }
@@ -224,8 +424,7 @@ html {
 /* Smooth section transitions */
 .section-transition {
   position: relative;
-  transition:
-    background-color 0.8s ease-in-out,
+  transition: background-color 0.8s ease-in-out,
     background-image 0.8s ease-in-out;
 }
 
@@ -505,6 +704,123 @@ html {
   .fade-overlay::before {
     height: 50px;
     top: -25px;
+  }
+
+  /* Mobile spacing optimizations */
+  .section-transition {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  /* Mobile grid improvements */
+  .grid {
+    gap: 1rem;
+  }
+
+  .grid.gap-6 {
+    gap: 1rem;
+  }
+
+  .grid.gap-8 {
+    gap: 1.5rem;
+  }
+
+  .grid.gap-12 {
+    gap: 2rem;
+  }
+
+  /* Mobile container padding */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Mobile button improvements */
+  button,
+  .button,
+  a[role="button"],
+  .btn,
+  .shiny-button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.75rem 1.5rem;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Touch target improvements */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Mobile form improvements */
+  input,
+  textarea,
+  select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 0.75rem;
+  }
+
+  /* Mobile text improvements */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.2;
+  }
+
+  p,
+  li {
+    line-height: 1.5;
+  }
+
+  /* Mobile image improvements */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Responsive images */
+  .responsive-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  /* Hero image adjustments */
+  .hero-image {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Mobile-specific spacing improvements */
+  .section-padding {
+    padding: 2rem 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .section-padding {
+      padding: 3rem 1.5rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .section-padding {
+      padding: 4rem 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-padding {
+      padding: 5rem 2rem;
+    }
   }
 }
 

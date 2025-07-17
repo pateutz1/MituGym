@@ -59,7 +59,7 @@ const ParallaxCard = ({
 
   return (
     <motion.div
-      className="perspective-1000 group relative h-80 w-full cursor-pointer sm:h-96"
+      className="perspective-1000 group relative h-72 w-full cursor-pointer sm:h-80 md:h-96"
       initial={{ opacity: 0, y: 50, scale: 0.9 }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
